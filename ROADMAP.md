@@ -7,18 +7,19 @@ Roadmap de mejoras e implementaciones pendientes para el sitio web de Citrino Ca
 ### Alta Prioridad 🔴
 
 #### 1. Identidad Visual Completa ✅
-- **Estado**: Completado (2026-02-22)
+- **Estado**: Completado (2026-02-22) - Corregido (2026-02-22)
 - **Descripción**: Incorporar logo, site icon y elementos visuales de Citrino
 - **Tareas completadas**:
-  - ✅ Agregar logo principal en formato SVG
+  - ✅ Agregar logo principal (SVG → corregido a PNG)
   - ✅ Implementar favicon (SVG + PNG fallback)
   - ✅ Agregar Apple touch icon (180x180px)
-  - ✅ Integrar logo en header (citrino-logo-fondo-claro.svg)
-  - ✅ Integrar logo en footer (citrino-logo-fondo-oscuro.svg)
+  - ✅ Integrar logo en header (citrino-logo-fondo-claro.png)
+  - ✅ Integrar logo en footer (citrino-logo-fondo-oscuro.png)
   - ✅ Asegurar consistencia de marca en toda la web
   - ✅ Implementar responsive sizing (desktop/tablet/mobile)
+  - ✅ Corregir calidad visual de logos (PNG)
 - **Impacto**: Mejora la profesionalidad y reconocimiento de marca
-- **Tiempo real**: 50 minutos
+- **Tiempo real**: 50 minutos + 10 min corrección
 
 #### 2. Activar Sección de Servicios
 - **Estado**: Pendiente

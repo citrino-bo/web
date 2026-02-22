@@ -7,6 +7,15 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-02-22
+
+### Changed
+- **Logos PNG**: Reemplazados logos SVG por PNG (citrino-logo-fondo-claro.png y citrino-logo-fondo-oscuro.png)
+- **Favicon**: Mantenido sin cambios (SVG + PNG + Apple Touch Icon)
+
+### Fixed
+- **Visual quality**: Corregido problema de visualización con logos SVG
+
 ## [1.2.0] - 2026-02-22
 
 ### Added
