@@ -7,7 +7,32 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ## [Unreleased]
 
-## [1.1.0] - 2025-02-22
+## [1.2.0] - 2026-02-22
+
+### Added
+- **Identidad visual completa**: Integrados logos SVG de Citrino en header y footer
+- **Favicon implementado**: Favicon SVG con fallback PNG + Apple Touch Icon
+- **Logos responsivos**: Tamaños ajustados para desktop (40px/48px), tablet (36px/44px) y mobile (32px/40px)
+- **Botón WhatsApp**: Botón Contacto del hero redirige a wa.me/59179822999
+- **Navegación temporal**: Botón Nuestros Servicios redirige a sección ¿Por qué Citrino?
+
+### Changed
+- **Actualización de fechas**: Todos los años actualizados de 2025 a 2026
+- **Header logo**: Reemplazado texto CITRINO por imagen SVG citrino-logo-fondo-claro.svg
+- **Footer logo**: Reemplazado texto CITRINO por imagen SVG citrino-logo-fondo-oscuro.svg
+
+### Technical Details
+- SVGs optimizados para rendimiento (27KB logo claro, 25KB logo oscuro)
+- Meta tags de favicon implementados en `<head>`
+- Clases CSS `.logo-img` y `.footer-logo-img` para styling de logos
+- Responsive breakpoints ajustados para logos en tablet y mobile
+
+### Design Improvements
+- Logo SVG vectorial mantiene calidad en cualquier tamaño
+- Consistencia de marca en toda la web con logos oficiales
+- Identidad visual profesional con elementos corporativos
+
+## [1.1.0] - 2026-02-22
 
 ### Added
 - **Tipografía distintiva**: Reemplazada fuente Inter genérica por Outfit (display) + DM Sans (body) + JetBrains Mono (elementos decorativos tech)
@@ -54,7 +79,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - **Unexpected layouts controlados**: Asymetrie sutil con grid patterns
 - **Performance**: Animaciones CSS-only优先, JavaScript mínimo para scroll-triggered
 
-## [1.0.0] - 2025-02-18
+## [1.0.0] - 2026-02-18
 
 ### Added
 - Sitio web estático inicial para GitHub Pages

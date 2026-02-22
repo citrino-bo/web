@@ -19,7 +19,7 @@ Este skill guía la creación de interfaces frontend para Citrino Capitales Inmo
 
 **Público:** Inversores inmobiliarios corporativos y particulares en Santa Cruz, Bolivia que buscan confianza y sofisticación tecnológica.
 
-**Propuesta de valor:** Big data inmobiliario, análisis de rentabilidad, datos georreferenciados - el diseño debe evocar tecnología y análisis sin comprometer la seriedad corporativa.
+**Propuesta de valor:** Big data inmobiliario, análisis de rentabilidad, datos - el diseño debe evocar tecnología y análisis sin comprometer la seriedad corporativa.
 
 **CRUCIAL:** El balance es clave. Demás minimalismo = genérico. Demás maximalismo = poco profesional. La sofisticación está en la ejecución precisa de elementos elegantes.
 
@@ -298,7 +298,7 @@ Animación de entrada escalonada para elementos relacionados. Más impacto que a
 <section class="hero">
     <div class="hero-content">
         <h1 class="hero-title animate-staggered animate-delay-1">Inteligencia de Datos para el Sector Inmobiliario</h1>
-        <p class="hero-subtitle animate-staggered animate-delay-2">Transformamos datos georreferenciados en decisiones estratégicas para inversores en Santa Cruz, Bolivia</p>
+        <p class="hero-subtitle animate-staggered animate-delay-2">Transformamos datos en decisiones estratégicas para inversores en Santa Cruz, Bolivia</p>
         <div class="hero-cta">
             <a href="#contacto" class="btn btn-primary animate-staggered animate-delay-3">Contacto</a>
             <a href="#servicios" class="btn btn-secondary animate-staggered animate-delay-4">Nuestros Servicios</a>
@@ -1316,7 +1316,7 @@ Antes de implementar cambios en la web de Citrino:
 
 ---
 
-**Última actualización:** 2025-02-22  
+**Última actualización:** 2026-02-22  
 **Versión:** 1.0.0  
 **Para:** Citrino Capitales Inmobiliarios web project  
 **Enfoque:** Data-driven corporate fintech aesthetic con balance profesionalidad-distinción

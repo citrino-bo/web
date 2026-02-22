@@ -152,21 +152,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: var(--primary-color);
     text-decoration: none;
-    letter-spacing: -0.03em;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     transition: transform 0.3s ease;
 }
 
 .logo:hover {
     transform: scale(1.05);
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+    display: block;
 }
 
 .nav-menu {
@@ -642,15 +639,16 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
-.footer-logo {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 800;
+.footer-brand-link {
+    text-decoration: none;
+    display: inline-block;
     margin-bottom: 0.75rem;
-    background: var(--gradient-secondary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+}
+
+.footer-logo-img {
+    height: 48px;
+    width: auto;
+    display: block;
 }
 
 .footer-tagline {
@@ -712,9 +710,17 @@ h1, h2, h3, h4, h5, h6 {
     .hero-title {
         font-size: clamp(2rem, 5vw, 3rem);
     }
-    
+
     .value-item {
         gap: 1.5rem;
+    }
+
+    .logo-img {
+        height: 36px;
+    }
+
+    .footer-logo-img {
+        height: 44px;
     }
 }
 
@@ -788,7 +794,7 @@ h1, h2, h3, h4, h5, h6 {
     .hero-title {
         font-size: clamp(1.75rem, 8vw, 2.5rem);
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
@@ -802,10 +808,18 @@ h1, h2, h3, h4, h5, h6 {
     .contact-item {
         padding: 1.5rem;
     }
-    
+
     .value-icon,
     .contact-icon {
         width: 48px;
         height: 48px;
+    }
+
+    .logo-img {
+        height: 32px;
+    }
+
+    .footer-logo-img {
+        height: 40px;
     }
 }

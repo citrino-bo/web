@@ -6,7 +6,7 @@ Sitio web estático profesional para Citrino Capitales Inmobiliarios, empresa es
 
 Citrino Capitales Inmobiliarios es una empresa basada en Santa Cruz, Bolivia, que se especializa en:
 
-- Recopilación de datos georreferenciados del sector inmobiliario desde fuentes públicas y privadas
+- Recopilación de datos del sector inmobiliario desde fuentes públicas y privadas
 - Análisis de rentabilidad de inmuebles por zonas específicas
 - Consultorías para inversores corporativos con estrategias personalizadas
 - Generación y socialización de presentaciones sobre diagnóstico y perspectivas del sector inmobiliario
@@ -47,7 +47,7 @@ web_citrino/
 - Llamadas a la acción (Contacto, Servicios)
 
 ### Servicios (actualmente comentado)
-- Recopilación de Datos Georreferenciados
+- Recopilación de Datos
 - Análisis de Rentabilidad por Zonas
 - Consultorías para Inversores Corporativos
 - Presentaciones del Sector
@@ -281,7 +281,7 @@ Ver archivo `CHANGELOG.md` para el historial de cambios.
 
 ## Licencia
 
-© 2025 Citrino Capitales Inmobiliarios. Todos los derechos reservados.
+© 2026 Citrino Capitales Inmobiliarios. Todos los derechos reservados.
 
 ## Créditos
 
