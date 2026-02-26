@@ -46,6 +46,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 @keyframes fadeInUp {
@@ -108,6 +109,9 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--white);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -119,6 +123,8 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .header {
@@ -392,6 +398,73 @@ h1, h2, h3, h4, h5, h6 {
 .service-description {
     color: var(--text-light);
     line-height: 1.7;
+}
+
+.clientes {
+    padding: 6rem 0;
+    background-color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.clientes::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, rgba(0,40,87,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
+
+.marquee-container {
+    position: relative;
+    overflow: hidden;
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.marquee-track {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+.marquee-content {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.client-logo {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
+.marquee-content:hover .client-logo {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.05);
 }
 
 .value-prop {
@@ -722,6 +795,10 @@ h1, h2, h3, h4, h5, h6 {
     .footer-logo-img {
         height: 44px;
     }
+
+    .client-logo {
+        height: 100px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -780,6 +857,19 @@ h1, h2, h3, h4, h5, h6 {
     .contact-item {
         padding: 2rem;
     }
+
+    .client-logo {
+        height: 80px;
+    }
+
+    .marquee-content {
+        gap: 2rem;
+    }
+
+    .marquee-container {
+        margin-left: -2rem;
+        margin-right: -2rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -821,5 +911,14 @@ h1, h2, h3, h4, h5, h6 {
 
     .footer-logo-img {
         height: 40px;
+    }
+
+    .client-logo {
+        height: 70px;
+    }
+
+    .marquee-container {
+        margin-left: -1.25rem;
+        margin-right: -1.25rem;
     }
 }
