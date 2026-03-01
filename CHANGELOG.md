@@ -7,6 +7,13 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ## [Unreleased]
 
+### Fixed
+- **Mobile scroll vertical**: Corregido problema de scroll que ocultaba títulos al navegar en móvil y desktop
+  - Cambiado `.marquee-container` de `overflow: hidden` a `overflow-x: hidden`
+  - Eliminado `overflow-x: hidden` redundante del `.container`
+  - Agregado `overflow-x: hidden` explícito en media queries de móvil para el marquee
+  - Solucionado conflicto de contexto de scroll que capturaba gestor táctil
+
 ## [1.2.1] - 2026-02-22
 
 ### Changed
