@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://citrino.com.bo/sitemap.xml

@@ -2,17 +2,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+            hamburger.setAttribute('aria-label', isExpanded ? 'Abrir menú de navegación' : 'Cerrar menú de navegación');
         });
-    });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Abrir menú de navegación');
+            });
+        });
+    }
 
     let ticking = false;
     window.addEventListener('scroll', function() {
@@ -68,9 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Mobile menu toggle
-    hamburger.addEventListener('click', () => {
-        track('menu-toggle', { state: navMenu.classList.contains('active') ? 'open' : 'close' });
-    });
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            track('menu-toggle', { state: navMenu.classList.contains('active') ? 'open' : 'close' });
+        });
+    }
 
     // Section views (via IntersectionObserver)
     document.querySelectorAll('section[id]').forEach(section => {
