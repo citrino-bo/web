@@ -105,6 +105,37 @@ html {
     transform: translateX(0);
 }
 
+/* Skip to content link */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color, #002857);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 8px 8px;
+    font-weight: 600;
+    z-index: 9999;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Keyboard focus indicator */
+:focus-visible {
+    outline: 2px solid var(--primary-color, #002857);
+    outline-offset: 2px;
+}
+
+/* Remove default outline on mouse clicks */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
 body {
     font-family: var(--font-body);
     line-height: 1.6;
