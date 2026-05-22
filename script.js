@@ -50,4 +50,43 @@ document.addEventListener('DOMContentLoaded', function() {
     scrollElements.forEach(el => {
         observer.observe(el);
     });
+
+    // ── Umami custom events ──────────────────────────────────
+
+    function track(event, data) {
+        if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(event, data);
+        }
+    }
+
+    // CTA clicks
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.addEventListener('click', () => track('cta-primary-click', { href: btn.getAttribute('href') || '' }));
+    });
+    document.querySelectorAll('.btn-secondary').forEach(btn => {
+        btn.addEventListener('click', () => track('cta-secondary-click', { href: btn.getAttribute('href') || '' }));
+    });
+
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+        track('menu-toggle', { state: navMenu.classList.contains('active') ? 'open' : 'close' });
+    });
+
+    // Section views (via IntersectionObserver)
+    document.querySelectorAll('section[id]').forEach(section => {
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    track('section-view', { id: section.id });
+                    sectionObserver.unobserve(section);
+                }
+            });
+        }, { threshold: 0.3 });
+        sectionObserver.observe(section);
+    });
+
+    // External link clicks (WhatsApp)
+    document.querySelectorAll('a[target="_blank"]').forEach(link => {
+        link.addEventListener('click', () => track('external-link-click', { href: link.getAttribute('href') || '' }));
+    });
 });
