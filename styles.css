@@ -46,6 +46,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
     overflow-x: hidden;
 }
 
@@ -117,6 +118,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     line-height: 1.2;
+    text-wrap: balance;
 }
 
 .container {
@@ -273,7 +275,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
@@ -291,7 +296,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.96);
 }
 
 .btn-secondary {
@@ -308,7 +313,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.96);
+}
+
+/* Spring-press micro-interaction for interactive elements */
+:where(a[href]:not(.logo):not(.social-link):not(.nav-link):not(.btn):not(.back-link):not(.footer-brand-link)),
+button {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.15s ease;
+}
+
+:where(a[href]:not(.logo):not(.social-link):not(.nav-link):not(.btn):not(.back-link):not(.footer-brand-link)):active,
+button:active {
+    transform: scale(0.96);
 }
 
 .hero-background {
@@ -1004,4 +1021,20 @@ h1, h2, h3, h4, h5, h6 {
 .back-link:hover {
     color: var(--secondary-color);
     text-decoration: underline;
+}
+
+.back-link:active {
+    transform: scale(0.96);
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
