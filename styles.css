@@ -1726,12 +1726,6 @@ button:active {
         font-size: 0.8rem;
     }
 
-    }
-
-    .hero-trust-logo {
-        height: 50px;
-    }
-
     .julia-showcase {
         grid-template-columns: 1fr;
         gap: 3rem;
