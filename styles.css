@@ -1261,7 +1261,7 @@ button:active {
     font-size: 0.8rem;
     font-weight: 500;
 
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02em;
     color: var(--secondary-color);
     margin-bottom: 1.25rem;
 }
@@ -1354,7 +1354,7 @@ button:active {
     font-size: 0.75rem;
     font-weight: 500;
 
-    letter-spacing: 0.1em;
+    letter-spacing: 0.03em;
     color: var(--secondary-color);
     background: var(--secondary-10);
     padding: 0.4rem 1rem;
@@ -1947,7 +1947,7 @@ button:active {
     font-size: 0.7rem;
     font-weight: 500;
 
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
     color: var(--primary-color);
     background: var(--primary-10);
     padding: 0.3rem 0.75rem;
@@ -1964,7 +1964,7 @@ button:active {
     font-size: 0.75rem;
     font-weight: 500;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.02em;
     color: var(--text-lighter);
     background: var(--bg-lighter);
     padding: 0.5rem 1.25rem;
@@ -2656,7 +2656,7 @@ button:active {
     font-size: 0.75rem;
     font-weight: 500;
 
-    letter-spacing: 0.1em;
+    letter-spacing: 0.03em;
     color: var(--secondary-color);
     background: rgba(238, 121, 0, 0.15);
     padding: 0.4rem 1rem;
@@ -2974,7 +2974,7 @@ button:active {
     font-size: 0.75rem;
     font-weight: 500;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.02em;
     color: var(--secondary-color);
     margin-bottom: 0.75rem;
 }
