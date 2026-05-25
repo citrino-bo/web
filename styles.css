@@ -473,6 +473,12 @@ button:active {
     line-height: 1.7;
 }
 
+.service-description strong,
+.about-text strong {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
 .clientes {
     padding: 6rem 0;
     background-color: var(--white);
