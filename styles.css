@@ -2269,11 +2269,14 @@ button:active {
     right: 0;
     bottom: 0;
     background: rgba(249, 250, 251, 0.95);
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 10;
     padding: 2rem;
+}
+.db-map-fallback:not([hidden]) {
+    display: flex;
 }
 
 .db-map-fallback-content {
