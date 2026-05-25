@@ -98,13 +98,69 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Page context
+    var page = (function() {
+        var path = location.pathname.split('/').pop();
+        if (!path || path === '' || path === '/') return 'index';
+        return path.replace('.html', '');
+    })();
+    track('page-view', { page: page });
+
     // CTA clicks
     document.querySelectorAll('.btn-primary').forEach(btn => {
-        btn.addEventListener('click', () => track('cta-primary-click', { href: btn.getAttribute('href') || '' }));
+        btn.addEventListener('click', () => track('cta-primary-click', { page: page, href: btn.getAttribute('href') || '' }));
     });
     document.querySelectorAll('.btn-secondary').forEach(btn => {
-        btn.addEventListener('click', () => track('cta-secondary-click', { href: btn.getAttribute('href') || '' }));
+        btn.addEventListener('click', () => track('cta-secondary-click', { page: page, href: btn.getAttribute('href') || '' }));
     });
+    document.querySelectorAll('.btn-julia').forEach(btn => {
+        btn.addEventListener('click', () => track('cta-julia-click', { page: page, href: btn.getAttribute('href') || '' }));
+    });
+
+    // Platform card CTAs (index.html)
+    document.querySelectorAll('.platform-card .btn-julia').forEach(btn => {
+        btn.addEventListener('click', () => track('platform-cta', { product: 'jul-ia', action: 'whatsapp' }));
+    });
+    document.querySelectorAll('.platform-card .btn-primary').forEach(btn => {
+        btn.addEventListener('click', () => track('platform-cta', { product: 'base-de-datos', action: 'explore' }));
+    });
+    document.querySelectorAll('.platform-card-link').forEach(link => {
+        link.addEventListener('click', () => track('platform-cta', {
+            product: link.getAttribute('href').indexOf('jul-ia') !== -1 ? 'jul-ia' : 'base-de-datos',
+            action: 'learn-more'
+        }));
+    });
+
+    // Jul-IA use-case conversions (jul-ia.html)
+    if (page === 'jul-ia') {
+        var useCaseBtns = document.querySelectorAll('.use-case-card .btn-julia');
+        var useCaseLabels = ['portafolio', 'alquiler'];
+        useCaseBtns.forEach(function(btn, i) {
+            btn.addEventListener('click', function() {
+                track('julia-use-case', { use_case: useCaseLabels[i] || 'unknown' });
+            });
+        });
+    }
+
+    // Cross-page navigation
+    document.querySelectorAll('a[href*="base-de-datos"], a[href*="jul-ia"]').forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href && href.endsWith('.html') && !link.hasAttribute('data-tracked-cross')) {
+            link.setAttribute('data-tracked-cross', '1');
+            link.addEventListener('click', function() {
+                track('cross-page-nav', { from: page, to: href.replace('.html', '') });
+            });
+        }
+    });
+
+    // Base de datos map interaction (base-de-datos.html)
+    if (page === 'base-de-datos') {
+        document.querySelectorAll('.db-filter-btn, .db-toggle-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                track('db-filter', { type: btn.classList.contains('db-filter-btn') ? 'tipo' : 'operacion', value: btn.getAttribute('data-filter') || btn.getAttribute('data-operation') });
+            });
+        });
+    }
 
     // Mobile menu toggle
     if (hamburger && navMenu) {
@@ -118,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    track('section-view', { id: section.id });
+                    track('section-view', { page: page, id: section.id });
                     sectionObserver.unobserve(section);
                 }
             });
@@ -128,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // External link clicks (WhatsApp)
     document.querySelectorAll('a[target="_blank"]').forEach(link => {
-        link.addEventListener('click', () => track('external-link-click', { href: link.getAttribute('href') || '' }));
+        link.addEventListener('click', () => track('external-link-click', { page: page, href: link.getAttribute('href') || '' }));
     });
 
     // ── Citrino global namespace ──────────────────
