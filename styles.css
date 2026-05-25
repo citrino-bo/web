@@ -872,6 +872,14 @@ button:active {
     .client-logo {
         height: 100px;
     }
+
+    .platform-grid {
+        gap: 2rem;
+    }
+
+    .platform-card {
+        padding: 2rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -990,6 +998,20 @@ button:active {
     .client-logo {
         height: 70px;
     }
+
+    .platform-card {
+        padding: 1.5rem;
+    }
+
+    .platform-card-title {
+        font-size: 1.25rem;
+    }
+
+    .platform-card-icon {
+        width: 52px;
+        height: 52px;
+    }
+}
 
     .marquee-container {
         margin-left: -1.25rem;
@@ -1123,9 +1145,235 @@ button:active {
     letter-spacing: 0.02em;
 }
 
-/* ── Julia Chatbot Section ──────────────────── */
+/* ── Hero Trust Stack ───────────────────────── */
 
-.julia-section {
+.hero-trust {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-trust-cred {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--white-70);
+    margin-bottom: 1.25rem;
+}
+
+.hero-trust-cred svg {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.hero-trust-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.hero-trust-logo {
+    height: 60px;
+    width: auto;
+    filter: grayscale(100%) brightness(1.5);
+    opacity: 0.7;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-trust-logo:hover {
+    filter: grayscale(0%) brightness(1);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.hero-trust-label {
+    font-size: 0.8rem;
+    color: var(--white-50);
+    margin: 0;
+}
+
+/* ── Platform Section (Hub) ──────────────────── */
+
+.platform-section {
+    padding: 8rem 0;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, rgba(0,40,87,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
+
+.platform-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.platform-card {
+    background: var(--bg-light);
+    padding: 3rem;
+    border-radius: 20px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.platform-card:first-child::before {
+    background: var(--gradient-secondary);
+}
+
+.platform-card:last-child::before {
+    background: var(--gradient-primary);
+}
+
+.platform-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(0, 40, 87, 0.15);
+}
+
+.platform-card:hover::before {
+    transform: scaleX(1);
+}
+
+.platform-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.platform-card:hover .platform-card-icon {
+    transform: scale(1.1);
+}
+
+.platform-card-icon--julia {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: var(--white);
+}
+
+.platform-card-icon--database {
+    background: var(--gradient-primary-medium);
+    color: var(--white);
+}
+
+.platform-card-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+}
+
+.platform-card-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--secondary-color);
+    margin-bottom: 1.25rem;
+}
+
+.platform-card-desc {
+    color: var(--text-medium);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.platform-card-features {
+    list-style: none;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.platform-card-features li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--text-medium);
+    font-size: 0.93rem;
+    line-height: 1.5;
+}
+
+.platform-card-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-color);
+}
+
+.platform-card-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.platform-card-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.platform-card-link:hover {
+    color: var(--secondary-color);
+    transform: translateX(4px);
+}
+
+/* ── Jul-IA Chatbot Section (legacy, kept for chat demo on jul-ia.html) ──── */
     padding: 8rem 0;
     background: var(--white);
     position: relative;
@@ -1529,6 +1777,14 @@ button:active {
         font-size: 0.8rem;
     }
 
+    .hero-trust-logos {
+        gap: 1.25rem;
+    }
+
+    .hero-trust-logo {
+        height: 50px;
+    }
+
     .julia-showcase {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -1559,6 +1815,23 @@ button:active {
         width: 100%;
         max-width: 340px;
         justify-content: center;
+    }
+
+    .platform-section {
+        padding: 6rem 0;
+    }
+
+    .platform-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .platform-card {
+        padding: 2rem;
+    }
+
+    .platform-card-title {
+        font-size: 1.4rem;
     }
 }
 
