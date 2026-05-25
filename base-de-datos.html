@@ -52,9 +52,7 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <!-- Leaflet MarkerCluster CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+
     <link rel="preload" href="assets/logos citrino/citrino-logo-fondo-claro.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,9 +117,9 @@
         <!-- MAPA INTERACTIVO -->
         <section id="db-mapa" class="db-map-section">
             <div class="db-map-header scroll-reveal">
-                <span class="db-badge">Mapa Interactivo</span>
-                <h2 class="section-title">Propiedades Geoespaciales</h2>
-                <p class="section-subtitle">Explorá 1,200+ propiedades con coordenadas verificadas en Santa Cruz</p>
+                <span class="db-badge">Mapa de Densidad</span>
+                <h2 class="section-title">Cobertura de Datos Inmobiliarios</h2>
+                <p class="section-subtitle">Cada punto de calor representa concentración de propiedades en nuestra base. Más de 7,600 inmuebles mapeados en Santa Cruz.</p>
             </div>
             <div class="db-map-controls scroll-reveal">
                 <div class="db-filter-group">
@@ -129,11 +127,6 @@
                     <button class="db-filter-btn" data-filter="casa">Casas</button>
                     <button class="db-filter-btn" data-filter="departamento">Deptos</button>
                     <button class="db-filter-btn" data-filter="terreno">Terrenos</button>
-                </div>
-                <div class="db-toggle-group">
-                    <button class="db-toggle-btn active" data-operation="all">Todas</button>
-                    <button class="db-toggle-btn" data-operation="venta">Venta</button>
-                    <button class="db-toggle-btn" data-operation="alquiler">Alquiler</button>
                 </div>
             </div>
             <div class="db-map-wrapper">
@@ -152,6 +145,11 @@
                     <div class="db-map-spinner"></div>
                     <p>Cargando propiedades...</p>
                 </div>
+            </div>
+            <div class="db-map-legend">
+                <span class="db-map-legend-label">Menor densidad</span>
+                <div class="db-map-legend-bar"></div>
+                <span class="db-map-legend-label">Mayor densidad</span>
             </div>
         </section>
 
@@ -310,8 +308,8 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Leaflet MarkerCluster JS -->
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <!-- Leaflet.heat -->
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="script.js" defer></script>
@@ -325,10 +323,9 @@
         var MAP_ZOOM = 12;
         var DATA_URL = 'data/propiedades.json';
         var map = null;
-        var markerCluster = null;
+        var heatLayer = null;
         var allProperties = [];
         var currentFilter = 'all';
-        var currentOperation = 'all';
         var charts = [];
 
         // ── Map initialization ──────────────────────
@@ -347,24 +344,9 @@
             });
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 maxZoom: 19
             }).addTo(map);
-
-            if (typeof L.markerClusterGroup === 'undefined') {
-                showMapFallback('MarkerCluster no está disponible');
-                return;
-            }
-
-            markerCluster = L.markerClusterGroup({
-                chunkedLoading: true,
-                maxClusterRadius: 60,
-                spiderfyOnMaxZoom: true,
-                showCoverageOnHover: false,
-                zoomToBoundsOnClick: true
-            });
-
-            map.addLayer(markerCluster);
 
             fetchProperties();
         }
@@ -381,7 +363,7 @@
                 .then(function(data) {
                     if (!Array.isArray(data) || data.length === 0) throw new Error('Datos vacíos');
                     allProperties = data;
-                    renderMarkers(allProperties);
+                    renderHeatmap(allProperties);
                     if (loading) loading.hidden = true;
                 })
                 .catch(function(err) {
@@ -391,41 +373,50 @@
                 });
         }
 
-        function renderMarkers(properties) {
-            if (!markerCluster) return;
-            markerCluster.clearLayers();
+        function renderHeatmap(properties) {
+            if (!map) return;
 
-            var markers = [];
+            // Clear previous heat layer
+            if (heatLayer) {
+                map.removeLayer(heatLayer);
+                heatLayer = null;
+            }
+
+            var points = [];
             properties.forEach(function(prop) {
                 if (!prop.lat || !prop.lng) return;
 
                 if (currentFilter !== 'all' && prop.tipo_inmueble !== currentFilter) return;
 
-                if (currentOperation !== 'all') {
-                    if (currentOperation === 'venta' && prop.tipo_operacion !== 'venta') return;
-                    if (currentOperation === 'alquiler' && prop.tipo_operacion !== 'alquiler') return;
-                }
-
-                var popupContent = '<strong>' + capitalize(prop.tipo_inmueble || 'Propiedad') + '</strong><br>' +
-                    'Precio: ' + formatPrice(prop.precio_usd, prop.tipo_operacion) + '<br>' +
-                    'Zona: ' + (prop.zona || 'No especificada');
-
-                var marker = L.marker([prop.lat, prop.lng]);
-                marker.bindPopup(popupContent);
-                markers.push(marker);
+                // All points have equal intensity — heatmap shows geographic density
+                points.push([prop.lat, prop.lng, 0.5]);
             });
 
-            markerCluster.addLayers(markers);
-
-            if (markers.length === 0 && properties.length > 0) {
+            if (points.length === 0) {
                 showMapFallback('No se encontraron propiedades con los filtros seleccionados');
-            } else {
-                hideMapFallback();
+                return;
             }
+
+            hideMapFallback();
+
+            heatLayer = L.heatLayer(points, {
+                radius: 25,
+                blur: 18,
+                maxZoom: 17,
+                max: 1.0,
+                minOpacity: 0.15,
+                gradient: {
+                    0.2: '#002857',
+                    0.4: '#004080',
+                    0.6: '#1a6fb5',
+                    0.8: '#ee7900',
+                    1.0: '#ff9500'
+                }
+            }).addTo(map);
         }
 
         function applyFilters() {
-            renderMarkers(allProperties);
+            renderHeatmap(allProperties);
         }
 
         function showMapFallback(message) {
@@ -437,10 +428,6 @@
                 fallback.hidden = false;
             }
             if (loading) loading.hidden = true;
-            // Also call the global handler from script.js if available
-            if (window.Citrino && typeof window.Citrino.showMapFallback === 'function') {
-                window.Citrino.showMapFallback('db-map', message);
-            }
         }
 
         function hideMapFallback() {
@@ -631,29 +618,6 @@
                     applyFilters();
                 });
             });
-
-            document.querySelectorAll('.db-toggle-btn').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.db-toggle-btn').forEach(function(b) { b.classList.remove('active'); });
-                    btn.classList.add('active');
-                    currentOperation = btn.getAttribute('data-operation');
-                    applyFilters();
-                });
-            });
-        }
-
-        // ── Utilities ───────────────────────────────
-
-        function capitalize(str) {
-            if (!str) return '';
-            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-        }
-
-        function formatPrice(price, operation) {
-            if (price == null) return 'N/D';
-            var formatted = '$' + Number(price).toLocaleString('es-BO');
-            if (operation === 'alquiler') formatted += '/mes';
-            return formatted;
         }
 
         // ── Init ────────────────────────────────────
