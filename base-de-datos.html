@@ -52,6 +52,9 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <!-- Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 
     <link rel="preload" href="assets/logos citrino/citrino-logo-fondo-claro.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -117,9 +120,9 @@
         <!-- MAPA INTERACTIVO -->
         <section id="db-mapa" class="db-map-section">
             <div class="db-map-header scroll-reveal">
-                <span class="db-badge">Mapa de Densidad</span>
-                <h2 class="section-title">Cobertura de Datos Inmobiliarios</h2>
-                <p class="section-subtitle">Cada punto de calor representa concentración de propiedades en nuestra base. Más de 7,600 inmuebles mapeados en Santa Cruz.</p>
+                <span class="db-badge">Mapa Interactivo</span>
+                <h2 class="section-title">Distribución de Propiedades por Zona</h2>
+                <p class="section-subtitle">Cada número indica cuántas propiedades tenemos registradas en esa área. Más de 7,600 inmuebles geoespaciales en Santa Cruz.</p>
             </div>
             <div class="db-map-controls scroll-reveal">
                 <div class="db-filter-group">
@@ -127,6 +130,11 @@
                     <button class="db-filter-btn" data-filter="casa">Casas</button>
                     <button class="db-filter-btn" data-filter="departamento">Deptos</button>
                     <button class="db-filter-btn" data-filter="terreno">Terrenos</button>
+                </div>
+                <div class="db-toggle-group">
+                    <button class="db-toggle-btn active" data-operation="all">Todas</button>
+                    <button class="db-toggle-btn" data-operation="venta">Venta</button>
+                    <button class="db-toggle-btn" data-operation="alquiler">Alquiler</button>
                 </div>
             </div>
             <div class="db-map-wrapper">
@@ -145,11 +153,6 @@
                     <div class="db-map-spinner"></div>
                     <p>Cargando propiedades...</p>
                 </div>
-            </div>
-            <div class="db-map-legend">
-                <span class="db-map-legend-label">Menor densidad</span>
-                <div class="db-map-legend-bar"></div>
-                <span class="db-map-legend-label">Mayor densidad</span>
             </div>
         </section>
 
@@ -308,8 +311,8 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- Leaflet.heat -->
-    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <!-- Leaflet MarkerCluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="script.js" defer></script>
@@ -321,11 +324,13 @@
 
         var MAP_CENTER = [-17.78, -63.18];
         var MAP_ZOOM = 12;
+        var MAP_MAX_ZOOM = 14;
         var DATA_URL = 'data/propiedades.json';
         var map = null;
-        var heatLayer = null;
+        var markerCluster = null;
         var allProperties = [];
         var currentFilter = 'all';
+        var currentOperation = 'all';
         var charts = [];
 
         // ── Map initialization ──────────────────────
@@ -339,6 +344,7 @@
             map = L.map('db-map', {
                 center: MAP_CENTER,
                 zoom: MAP_ZOOM,
+                maxZoom: MAP_MAX_ZOOM,
                 zoomControl: true,
                 scrollWheelZoom: true
             });
@@ -347,6 +353,31 @@
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 maxZoom: 19
             }).addTo(map);
+
+            if (typeof L.markerClusterGroup === 'undefined') {
+                showMapFallback('MarkerCluster no está disponible');
+                return;
+            }
+
+            markerCluster = L.markerClusterGroup({
+                chunkedLoading: true,
+                maxClusterRadius: 70,
+                spiderfyOnMaxZoom: false,
+                showCoverageOnHover: false,
+                zoomToBoundsOnClick: true,
+                disableClusteringAtZoom: MAP_MAX_ZOOM + 1,
+                iconCreateFunction: function(cluster) {
+                    var count = cluster.getChildCount();
+                    var size = count < 50 ? 'small' : count < 200 ? 'medium' : 'large';
+                    return L.divIcon({
+                        html: '<div><span>' + count + '</span></div>',
+                        className: 'db-marker-cluster db-marker-cluster--' + size,
+                        iconSize: L.point(40, 40)
+                    });
+                }
+            });
+
+            map.addLayer(markerCluster);
 
             fetchProperties();
         }
@@ -363,7 +394,7 @@
                 .then(function(data) {
                     if (!Array.isArray(data) || data.length === 0) throw new Error('Datos vacíos');
                     allProperties = data;
-                    renderHeatmap(allProperties);
+                    renderMarkers(allProperties);
                     if (loading) loading.hidden = true;
                 })
                 .catch(function(err) {
@@ -373,50 +404,44 @@
                 });
         }
 
-        function renderHeatmap(properties) {
-            if (!map) return;
+        function renderMarkers(properties) {
+            if (!markerCluster) return;
+            markerCluster.clearLayers();
 
-            // Clear previous heat layer
-            if (heatLayer) {
-                map.removeLayer(heatLayer);
-                heatLayer = null;
-            }
-
-            var points = [];
+            var markers = [];
             properties.forEach(function(prop) {
                 if (!prop.lat || !prop.lng) return;
 
                 if (currentFilter !== 'all' && prop.tipo_inmueble !== currentFilter) return;
 
-                // All points have equal intensity — heatmap shows geographic density
-                points.push([prop.lat, prop.lng, 0.5]);
+                if (currentOperation !== 'all') {
+                    if (currentOperation === 'venta' && prop.tipo_operacion !== 'venta') return;
+                    if (currentOperation === 'alquiler' && prop.tipo_operacion !== 'alquiler') return;
+                }
+
+                // Marker with no popup — only clusters show, no individual property details
+                var marker = L.circleMarker([prop.lat, prop.lng], {
+                    radius: 4,
+                    fillColor: '#002857',
+                    color: '#002857',
+                    weight: 1,
+                    opacity: 0.6,
+                    fillOpacity: 0.4
+                });
+                markers.push(marker);
             });
 
-            if (points.length === 0) {
+            markerCluster.addLayers(markers);
+
+            if (markers.length === 0 && properties.length > 0) {
                 showMapFallback('No se encontraron propiedades con los filtros seleccionados');
-                return;
+            } else {
+                hideMapFallback();
             }
-
-            hideMapFallback();
-
-            heatLayer = L.heatLayer(points, {
-                radius: 25,
-                blur: 18,
-                maxZoom: 17,
-                max: 1.0,
-                minOpacity: 0.15,
-                gradient: {
-                    0.2: '#002857',
-                    0.4: '#004080',
-                    0.6: '#1a6fb5',
-                    0.8: '#ee7900',
-                    1.0: '#ff9500'
-                }
-            }).addTo(map);
         }
 
         function applyFilters() {
-            renderHeatmap(allProperties);
+            renderMarkers(allProperties);
         }
 
         function showMapFallback(message) {
@@ -615,6 +640,15 @@
                     document.querySelectorAll('.db-filter-btn').forEach(function(b) { b.classList.remove('active'); });
                     btn.classList.add('active');
                     currentFilter = btn.getAttribute('data-filter');
+                    applyFilters();
+                });
+            });
+
+            document.querySelectorAll('.db-toggle-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.db-toggle-btn').forEach(function(b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    currentOperation = btn.getAttribute('data-operation');
                     applyFilters();
                 });
             });
