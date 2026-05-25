@@ -58,6 +58,38 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 
+    // ── Stats counter animation ──────────────────
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const statNumbers = entry.target.querySelectorAll('.stat-number');
+                statNumbers.forEach(el => {
+                    const target = parseInt(el.getAttribute('data-target'), 10);
+                    if (!target) return;
+                    const duration = 2000;
+                    const startTime = performance.now();
+                    function update(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(target * eased);
+                        el.textContent = current.toLocaleString('es-BO');
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        }
+                    }
+                    requestAnimationFrame(update);
+                });
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats) {
+        statsObserver.observe(heroStats);
+    }
+
     // ── Umami custom events ──────────────────────────────────
 
     function track(event, data) {
@@ -98,4 +130,26 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[target="_blank"]').forEach(link => {
         link.addEventListener('click', () => track('external-link-click', { href: link.getAttribute('href') || '' }));
     });
+
+    // ── Citrino global namespace ──────────────────
+    window.Citrino = window.Citrino || {};
+
+    /**
+     * Show a fallback overlay on a map container when Leaflet or data fails to load.
+     * Called from base-de-datos.html inline script on map load failure.
+     * @param {string} containerId - The map container element ID
+     * @param {string} [message] - Optional fallback message
+     */
+    window.Citrino.showMapFallback = function(containerId, message) {
+        var container = document.getElementById(containerId);
+        if (!container) return;
+        var fallback = container.parentElement.querySelector('.db-map-fallback');
+        if (fallback) {
+            if (message) {
+                var p = fallback.querySelector('p');
+                if (p) p.textContent = message;
+            }
+            fallback.hidden = false;
+        }
+    };
 });
