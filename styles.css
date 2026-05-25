@@ -1145,57 +1145,6 @@ button:active {
     letter-spacing: 0.02em;
 }
 
-/* ── Hero Trust Stack ───────────────────────── */
-
-.hero-trust {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.hero-trust-cred {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--white-70);
-    margin-bottom: 1.25rem;
-}
-
-.hero-trust-cred svg {
-    color: var(--accent-color);
-    flex-shrink: 0;
-}
-
-.hero-trust-logos {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.hero-trust-logo {
-    height: 60px;
-    width: auto;
-    filter: grayscale(100%) brightness(1.5);
-    opacity: 0.7;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hero-trust-logo:hover {
-    filter: grayscale(0%) brightness(1);
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.hero-trust-label {
-    font-size: 0.8rem;
-    color: var(--white-50);
-    margin: 0;
-}
-
 /* ── Platform Section (Hub) ──────────────────── */
 
 .platform-section {
@@ -1311,7 +1260,7 @@ button:active {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 500;
-    text-transform: uppercase;
+
     letter-spacing: 0.06em;
     color: var(--secondary-color);
     margin-bottom: 1.25rem;
@@ -1404,7 +1353,7 @@ button:active {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
-    text-transform: uppercase;
+
     letter-spacing: 0.1em;
     color: var(--secondary-color);
     background: var(--secondary-10);
@@ -1777,8 +1726,6 @@ button:active {
         font-size: 0.8rem;
     }
 
-    .hero-trust-logos {
-        gap: 1.25rem;
     }
 
     .hero-trust-logo {
@@ -2005,7 +1952,7 @@ button:active {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 500;
-    text-transform: uppercase;
+
     letter-spacing: 0.05em;
     color: var(--primary-color);
     background: var(--primary-10);
@@ -2022,7 +1969,7 @@ button:active {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
-    text-transform: uppercase;
+
     letter-spacing: 0.08em;
     color: var(--text-lighter);
     background: var(--bg-lighter);
@@ -2714,7 +2661,7 @@ button:active {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
-    text-transform: uppercase;
+
     letter-spacing: 0.1em;
     color: var(--secondary-color);
     background: rgba(238, 121, 0, 0.15);
@@ -3032,7 +2979,7 @@ button:active {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
-    text-transform: uppercase;
+
     letter-spacing: 0.08em;
     color: var(--secondary-color);
     margin-bottom: 0.75rem;
