@@ -29,7 +29,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - **Identidad visual completa**: Integrados logos SVG de Citrino en header y footer
 - **Favicon implementado**: Favicon SVG con fallback PNG + Apple Touch Icon
 - **Logos responsivos**: Tamaños ajustados para desktop (40px/48px), tablet (36px/44px) y mobile (32px/40px)
-- **Botón WhatsApp**: Botón Contacto del hero redirige a wa.me/59179822999
+- **Botón WhatsApp**: Botón Contacto del hero redirige a wa.me/15558355716
 - **Navegación temporal**: Botón Nuestros Servicios redirige a sección ¿Por qué Citrino?
 
 ### Changed
