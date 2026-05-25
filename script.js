@@ -134,22 +134,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // ── Citrino global namespace ──────────────────
     window.Citrino = window.Citrino || {};
 
-    /**
-     * Show a fallback overlay on a map container when Leaflet or data fails to load.
-     * Called from base-de-datos.html inline script on map load failure.
-     * @param {string} containerId - The map container element ID
-     * @param {string} [message] - Optional fallback message
-     */
-    window.Citrino.showMapFallback = function(containerId, message) {
-        var container = document.getElementById(containerId);
-        if (!container) return;
-        var fallback = container.parentElement.querySelector('.db-map-fallback');
-        if (fallback) {
-            if (message) {
-                var p = fallback.querySelector('p');
-                if (p) p.textContent = message;
-            }
-            fallback.hidden = false;
-        }
-    };
 });

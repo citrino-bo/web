@@ -2338,6 +2338,31 @@ button:active {
     margin: 0;
 }
 
+/* ── Map legend ───────────────────────────────── */
+
+.db-map-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.db-map-legend-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.db-map-legend-bar {
+    width: 160px;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #002857, #004080, #1a6fb5, #ee7900, #ff9500);
+}
+
 .db-map-container .leaflet-popup-content {
     font-family: var(--font-body);
     font-size: 0.85rem;
