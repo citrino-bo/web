@@ -2,91 +2,81 @@
 
 ## Purpose
 
-A lead-gen landing page at `/inteligencia-inmobiliaria/` that converts Citrino's CBDI collaboration into a client-acquisition channel. Non-members are routed to WhatsApp consultoría; CBDI members are informed about the access-request flow.
+A sober platform-focused landing page at `/inteligencia-inmobiliaria/` that presents the "Plataforma de Inteligencia Inmobiliaria" — a set of market analysis tools covering Bolivia's eje troncal (Santa Cruz, La Paz, Cochabamba). The page describes what the platform includes and routes interested parties to WhatsApp.
 
 ## Out of Scope
 
-The following are explicitly NOT covered by this spec: authed portal or login screen, real indicator dashboards or data visualizations, CBDI member account management or Gmail assignment flow, Metabase integration or any BI tool embedding, city destination pages (Santa Cruz/Cochabamba/La Paz — placeholders only).
+The following are explicitly NOT covered by this spec: authed portal or login screen, real indicator dashboards or data visualizations, CBDI member account management or Gmail assignment flow, Metabase integration or any BI tool embedding, city destination pages (Santa Cruz/Cochabamba/La Paz — placeholders only). Citrino corporate positioning ("who is Citrino", Equity Research methodology, Harvard/Levy Hara references, "única firma en Bolivia") — these belong on the homepage and are NOT part of this page.
 
 ---
 
 ## ADDED Requirements
 
-### Requirement: Landing Page Section Sequence
+### Requirement: Landing Page — 5-Block Sober Structure
 
-The page at `/inteligencia-inmobiliaria/` MUST contain the following sections in order: hero, value proposition, methodology (4 axes), platform indicators, city links, access/impact info, final WhatsApp CTA. Each section MUST contain the content defined in the proposal.
+The page at `/inteligencia-inmobiliaria/` MUST contain exactly five content blocks in order: (1) page header with title and factual subtitle, (2) value proposition listing the four analysis axes, (3) access links for three cities, (4) access note, (5) single WhatsApp CTA. Each block MUST contain only the content defined below.
 
-#### Scenario: Hero section renders badge, title, subtitle, and dual CTA
+#### Scenario: Page header displays title and factual subtitle only
 
 - GIVEN a browser navigates to `/inteligencia-inmobiliaria/`
 - WHEN the page loads
-- THEN the hero section displays a badge reading "En alianza con la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI)", the title "Plataforma de Inteligencia Inmobiliaria", a subtitle describing Citrino's equity research approach, and two CTAs: "Solicitar acceso" (WhatsApp link) and "Conocer la metodología" (scroll anchor)
+- THEN the hero section displays the title "Plataforma de Inteligencia Inmobiliaria" and a single sober subtitle: "Información del mercado inmobiliario del eje troncal — Santa Cruz, La Paz y Cochabamba: ciclo, censo, financiamiento e indicadores del sector."
+- AND the hero contains NO badge, NO dual CTA, NO marketing taglines, NO Citrino corporate positioning
 
-#### Scenario: Value prop section lists three differentiators
+#### Scenario: Value prop lists the four analysis axes with factual descriptions
 
-- GIVEN the user scrolls past the hero
+- GIVEN the user scrolls past the header
 - WHEN the value prop section enters the viewport
-- THEN it displays three items: "Equity Research como núcleo", "Expertise única en la región" and "Metodología avalada por Harvard", each with a description paragraph
+- THEN it displays a heading "Qué incluye la plataforma" and four items:
+  - "Ciclo y censo inmobiliario" — description covering cycle phases, offer census, stock, sales pace, months of stock, and price per m² by zone and typology
+  - "Análisis del financiamiento al sector" — description covering mortgage and construction credit evolution, portfolio, delinquency, and regulatory impact (D.S. 1842 and 2137)
+  - "Análisis evolutivo" — description covering long-term trends in supply, sales pace, prices, and absorption by zone and construction stage
+  - "Plataforma de indicadores inmobiliarios" — description covering the online tool updated continuously from annual census and monthly sampling
+- AND NO corporate positioning items ("Equity Research", "Expertise única", "Metodología avalada por Harvard") appear
 
-#### Scenario: Methodology grid shows four analysis axes
-
-- GIVEN the user scrolls to the methodology section
-- WHEN the section is visible
-- THEN four cards are displayed with titles "Ciclo inmobiliario", "Censo inmobiliario", "Financiamiento del sector" and "Análisis evolutivo", each with a description and tag list
-
-#### Scenario: Platform indicators section has copy + feature list split layout
-
-- GIVEN the user scrolls to the platform indicators section
-- WHEN the section is visible
-- THEN the layout presents descriptive copy on the left and a feature list (inventory/stock, pricing, macro indicators) on the right
-
-#### Scenario: City links section renders three clickable link cards
+#### Scenario: City links section renders three clickable placeholder cards
 
 - GIVEN the user scrolls to the city links section
 - WHEN the section is visible
-- THEN three `<a>` elements render labeled "Santa Cruz", "Cochabamba" and "La Paz", each with `href="#"` and `data-placeholder="true"` attribute; they MUST be clickable (not disabled, not hidden)
+- THEN it displays a heading "Acceso a la plataforma" and three `<a>` elements labeled "Inteligencia inmobiliaria Santa Cruz", "Inteligencia inmobiliaria Cochabamba", and "Inteligencia inmobiliaria La Paz", each with `href="#"` and `data-placeholder="true"`; they MUST be clickable (not disabled, not hidden)
 
-### Requirement: Lead-Gen WhatsApp CTA
+#### Scenario: Access note section displays factual CBDI membership note
 
-The page MUST provide a WhatsApp CTA targeting `+59170933603` with a pre-filled Spanish message. This CTA MUST appear in the hero section AND in the final CTA section. The link format MUST use `https://wa.me/59170933603?text=...` with an URL-encoded message describing interest in the platform.
+- GIVEN the user scrolls to the access note section
+- WHEN the section is visible
+- THEN it displays the text: "El acceso autorizado a la plataforma está limitado a socios de la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI) al día con sus aportes."
+- AND NO marketing impact items ("Para el asociado", "Para el sector", "ventaja competitiva", "mitigación de riesgo") appear
 
-#### Scenario: Hero WhatsApp CTA opens correct pre-filled chat
+#### Scenario: Final CTA contains single WhatsApp button
 
-- GIVEN a non-member user is on the landing page
-- WHEN they click "Solicitar acceso" in the hero
-- THEN the browser opens `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20conocer%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` in a new tab
+- GIVEN the user scrolls to the final CTA section
+- WHEN the section is visible
+- THEN it displays the title "Si te interesa tener acceso a esta información, escribinos." and a single WhatsApp button linking to `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` with `target="_blank" rel="noopener noreferrer"`
+- AND NO dual CTA or description paragraph appears
 
-#### Scenario: Final CTA WhatsApp link uses the same number
+### Requirement: Banned Content
 
-- GIVEN a user scrolls to the final CTA section
-- WHEN they click "Escribinos por WhatsApp"
-- THEN the browser opens `https://wa.me/59170933603` with a pre-filled message about "tener acceso" to the platform
-
-### Requirement: Branding — Citrino Primary, CBDI Mentioned
-
-The page MUST use Citrino as the primary brand (logo, colors, typography per the citrino-frontend-design skill). The CBDI alliance MUST be mentioned as "en alianza con la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI)" in the hero badge. No CBDI logo co-branding SHALL appear. The CBDI access-rule note MUST be present: access limited to CBDI members up to date with contributions, each member can assign up to two Gmail addresses.
-
-#### Scenario: Hero badge mentions CBDI without logo
-
-- GIVEN the landing page loads
-- WHEN inspecting the hero badge text
-- THEN it contains "CBDI" but no `<img>` or SVG representing a CBDI logo is present on the page
-
-#### Scenario: CBDI access note explains membership rules
-
-- GIVEN a user scrolls to the access section
-- WHEN reading the access note
-- THEN the text states that authorized access is limited to CBDI members up to date with their contributions and that each member can assign up to two Gmail addresses
+The page MUST NOT contain any of the following text or references:
+- "Equity Research"
+- "Levy Hara", "Harvard", or any academic institutional reference
+- "única firma en Bolivia", "única en Bolivia y Paraguay", or similar exclusivity claims
+- "transformamos la percepción en evidencia" or similar marketing taglines
+- "ventaja competitiva", "mitigación de riesgo", or similar sales-language impact claims
+- A hero badge (no `.ii-badge` element exists)
 
 ### Requirement: City Links as Swappable Placeholders
 
 Three city links (Santa Cruz, Cochabamba, La Paz) MUST be `<a>` elements with `href="#"` and a `data-placeholder="true"` attribute. They MUST NOT be disabled, hidden, or styled as non-interactive. Each SHALL display a city-specific title and an "Acceder" link indicator.
 
-#### Scenario: City links are clickable anchor elements
+### Requirement: Lead-Gen WhatsApp CTA
 
-- GIVEN the city links section is rendered
-- WHEN inspecting each city card's HTML
-- THEN each is an `<a>` tag with `href="#"`, `data-placeholder="true"`, rendered as a visibly clickable card (not `disabled`, not `aria-disabled`, not `pointer-events: none`, not `display: none`)
+The page MUST provide exactly one WhatsApp CTA targeting `+59170933603` in the final CTA section (block 5). The hero section MUST NOT contain any CTA. The link format MUST use `https://wa.me/59170933603?text=...` with the pre-filled message "Hola Citrino, me interesa la Plataforma de Inteligencia Inmobiliaria." URL-encoded.
+
+#### Scenario: Final CTA WhatsApp link opens correct pre-filled chat
+
+- GIVEN a user scrolls to the final CTA section
+- WHEN they click "Escribinos por WhatsApp"
+- THEN the browser opens `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` in a new tab
 
 ### Requirement: Navigation & Discoverability — "Plataforma" Nav Entry
 
@@ -98,12 +88,6 @@ A "Plataforma" navigation entry MUST be present in the header nav AND footer nav
 - WHEN inspecting the `<header>` navigation menu
 - THEN an `<a>` element with text "Plataforma" and `href="inteligencia-inmobiliaria/"` is present
 
-#### Scenario: "Plataforma" appears in footer nav on jul-ia/index.html
-
-- GIVEN a browser loads `https://citrino.com.bo/jul-ia/`
-- WHEN inspecting the `<footer>` navigation list
-- THEN an `<a>` element with text "Plataforma" and `href="../inteligencia-inmobiliaria/"` is present
-
 #### Scenario: Active page has aria-current="page" on the Plataforma link
 
 - GIVEN a browser loads `https://citrino.com.bo/inteligencia-inmobiliaria/`
@@ -112,7 +96,7 @@ A "Plataforma" navigation entry MUST be present in the header nav AND footer nav
 
 ### Requirement: Static-Site Conventions
 
-The landing page MUST follow existing static-site patterns: live in a subdirectory (`inteligencia-inmobiliaria/index.html`), with a root-level `inteligencia-inmobiliaria.html` redirect stub using meta-refresh. It MUST reference `../styles.css` for shared styles. Page-specific CSS MUST be appended to `styles.css` under a clearly marked section comment. Existing `script.js` (scroll-reveal + hamburger) MUST be reused.
+The landing page MUST follow existing static-site patterns: live in a subdirectory (`inteligencia-inmobiliaria/index.html`), with a root-level `inteligencia-inmobiliaria.html` redirect stub. It MUST reference `../styles.css` for shared styles. Page-specific CSS MUST be in `styles.css` under `/* ── Inteligencia Inmobiliaria Landing ──── */` using `ii-*` prefixed selectors. Existing `script.js` (scroll-reveal + hamburger) MUST be reused.
 
 #### Scenario: Root redirect file sends users to subdirectory
 
@@ -120,43 +104,35 @@ The landing page MUST follow existing static-site patterns: live in a subdirecto
 - WHEN the page loads
 - THEN a `<meta http-equiv="refresh">` tag redirects to `/inteligencia-inmobiliaria/` after 0 seconds
 
-#### Scenario: Page-specific styles live in shared styles.css
+#### Scenario: Page-specific styles use ii-* prefix in styles.css
 
 - GIVEN the project's `styles.css` file
 - WHEN searching for a section comment matching `/* ── Inteligencia Inmobiliaria Landing ──── */`
 - THEN all page-specific CSS selectors (`.ii-*` prefixed) are contained within that section
-
-#### Scenario: script.js provides scroll-reveal and hamburger behavior
-
-- GIVEN the landing page loads
-- WHEN scrolling through sections
-- THEN elements with class `scroll-reveal` become visible via the shared script.js intersection observer
+- AND every `ii-*` class used in the HTML has a corresponding CSS rule
+- AND no orphan CSS rules exist for unused `ii-*` classes
 
 ### Requirement: SEO — Structured Data + Social Meta
 
-The page MUST include: JSON-LD of type `WebPage` with nested `Service`, Open Graph and Twitter Card meta tags, canonical URL `https://citrino.com.bo/inteligencia-inmobiliaria/`, and a corresponding entry in `sitemap.xml`.
+The page MUST include: JSON-LD of type `WebPage` with nested `Service`, Open Graph and Twitter Card meta tags, canonical URL `https://citrino.com.bo/inteligencia-inmobiliaria/`, and a corresponding entry in `sitemap.xml`. All meta copy MUST be sober and platform-focused, free of Citrino corporate superlatives.
 
 #### Scenario: JSON-LD describes the platform as a service
 
 - GIVEN a browser loads the page
 - WHEN examining the `<script type="application/ld+json">` block
-- THEN the JSON-LD is of type `WebPage` with an `about` field of type `Service` named "Plataforma de Inteligencia Inmobiliaria" and the provider is Citrino
+- THEN the JSON-LD is of type `WebPage` with an `about` field of type `Service` named "Plataforma de Inteligencia Inmobiliaria"
+- AND NO "metodología avalada por Harvard" or similar language appears in any structured data field
 
-#### Scenario: OG and Twitter meta tags reference the correct URL
+#### Scenario: OG and Twitter meta tags use sober platform-focused copy
 
 - GIVEN the page `<head>` is inspected
 - WHEN checking `meta[property="og:url"]` and `meta[name="twitter:title"]`
-- THEN `og:url` is `https://citrino.com.bo/inteligencia-inmobiliaria/` and `twitter:title` contains "Plataforma de Inteligencia Inmobiliaria"
-
-#### Scenario: sitemap.xml includes the new URL
-
-- GIVEN the `sitemap.xml` file is read
-- WHEN searching for `inteligencia-inmobiliaria`
-- THEN an `<url>` entry exists with `<loc>https://citrino.com.bo/inteligencia-inmobiliaria/</loc>`
+- THEN `og:url` is `https://citrino.com.bo/inteligencia-inmobiliaria/`
+- AND descriptions reference "mercado inmobiliario del eje troncal" with NO corporate superlatives
 
 ### Requirement: Accessibility & Responsive
 
-The page MUST include: a skip-link targeting `#main-content`, `alt` attributes on all images, ARIA labels on interactive non-text elements (hamburger button, social links), visible focus states on all interactive elements, and responsive breakpoints matching the existing pages (768px mobile, 480px small mobile).
+The page MUST include: a skip-link targeting `#main-content`, `alt` attributes on all images, ARIA labels on interactive non-text elements (hamburger button, social links), `aria-hidden="true"` on all decorative SVGs, visible focus states on all interactive elements, and responsive breakpoints matching the existing pages (768px mobile, 480px small mobile).
 
 #### Scenario: Skip-link present before header
 
@@ -170,8 +146,8 @@ The page MUST include: a skip-link targeting `#main-content`, `alt` attributes o
 - WHEN inspecting the hamburger element
 - THEN it has `role="button"`, `aria-label="Abrir menú de navegación"`, and `aria-expanded="false"`
 
-#### Scenario: Responsive at 768px shows hamburger and stacked layout
+#### Scenario: All decorative SVGs have aria-hidden="true"
 
-- GIVEN a viewport width of 768px or less
-- WHEN inspecting the page layout
-- THEN the hamburger menu is visible, the nav menu is hidden (transformed off-screen), and sections stack vertically with full-width content
+- GIVEN the page loads
+- WHEN inspecting all `<svg>` elements that are icons or decorations (not images)
+- THEN each has the attribute `aria-hidden="true"`
