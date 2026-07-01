@@ -3348,163 +3348,6 @@ button:active {
 
 /* ── Inteligencia Inmobiliaria Landing ──── */
 
-/* Hero badge */
-.ii-badge {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    color: var(--secondary-color);
-    background: rgba(238, 121, 0, 0.15);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    margin-bottom: 1.25rem;
-}
-
-/* Methodology section */
-.ii-method {
-    padding: 8rem 0;
-    background-color: var(--bg-light);
-    position: relative;
-}
-
-.ii-section-head {
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto 4rem;
-}
-
-/* Methodology grid */
-.ii-method-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-}
-
-.ii-method-card {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-}
-
-.ii-method-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-}
-
-.ii-method-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
-    background: var(--gradient-primary-medium);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    margin-bottom: 1.25rem;
-}
-
-.ii-method-icon svg {
-    width: 24px;
-    height: 24px;
-}
-
-.ii-method-name {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-}
-
-.ii-method-desc {
-    font-size: 0.95rem;
-    color: var(--text-light);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-}
-
-.ii-method-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.ii-method-tag {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.75rem;
-    background: var(--primary-10);
-    color: var(--primary-color);
-    border-radius: 20px;
-    font-weight: 500;
-}
-
-/* Platform indicators */
-.ii-platform-section {
-    padding: 6rem 0;
-    background: var(--primary-color);
-    color: var(--white);
-    position: relative;
-    overflow: hidden;
-}
-
-.ii-platform-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-.ii-platform-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-    position: relative;
-    z-index: 1;
-}
-
-.ii-platform-copy {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--white-70);
-}
-
-.ii-platform-copy h2 {
-    color: var(--white);
-    margin-bottom: 1.25rem;
-}
-
-.ii-platform-features {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.ii-platform-feature-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    color: var(--white-70);
-}
-
-.ii-platform-feature-item svg {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-    color: var(--secondary-color);
-    margin-top: 0.2rem;
-}
-
 /* City links */
 .ii-cities-section {
     padding: 6rem 0;
@@ -3546,7 +3389,7 @@ button:active {
     font-weight: 500;
 }
 
-/* Access section */
+/* Access note */
 .ii-access-section {
     padding: 6rem 0;
     background: var(--white);
@@ -3558,54 +3401,7 @@ button:active {
     text-align: center;
     color: var(--text-medium);
     line-height: 1.7;
-}
-
-.ii-access-rule {
-    background: var(--primary-10);
-    border-left: 3px solid var(--secondary-color);
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    margin-top: 1.5rem;
-    text-align: left;
-    color: var(--text-dark);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-/* Impact grid */
-.ii-impact-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.ii-impact-card {
-    background: var(--bg-light);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-}
-
-.ii-impact-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.ii-impact-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.ii-impact-card li {
-    padding: 0.5rem 0;
-    color: var(--text-medium);
-    line-height: 1.6;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
 }
 
 /* Final CTA */
@@ -3640,35 +3436,15 @@ button:active {
 
 .ii-final-cta-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     letter-spacing: -0.02em;
-}
-
-.ii-final-cta-content p {
-    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
-    opacity: 0.85;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
 }
 
 /* ── II Responsive ── */
 @media (max-width: 768px) {
-    .ii-method-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .ii-platform-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
     .ii-cities-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .ii-impact-grid {
         grid-template-columns: 1fr;
     }
 
@@ -3677,29 +3453,17 @@ button:active {
     }
 
     .ii-final-cta-title {
-        font-size: clamp(1.75rem, 8vw, 2.5rem);
+        font-size: clamp(1.5rem, 6vw, 2rem);
     }
 }
 
 @media (max-width: 480px) {
-    .ii-method-card {
-        padding: 1.5rem;
-    }
-
-    .ii-platform-section {
-        padding: 4rem 0;
-    }
-
     .ii-cities-section {
         padding: 4rem 0;
     }
 
     .ii-access-section {
         padding: 4rem 0;
-    }
-
-    .ii-impact-card {
-        padding: 1.5rem;
     }
 }
 
