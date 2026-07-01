@@ -3389,21 +3389,6 @@ button:active {
     font-weight: 500;
 }
 
-/* Access note */
-.ii-access-section {
-    padding: 6rem 0;
-    background: var(--white);
-}
-
-.ii-access-note {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    color: var(--text-medium);
-    line-height: 1.7;
-    font-size: 1.05rem;
-}
-
 /* Final CTA */
 .ii-final-cta {
     padding: 8rem 0;
@@ -3459,10 +3444,6 @@ button:active {
 
 @media (max-width: 480px) {
     .ii-cities-section {
-        padding: 4rem 0;
-    }
-
-    .ii-access-section {
         padding: 4rem 0;
     }
 }
