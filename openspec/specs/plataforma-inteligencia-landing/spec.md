@@ -2,25 +2,26 @@
 
 ## Purpose
 
-A sober platform-focused landing page at `/inteligencia-inmobiliaria/` that presents the "Plataforma de Inteligencia Inmobiliaria" — a set of market analysis tools covering Bolivia's eje troncal (Santa Cruz, La Paz, Cochabamba). The page describes what the platform includes and routes interested parties to WhatsApp.
+A sober platform-focused landing page at `/inteligencia-inmobiliaria/` that presents the "Plataforma de Inteligencia Inmobiliaria" — a set of market analysis tools covering Bolivia's eje troncal (Santa Cruz, Cochabamba, La Paz). The page describes what the platform includes, links to the live Looker Studio dashboards for cities already available, marks La Paz as "Próximamente", and routes interested parties to WhatsApp.
 
 ## Out of Scope
 
-The following are explicitly NOT covered by this spec: authed portal or login screen, real indicator dashboards or data visualizations, CBDI member account management or Gmail assignment flow, Metabase integration or any BI tool embedding, city destination pages (Santa Cruz/Cochabamba/La Paz — placeholders only). Citrino corporate positioning ("who is Citrino", Equity Research methodology, Harvard/Levy Hara references, "única firma en Bolivia") — these belong on the homepage and are NOT part of this page.
+The following are explicitly NOT covered by this spec: authed portal or login screen, real indicator dashboards or data visualizations (these live in Looker Studio and are linked, not embedded), CBDI member account management or Gmail assignment flow, Metabase integration or any BI tool embedding, city destination pages on this site (Santa Cruz/Cochabamba/La Paz link out to Looker Studio, not to local pages). Citrino corporate positioning ("who is Citrino", Equity Research methodology, Harvard/Levy Hara references, "única firma en Bolivia") — these belong on the homepage and are NOT part of this page.
 
 ---
 
 ## ADDED Requirements
 
-### Requirement: Landing Page — 5-Block Sober Structure
+### Requirement: Landing Page — 4-Block Sober Structure
 
-The page at `/inteligencia-inmobiliaria/` MUST contain exactly five content blocks in order: (1) page header with title and factual subtitle, (2) value proposition listing the four analysis axes, (3) access links for three cities, (4) access note, (5) single WhatsApp CTA. Each block MUST contain only the content defined below.
+The page at `/inteligencia-inmobiliaria/` MUST contain exactly four content blocks in order: (1) page header with title, factual subtitle, and a single WhatsApp CTA, (2) value proposition listing the four analysis axes, (3) access links for three cities, (4) final WhatsApp CTA. Each block MUST contain only the content defined below. The page MUST NOT include any access-note or CBDI-membership-notice block.
 
-#### Scenario: Page header displays title and factual subtitle only
+#### Scenario: Page header displays title, factual subtitle, and a single WhatsApp CTA
 
 - GIVEN a browser navigates to `/inteligencia-inmobiliaria/`
 - WHEN the page loads
 - THEN the hero section displays the title "Plataforma de Inteligencia Inmobiliaria" and a single sober subtitle: "Información del mercado inmobiliario del eje troncal — Santa Cruz, La Paz y Cochabamba: ciclo, censo, financiamiento e indicadores del sector."
+- AND the hero contains exactly one CTA button labeled "Solicitar acceso" linking to `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` with `target="_blank" rel="noopener noreferrer"`
 - AND the hero contains NO badge, NO dual CTA, NO marketing taglines, NO Citrino corporate positioning
 
 #### Scenario: Value prop lists the four analysis axes with factual descriptions
@@ -34,24 +35,17 @@ The page at `/inteligencia-inmobiliaria/` MUST contain exactly five content bloc
   - "Plataforma de indicadores inmobiliarios" — description covering the online tool updated continuously from annual census and monthly sampling
 - AND NO corporate positioning items ("Equity Research", "Expertise única", "Metodología avalada por Harvard") appear
 
-#### Scenario: City links section renders three clickable placeholder cards
+#### Scenario: City access section renders two live links and one "Próximamente" card
 
-- GIVEN the user scrolls to the city links section
+- GIVEN the user scrolls to the city access section
 - WHEN the section is visible
-- THEN it displays a heading "Acceso a la plataforma" and three `<a>` elements labeled "Inteligencia inmobiliaria Santa Cruz", "Inteligencia inmobiliaria Cochabamba", and "Inteligencia inmobiliaria La Paz", each with `href="#"` and `data-placeholder="true"`; they MUST be clickable (not disabled, not hidden)
+- THEN it displays a heading "Acceso a la plataforma" and three city cards: Santa Cruz and Cochabamba as live `<a>` elements pointing to Looker Studio, and La Paz as a disabled card with a "Próximamente" badge
 
-#### Scenario: Access note section displays factual CBDI membership note
-
-- GIVEN the user scrolls to the access note section
-- WHEN the section is visible
-- THEN it displays the text: "El acceso autorizado a la plataforma está limitado a socios de la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI) al día con sus aportes."
-- AND NO marketing impact items ("Para el asociado", "Para el sector", "ventaja competitiva", "mitigación de riesgo") appear
-
-#### Scenario: Final CTA contains single WhatsApp button
+#### Scenario: Final CTA contains a single WhatsApp button
 
 - GIVEN the user scrolls to the final CTA section
 - WHEN the section is visible
-- THEN it displays the title "Si te interesa tener acceso a esta información, escribinos." and a single WhatsApp button linking to `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` with `target="_blank" rel="noopener noreferrer"`
+- THEN it displays the title "Si te interesa tener acceso a esta información, escribinos." and a single WhatsApp button labeled "Escribinos por WhatsApp" linking to `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` with `target="_blank" rel="noopener noreferrer"`
 - AND NO dual CTA or description paragraph appears
 
 ### Requirement: Banned Content
@@ -62,15 +56,44 @@ The page MUST NOT contain any of the following text or references:
 - "única firma en Bolivia", "única en Bolivia y Paraguay", or similar exclusivity claims
 - "transformamos la percepción en evidencia" or similar marketing taglines
 - "ventaja competitiva", "mitigación de riesgo", or similar sales-language impact claims
-- A hero badge (no `.ii-badge` element exists)
+- A hero badge (no badge element exists)
+- A "socios de la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI) al día con sus aportes" access note block (this is not implemented; see Future / Not Implemented)
 
-### Requirement: City Links as Swappable Placeholders
+### Requirement: City Access Links
 
-Three city links (Santa Cruz, Cochabamba, La Paz) MUST be `<a>` elements with `href="#"` and a `data-placeholder="true"` attribute. They MUST NOT be disabled, hidden, or styled as non-interactive. Each SHALL display a city-specific title and an "Acceder" link indicator.
+The city access section MUST render three cards representing the three cities of Bolivia's eje troncal, in this order: Santa Cruz, Cochabamba, La Paz. The two cities with live dashboards MUST be `<a>` elements pointing to Looker Studio reports, and the one without a live dashboard MUST be a disabled card with a "Próximamente" badge.
+
+#### Scenario: Santa Cruz card links to the live Looker Studio report
+
+- GIVEN a user scrolls to the city access section
+- WHEN the Santa Cruz card is inspected
+- THEN it is an `<a>` element with `href="https://datastudio.google.com/reporting/4802c680-ec58-4d48-b879-9d3341e428e1"`, `target="_blank"`, `rel="noopener noreferrer"`
+- AND it displays the title "Inteligencia inmobiliaria Santa Cruz" and a link indicator "Acceder →"
+
+#### Scenario: Cochabamba card links to the live Looker Studio report
+
+- GIVEN a user scrolls to the city access section
+- WHEN the Cochabamba card is inspected
+- THEN it is an `<a>` element with `href="https://datastudio.google.com/reporting/3066ff66-4f25-480f-a710-60cef0423cc6"`, `target="_blank"`, `rel="noopener noreferrer"`
+- AND it displays the title "Inteligencia inmobiliaria Cochabamba" and a link indicator "Acceder →"
+
+#### Scenario: La Paz card is disabled with a "Próximamente" badge
+
+- GIVEN a user scrolls to the city access section
+- WHEN the La Paz card is inspected
+- THEN it is a `<div>` (not an `<a>`) with class `ii-city-card ii-city-card-soon` and `aria-disabled="true"`
+- AND it displays the title "Inteligencia inmobiliaria La Paz" and a "Próximamente" badge
+- AND clicking or focusing the card does NOT navigate anywhere
 
 ### Requirement: Lead-Gen WhatsApp CTA
 
-The page MUST provide exactly one WhatsApp CTA targeting `+59170933603` in the final CTA section (block 5). The hero section MUST NOT contain any CTA. The link format MUST use `https://wa.me/59170933603?text=...` with the pre-filled message "Hola Citrino, me interesa la Plataforma de Inteligencia Inmobiliaria." URL-encoded.
+The page MUST provide exactly two WhatsApp CTAs (one in the hero, one in the final CTA section), both targeting `+59170933603` with the pre-filled message "Hola Citrino, me interesa la Plataforma de Inteligencia Inmobiliaria." URL-encoded. The hero CTA MUST be labeled "Solicitar acceso" and the final CTA MUST be labeled "Escribinos por WhatsApp". Both links MUST use `https://wa.me/59170933603?text=...` and open in a new tab with `target="_blank" rel="noopener noreferrer"`.
+
+#### Scenario: Hero WhatsApp link opens correct pre-filled chat
+
+- GIVEN a user is on the hero section
+- WHEN they click "Solicitar acceso"
+- THEN the browser opens `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` in a new tab
 
 #### Scenario: Final CTA WhatsApp link opens correct pre-filled chat
 
@@ -114,13 +137,15 @@ The landing page MUST follow existing static-site patterns: live in a subdirecto
 
 ### Requirement: SEO — Structured Data + Social Meta
 
-The page MUST include: JSON-LD of type `WebPage` with nested `Service`, Open Graph and Twitter Card meta tags, canonical URL `https://citrino.com.bo/inteligencia-inmobiliaria/`, and a corresponding entry in `sitemap.xml`. All meta copy MUST be sober and platform-focused, free of Citrino corporate superlatives.
+The page MUST include: JSON-LD of type `WebPage` with nested `Service` describing the platform as developed for the Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI) and with `Citrino Capitales Inmobiliarios` as `provider`, Open Graph and Twitter Card meta tags, canonical URL `https://citrino.com.bo/inteligencia-inmobiliaria/`, and a corresponding entry in `sitemap.xml`. All meta copy MUST be sober and platform-focused, free of Citrino corporate superlatives.
 
-#### Scenario: JSON-LD describes the platform as a service
+#### Scenario: JSON-LD describes the platform as a service developed for CBDI
 
 - GIVEN a browser loads the page
 - WHEN examining the `<script type="application/ld+json">` block
 - THEN the JSON-LD is of type `WebPage` with an `about` field of type `Service` named "Plataforma de Inteligencia Inmobiliaria"
+- AND the `Service.description` field mentions "Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI)"
+- AND the `Service.provider` is an `Organization` named "Citrino Capitales Inmobiliarios"
 - AND NO "metodología avalada por Harvard" or similar language appears in any structured data field
 
 #### Scenario: OG and Twitter meta tags use sober platform-focused copy
@@ -151,3 +176,29 @@ The page MUST include: a skip-link targeting `#main-content`, `alt` attributes o
 - GIVEN the page loads
 - WHEN inspecting all `<svg>` elements that are icons or decorations (not images)
 - THEN each has the attribute `aria-hidden="true"`
+
+### Requirement: Privacy-Friendly Analytics (Plausible Self-Hosted)
+
+The page MUST load the self-hosted Plausible analytics script from `https://estadisticas.srv1406344.hstgr.cloud/script.js` with the `defer` attribute and a `data-website-id` attribute set to the production site ID. The page MUST include a `<link rel="preconnect" href="https://estadisticas.srv1406344.hstgr.cloud">` in the `<head>` to establish an early connection. No cookie banner is required because Plausible is cookieless.
+
+#### Scenario: Plausible script loads with defer and correct site ID
+
+- GIVEN a browser loads the page
+- WHEN inspecting scripts with `src` pointing to `estadisticas.srv1406344.hstgr.cloud`
+- THEN the script tag has the `defer` attribute and a `data-website-id` attribute matching the production site ID assigned to the landing page
+
+#### Scenario: Preconnect to Plausible host is declared in head
+
+- GIVEN the page `<head>` is inspected
+- WHEN searching for `<link rel="preconnect">` tags
+- THEN one of them targets `https://estadisticas.srv1406344.hstgr.cloud`
+
+---
+
+## Future / Not Implemented
+
+The following items were considered for inclusion in this spec but are NOT currently implemented in the HTML and therefore are NOT active requirements. They are documented here so future changes can reference them.
+
+### CBDI Access Note Block (not implemented)
+
+A prior version of this spec required an "Access note" block containing the text: "El acceso autorizado a la plataforma está limitado a socios de la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI) al día con sus aportes." This block is NOT present in the current HTML and is NOT a requirement of this spec. The current page already references CBDI through the JSON-LD `Service.description` field, which is sufficient. If a visible access note is added in a future change, it SHOULD appear between the city access section and the final CTA, and SHOULD reuse the text above.
