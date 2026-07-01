@@ -3389,6 +3389,28 @@ button:active {
     font-weight: 500;
 }
 
+.ii-city-card-soon {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.ii-city-card-soon:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+}
+
+.ii-city-soon-badge {
+    display: inline-block;
+    background: rgba(0, 40, 87, 0.1);
+    color: var(--primary-color);
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
 /* Final CTA */
 .ii-final-cta {
     padding: 8rem 0;
