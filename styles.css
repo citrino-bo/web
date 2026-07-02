@@ -2739,8 +2739,13 @@ button:active {
 /* ── Plataforma (Inteligencia Inmobiliaria) Page ─*/
 
 .platform-hero {
-    min-height: 90vh;
-    min-height: 90dvh;
+    min-height: auto;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+}
+
+.platform-hero .hero-subtitle {
+    margin-bottom: 0;
 }
 
 .platform-hero .hero-background::before {
