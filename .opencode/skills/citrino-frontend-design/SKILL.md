@@ -1314,6 +1314,8 @@ Antes de implementar cambios en la web de Citrino:
 
 **Cross-browser:** Testear en Chrome, Firefox, Safari, Edge. Polyfills si es necesario.
 
+**Verificación local:** Playwright bloquea protocolos `file://` por seguridad. Para previsualizar cambios en HTML/CSS plano, levantar un servidor local (`python -m http.server 8080 --directory <path>`) es la forma confiable. En entornos Windows/bash híbridos, `python -m http.server` es más estable que `npx serve`.
+
 ---
 
 **Última actualización:** 2026-02-22  
