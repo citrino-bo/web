@@ -100,20 +100,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Page context
     var page = (function() {
-        var path = location.pathname.split('/').pop();
-        if (!path || path === '' || path === '/') return 'index';
-        return path.replace('.html', '');
+        var parts = location.pathname.split('/').filter(Boolean);
+        if (parts.length === 0) return 'index';
+        var last = parts[parts.length - 1].replace(/\.html?$/, '');
+        if (last === 'index' && parts.length > 1) return parts[parts.length - 2];
+        return last;
     })();
     track('page-view', { page: page });
 
+    function isDisabled(el) {
+        return el && el.style && el.style.cursor === 'not-allowed';
+    }
+
     // CTA clicks
     document.querySelectorAll('.btn-primary').forEach(btn => {
+        if (isDisabled(btn)) return;
         btn.addEventListener('click', () => track('cta-primary-click', { page: page, href: btn.getAttribute('href') || '' }));
     });
     document.querySelectorAll('.btn-secondary').forEach(btn => {
+        if (isDisabled(btn)) return;
         btn.addEventListener('click', () => track('cta-secondary-click', { page: page, href: btn.getAttribute('href') || '' }));
     });
     document.querySelectorAll('.btn-julia').forEach(btn => {
+        if (isDisabled(btn)) return;
         btn.addEventListener('click', () => track('cta-julia-click', { page: page, href: btn.getAttribute('href') || '' }));
     });
 
@@ -186,6 +195,67 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[target="_blank"]').forEach(link => {
         link.addEventListener('click', () => track('external-link-click', { page: page, href: link.getAttribute('href') || '' }));
     });
+
+    // Contact link clicks (mailto / tel)
+    document.querySelectorAll('a[href^="mailto:"], a[href^="tel:"]').forEach(link => {
+        link.addEventListener('click', () => {
+            var type = link.getAttribute('href').indexOf('mailto:') === 0 ? 'email' : 'phone';
+            track('contact-link-click', { type: type, href: link.getAttribute('href') });
+        });
+    });
+
+    // Anchor clicks (excluding skip-link, #main-content, plain "#")
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || href === '#main-content' || link.classList.contains('skip-link')) return;
+        link.addEventListener('click', () => track('anchor-click', { page: page, target: href }));
+    });
+
+    // Logo click
+    document.querySelectorAll('a.logo').forEach(link => {
+        link.addEventListener('click', () => track('logo-click', { page: page, href: link.getAttribute('href') || '' }));
+    });
+
+    // Scroll depth (25 / 50 / 75 / 100%)
+    (function() {
+        var thresholds = [25, 50, 75, 100];
+        var fired = {};
+        thresholds.forEach(function(t) { fired[t] = false; });
+        var queued = false;
+        function checkScroll() {
+            var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (docHeight <= 0) return;
+            var pct = Math.round((window.scrollY / docHeight) * 100);
+            thresholds.forEach(function(t) {
+                if (!fired[t] && pct >= t) {
+                    fired[t] = true;
+                    track('scroll-depth', { page: page, percent: t });
+                }
+            });
+        }
+        window.addEventListener('scroll', function() {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(function() { checkScroll(); queued = false; });
+        }, { passive: true });
+    })();
+
+    // Engagement time (reported once on hide / unload)
+    (function() {
+        var startTime = Date.now();
+        var reported = false;
+        function reportEngagement() {
+            if (reported) return;
+            reported = true;
+            var seconds = Math.round((Date.now() - startTime) / 1000);
+            track('engagement-time', { page: page, seconds: seconds });
+        }
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') reportEngagement();
+        });
+        window.addEventListener('pagehide', reportEngagement);
+        window.addEventListener('beforeunload', reportEngagement);
+    })();
 
     // ── Citrino global namespace ──────────────────
     window.Citrino = window.Citrino || {};

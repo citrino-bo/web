@@ -19,6 +19,7 @@ Antes de tocar UI/CSS/layout, **cargá estas skills en este orden** y seguí su 
 - **Componentes/branding del proyecto** → load `citrino-frontend-design` (`.opencode/skills/citrino-frontend-design/SKILL.md`).
 - **Compliance HTML/CSS puntual** → load `web-design-guidelines` (Vercel Labs). Output = formato `file:line` terse.
 - **Accesibilidad** → load `accessibility` cuando el cambio toque ARIA, focus, contraste, keyboard nav.
+- **Conversión / growth** → load `cro` y/o `ab-testing` (de coreyhaines31/marketingskills). Requieren analytics instrumentado (Umami) y baseline real; sin datos, pedir antes de auditar.
 
 **Prohibido**: hacer auditoría "a ojo" sin cargar el skill correspondiente. El método es el método.
 
@@ -26,6 +27,7 @@ Antes de tocar UI/CSS/layout, **cargá estas skills en este orden** y seguí su 
 
 - **La spec puede estar stale. El HTML es la fuente de verdad.** Antes de proponer cambios sobre un archivo existente (página, spec, config), leé la versión live (`*.html`, `styles.css`, `script.js`) y verificá que tu propuesta refleja el estado real. Si la spec está desactualizada respecto al código, marquélo explícitamente y propón corregir la spec como primer paso.
 - **Antes de declarar "listo"**, verificá con el navegador (Playwright) en desktop y mobile. Mostrá evidencia (screenshot + DOM). Si no verificás, no está listo.
+- **Si la propuesta es un test A/B**, definir primary metric, baseline rate, y duración esperada. Sin estos tres, el test no se aprueba.
 
 ## Proceso
 
