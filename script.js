@@ -257,6 +257,17 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('beforeunload', reportEngagement);
     })();
 
+    // ── Marquee visibility pause ─────────────────
+    const marqueeContent = document.querySelector('.marquee-content');
+    if (marqueeContent) {
+        const marqueeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                marqueeContent.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+            });
+        }, { threshold: 0 });
+        marqueeObserver.observe(marqueeContent.closest('.marquee-container') || marqueeContent);
+    }
+
     // ── Citrino global namespace ──────────────────
     window.Citrino = window.Citrino || {};
 
