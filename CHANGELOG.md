@@ -7,6 +7,9 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ## [Unreleased]
 
+### Added
+- **Analytics Umami**: instrumentación de eventos custom (`page-view`, CTAs, `platform-cta`, `external-link-click`, `section-view`, `scroll-depth`, `engagement-time`) en `script.js` con website-id `072eb175-7fc1-4d66-b54f-32c2f817f940`. Reports creados en Umami: 3 funnels de plataforma por ciudad (SC/CBBA/LP), 5 goals de CTA, 2 breakdowns (páginas, referrers). Board "Informe semanal Citrino" con share público: `https://estadisticas.srv1406344.hstgr.cloud/share/ZW7HlPx7ZQptK9rs`.
+
 ### Fixed
 - **Mobile scroll vertical**: Corregido problema de scroll que ocultaba títulos al navegar en móvil y desktop
   - Cambiado `.marquee-container` de `overflow: hidden` a `overflow-x: hidden`
