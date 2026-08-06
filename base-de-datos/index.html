@@ -127,19 +127,19 @@
             <div class="db-hero-content">
                 <span class="db-badge animate-staggered animate-delay-1">Base de datos</span>
                 <h1 class="hero-title animate-staggered animate-delay-2">Inteligencia Inmobiliaria<br>Basada en Datos Reales</h1>
-                <p class="hero-subtitle animate-staggered animate-delay-3">7,693 propiedades geoespaciales analizadas en 596 zonas de Santa Cruz. Datos estructurados, actualizados y verificados por Citrino.</p>
+                <p class="hero-subtitle animate-staggered animate-delay-3" id="hero-subtitle">propiedades geoespaciales analizadas en zonas de Santa Cruz. Datos estructurados, actualizados y verificados por Citrino.</p>
                 <div class="hero-stats animate-staggered animate-delay-4">
                     <div class="stat-item">
-                        <span class="stat-number" data-target="7693">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-number" id="stat-total" data-target="0">0</span><span class="stat-suffix">+</span>
                         <span class="stat-label">Propiedades</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-target="596">0</span>
+                        <span class="stat-number" id="stat-zonas" data-target="0">0</span>
                         <span class="stat-suffix"></span>
                         <span class="stat-label">Zonas mapeadas</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-target="820">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-number" id="stat-alquiler" data-target="0">0</span><span class="stat-suffix">+</span>
                         <span class="stat-label">Alquileres de referencia</span>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
             <div class="db-map-header scroll-reveal">
                 <span class="db-badge">Mapa Interactivo</span>
                 <h2 class="section-title">Distribución de Propiedades por Zona</h2>
-                <p class="section-subtitle">Cada número indica cuántas propiedades tenemos registradas en esa área. 7,315 inmuebles geoespaciales — el 95% de nuestra base de datos.</p>
+                <p class="section-subtitle" id="map-subtitle">Cada número indica cuántas propiedades tenemos registradas en esa área. inmuebles geoespaciales con coordenadas y precio verificados.</p>
             </div>
             <div class="db-map-controls scroll-reveal">
                 <div class="db-filter-group">
@@ -202,7 +202,7 @@
                                 <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                             </svg>
                         </div>
-                        <span class="db-metric-value">7,693</span>
+                        <span class="db-metric-value" id="metric-total">0</span>
                         <span class="db-metric-label">Propiedades en la base</span>
                         <p class="db-metric-desc">Casas, departamentos, terrenos, locales, oficinas y más. Cada propiedad con coordenadas geoespaciales verificadas.</p>
                     </div>
@@ -212,7 +212,7 @@
                                 <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
-                        <span class="db-metric-value">596</span>
+                        <span class="db-metric-value" id="metric-zonas">0</span>
                         <span class="db-metric-label">Zonas mapeadas</span>
                         <p class="db-metric-desc">Desde el centro histórico hasta los nuevos desarrollos en la periferia. Cobertura completa del área metropolitana.</p>
                     </div>
@@ -222,7 +222,7 @@
                                 <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <span class="db-metric-value">820</span>
+                        <span class="db-metric-value" id="metric-alquiler">0</span>
                         <span class="db-metric-label">Alquileres de referencia</span>
                         <p class="db-metric-desc">Base de comparación para el cálculo de retorno de inversión. Actualizada diariamente con datos reales del mercado.</p>
                     </div>
@@ -244,11 +244,11 @@
                         <p class="db-chart-note">Composición de la base de datos por categoría de propiedad</p>
                     </div>
                     <div class="db-chart-card scroll-reveal">
-                        <h3>Distribución por Rango de Precio</h3>
+                        <h3>Distribución por Tipo de Operación</h3>
                         <div class="db-chart-canvas-wrapper">
                             <canvas id="chart-precios"></canvas>
                         </div>
-                        <p class="db-chart-note">Propiedades en venta agrupadas por rango de precio (USD)</p>
+                        <p class="db-chart-note">Propiedades agrupadas por tipo de operación</p>
                     </div>
                     <div class="db-chart-card db-chart-card--full scroll-reveal">
                         <h3>Top Zonas por Cantidad de Propiedades</h3>
@@ -369,6 +369,7 @@
         var map = null;
         var markerCluster = null;
         var allProperties = [];
+        var webData = null;
         var currentFilter = 'all';
         var currentOperation = 'all';
         var charts = [];
@@ -433,6 +434,49 @@
             fetchProperties();
         }
 
+        function fmt(n) {
+            return Number(n || 0).toLocaleString('es-BO');
+        }
+
+        function setStat(id, value) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.setAttribute('data-target', String(value));
+            el.textContent = fmt(value);
+        }
+
+        function applyData(data) {
+            var total = data.total || data.propiedades.length;
+            var porOperacion = data.por_operacion || {};
+            var zonas = {};
+            data.propiedades.forEach(function(p) {
+                if (p.zona) zonas[p.zona] = true;
+            });
+            var zonasCount = Object.keys(zonas).length;
+
+            setStat('stat-total', total);
+            setStat('stat-zonas', zonasCount);
+            setStat('stat-alquiler', porOperacion.alquiler || 0);
+
+            var metricTotal = document.getElementById('metric-total');
+            if (metricTotal) metricTotal.textContent = fmt(total);
+            var metricZonas = document.getElementById('metric-zonas');
+            if (metricZonas) metricZonas.textContent = fmt(zonasCount);
+            var metricAlquiler = document.getElementById('metric-alquiler');
+            if (metricAlquiler) metricAlquiler.textContent = fmt(porOperacion.alquiler || 0);
+
+            var heroSub = document.getElementById('hero-subtitle');
+            if (heroSub) {
+                heroSub.textContent = fmt(total) + ' propiedades geoespaciales analizadas en ' +
+                    fmt(zonasCount) + ' zonas de Santa Cruz. Datos estructurados, actualizados y verificados por Citrino.';
+            }
+            var mapSub = document.getElementById('map-subtitle');
+            if (mapSub) {
+                mapSub.textContent = 'Cada número indica cuántas propiedades tenemos registradas en esa área. ' +
+                    fmt(total) + ' inmuebles geoespaciales con coordenadas y precio verificados.';
+            }
+        }
+
         function fetchProperties() {
             var loading = document.getElementById('db-map-loading');
             if (loading) loading.hidden = false;
@@ -443,9 +487,14 @@
                     return response.json();
                 })
                 .then(function(data) {
-                    if (!Array.isArray(data) || data.length === 0) throw new Error('Datos vacíos');
-                    allProperties = data;
+                    if (!data || !Array.isArray(data.propiedades) || data.propiedades.length === 0) {
+                        throw new Error('Datos vacíos');
+                    }
+                    webData = data;
+                    allProperties = data.propiedades;
                     renderMarkers(allProperties);
+                    applyData(data);
+                    initCharts();
                     track('map-loaded', { total: allProperties.length });
                     if (loading) loading.hidden = true;
                 })
@@ -453,6 +502,8 @@
                     console.warn('Error cargando propiedades:', err.message);
                     showMapFallback('No se pudieron cargar los datos de propiedades');
                     track('map-load-error', { reason: err.message });
+                    var chartsFallback = document.getElementById('db-charts-fallback');
+                    if (chartsFallback) chartsFallback.hidden = false;
                     if (loading) loading.hidden = true;
                 });
         }
@@ -541,36 +592,32 @@
 
         function initTipoChart() {
             var ctx = document.getElementById('chart-tipos');
-            if (!ctx) return;
+            if (!ctx || !webData) return;
+
+            var labels = { 'casa': 'Casas', 'departamento': 'Departamentos', 'terreno': 'Terrenos' };
+            var tipoLabels = [];
+            var tipoData = [];
+            Object.keys(webData.por_tipo || {}).forEach(function(tipo) {
+                tipoLabels.push(labels[tipo] || tipo);
+                tipoData.push(webData.por_tipo[tipo]);
+            });
 
             charts.push(new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Casas', 'Departamentos', 'Terrenos', 'Locales', 'Oficinas', 'Edificios', 'Quintas', 'Comercial', 'Otros'],
+                    labels: tipoLabels,
                     datasets: [{
                         label: 'Propiedades',
-                        data: [2847, 1856, 1234, 567, 389, 245, 198, 176, 181],
+                        data: tipoData,
                         backgroundColor: [
                             'rgba(0, 40, 87, 0.8)',
                             'rgba(0, 64, 128, 0.8)',
-                            'rgba(238, 121, 0, 0.8)',
-                            'rgba(16, 185, 129, 0.8)',
-                            'rgba(0, 40, 87, 0.5)',
-                            'rgba(0, 64, 128, 0.5)',
-                            'rgba(238, 121, 0, 0.5)',
-                            'rgba(16, 185, 129, 0.5)',
-                            'rgba(107, 114, 128, 0.5)'
+                            'rgba(238, 121, 0, 0.8)'
                         ],
                         borderColor: [
                             'rgba(0, 40, 87, 1)',
                             'rgba(0, 64, 128, 1)',
-                            'rgba(238, 121, 0, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(0, 40, 87, 0.8)',
-                            'rgba(0, 64, 128, 0.8)',
-                            'rgba(238, 121, 0, 0.8)',
-                            'rgba(16, 185, 129, 0.8)',
-                            'rgba(107, 114, 128, 0.8)'
+                            'rgba(238, 121, 0, 1)'
                         ],
                         borderWidth: 1,
                         borderRadius: 6
@@ -598,15 +645,23 @@
 
         function initPrecioChart() {
             var ctx = document.getElementById('chart-precios');
-            if (!ctx) return;
+            if (!ctx || !webData) return;
+
+            var labels = { 'venta': 'Ventas', 'alquiler': 'Alquileres', 'anticretico': 'Anticréticos' };
+            var opLabels = [];
+            var opData = [];
+            Object.keys(webData.por_operacion || {}).forEach(function(op) {
+                opLabels.push(labels[op] || op);
+                opData.push(webData.por_operacion[op]);
+            });
 
             charts.push(new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['< $30K', '$30K–$60K', '$60K–$100K', '$100K–$150K', '$150K–$250K', '$250K–$500K', '> $500K'],
+                    labels: opLabels,
                     datasets: [{
-                        label: 'Propiedades en venta',
-                        data: [623, 984, 1123, 756, 487, 312, 145],
+                        label: 'Propiedades',
+                        data: opData,
                         backgroundColor: 'rgba(0, 40, 87, 0.75)',
                         borderColor: 'rgba(0, 40, 87, 1)',
                         borderWidth: 1,
@@ -636,39 +691,33 @@
 
         function initZonasChart() {
             var ctx = document.getElementById('chart-zonas');
-            if (!ctx) return;
+            if (!ctx || !webData) return;
+
+            var zonas = webData.top_zonas || [];
+            var zonaLabels = zonas.map(function(z) { return z.zona; });
+            var zonaData = zonas.map(function(z) { return z.count; });
+            var palette = [
+                'rgba(0, 40, 87, 0.85)',
+                'rgba(0, 64, 128, 0.85)',
+                'rgba(238, 121, 0, 0.85)',
+                'rgba(16, 185, 129, 0.85)',
+                'rgba(0, 40, 87, 0.6)',
+                'rgba(0, 64, 128, 0.6)',
+                'rgba(238, 121, 0, 0.6)',
+                'rgba(16, 185, 129, 0.6)',
+                'rgba(0, 40, 87, 0.4)',
+                'rgba(238, 121, 0, 0.4)'
+            ];
 
             charts.push(new Chart(ctx, {
                 type: 'bar',
                 indexAxis: 'y',
                 data: {
-                    labels: [
-                        'Norte 5to a 10mo Anillo',
-                        'Equipetrol',
-                        'Urubó',
-                        'Pampa de la Isla',
-                        'Doble Vía La Guardia',
-                        'Norte 1ro a 5to Anillo',
-                        'Av. Santos Dumont',
-                        'Villa 1° de Mayo',
-                        'Centro',
-                        'Suroeste'
-                    ],
+                    labels: zonaLabels,
                     datasets: [{
                         label: 'Propiedades',
-                        data: [572, 498, 387, 342, 289, 253, 218, 195, 178, 156],
-                        backgroundColor: [
-                            'rgba(0, 40, 87, 0.85)',
-                            'rgba(0, 64, 128, 0.85)',
-                            'rgba(238, 121, 0, 0.85)',
-                            'rgba(16, 185, 129, 0.85)',
-                            'rgba(0, 40, 87, 0.6)',
-                            'rgba(0, 64, 128, 0.6)',
-                            'rgba(238, 121, 0, 0.6)',
-                            'rgba(16, 185, 129, 0.6)',
-                            'rgba(0, 40, 87, 0.4)',
-                            'rgba(238, 121, 0, 0.4)'
-                        ],
+                        data: zonaData,
+                        backgroundColor: palette.slice(0, zonaLabels.length),
                         borderWidth: 0,
                         borderRadius: 4
                     }]
@@ -721,12 +770,10 @@
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
                 initMap();
-                initCharts();
                 bindFilters();
             });
         } else {
             initMap();
-            initCharts();
             bindFilters();
         }
     })();
