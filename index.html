@@ -117,7 +117,7 @@
                 </div>
                 <div class="hero-cta animate-staggered animate-delay-4">
                     <a href="https://wa.me/59170933603?text=Hola%20Citrino%2C%20vengo%20de%20la%20web%20principal%20y%20quiero%20asesoramiento%20inmobiliario%20en%20Santa%20Cruz." class="btn btn-primary" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
-                    <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
+                    <a href="#servicios" class="btn btn-secondary">Ver pilares</a>
                 </div>
             </div>
             <div class="hero-background"></div>
@@ -481,5 +481,28 @@
     </footer>
 
     <script src="script.js" defer></script>
+    <script>
+        // Generate animated polyhedra in hero background
+        document.addEventListener('DOMContentLoaded', function() {
+            var heroBg = document.querySelector('.hero-background');
+            if (!heroBg) return;
+
+            var polyhedronCount = 10;
+            var svgTemplate = '<svg viewBox="0 0 100 100"><polygon points="50,5 95,30 95,75 50,95 5,75 5,30"/><line x1="50" y1="5" x2="50" y2="50"/><line x1="95" y1="30" x2="50" y2="50"/><line x1="95" y1="75" x2="50" y2="50"/><line x1="50" y1="95" x2="50" y2="50"/><line x1="5" y1="75" x2="50" y2="50"/><line x1="5" y1="30" x2="50" y2="50"/></svg>';
+
+            for (var i = 0; i < polyhedronCount; i++) {
+                var div = document.createElement('div');
+                div.className = 'hero-polyhedron';
+                div.innerHTML = svgTemplate;
+                div.style.left = (Math.random() * 90 + 5) + '%';
+                div.style.top = (Math.random() * 80 + 10) + '%';
+                div.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                div.style.animationDelay = (Math.random() * 5) + 's';
+                div.style.width = (Math.random() * 40 + 60) + 'px';
+                div.style.height = div.style.width;
+                heroBg.appendChild(div);
+            }
+        });
+    </script>
 </body>
 </html>
