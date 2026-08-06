@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-24T12:00:00.000Z",
+  "title": "Design System: Citrino Capitales Inmobiliarios",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Deep Authority",
+        "canonical": "oklch(23.5% 0.08 261)",
+        "tonalRamp": [
+          "oklch(15% 0.06 261)",
+          "oklch(20% 0.07 261)",
+          "oklch(25% 0.08 261)",
+          "oklch(30% 0.07 261)",
+          "oklch(40% 0.06 261)",
+          "oklch(50% 0.05 261)",
+          "oklch(65% 0.04 261)",
+          "oklch(85% 0.02 261)"
+        ]
+      },
+      "secondary": {
+        "role": "accent",
+        "displayName": "Signal",
+        "canonical": "oklch(62% 0.18 55)",
+        "tonalRamp": [
+          "oklch(30% 0.15 55)",
+          "oklch(40% 0.17 55)",
+          "oklch(50% 0.18 55)",
+          "oklch(60% 0.18 55)",
+          "oklch(70% 0.16 55)",
+          "oklch(80% 0.12 55)",
+          "oklch(88% 0.08 55)",
+          "oklch(95% 0.04 55)"
+        ]
+      },
+      "accent": {
+        "role": "accent",
+        "displayName": "Return",
+        "canonical": "oklch(65% 0.18 165)",
+        "tonalRamp": [
+          "oklch(30% 0.15 165)",
+          "oklch(40% 0.17 165)",
+          "oklch(50% 0.18 165)",
+          "oklch(60% 0.18 165)",
+          "oklch(70% 0.16 165)",
+          "oklch(80% 0.12 165)",
+          "oklch(88% 0.08 165)",
+          "oklch(95% 0.04 165)"
+        ]
+      },
+      "neutral-ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(30% 0.015 260)",
+        "tonalRamp": [
+          "oklch(15% 0.01 260)",
+          "oklch(25% 0.012 260)",
+          "oklch(35% 0.015 260)",
+          "oklch(45% 0.01 260)",
+          "oklch(55% 0.02 260)",
+          "oklch(75% 0.015 260)",
+          "oklch(90% 0.01 260)",
+          "oklch(97% 0.005 260)"
+        ]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(97% 0.002 260)",
+        "tonalRamp": [
+          "oklch(15% 0.01 260)",
+          "oklch(25% 0.012 260)",
+          "oklch(35% 0.015 260)",
+          "oklch(45% 0.01 260)",
+          "oklch(55% 0.02 260)",
+          "oklch(75% 0.015 260)",
+          "oklch(90% 0.01 260)",
+          "oklch(97% 0.005 260)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headlines only. One per page."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs and prose. Max 75ch measure."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Badges, metadata, tags, data labels. Uppercase."
+      }
+    },
+    "shadows": [
+      { "name": "low", "value": "0 4px 6px -1px rgba(0,40,87,0.08)", "purpose": "Card hover, low-tier interactive states" },
+      { "name": "medium", "value": "0 10px 15px -3px rgba(0,40,87,0.1)", "purpose": "Header on scroll, dropdowns" },
+      { "name": "high", "value": "0 20px 40px -10px rgba(0,40,87,0.15)", "purpose": "Hero CTA hover, modals" }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for state transitions" },
+      { "name": "ease-spring", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Spring-press micro-interactions on buttons" }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "480px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA. Orange fill conveys action.",
+      "html": "<button class=\"ds-btn-primary\">Hablar por WhatsApp</button>",
+      "css": ".ds-btn-primary { background: #ee7900; color: #fff; padding: 1rem 2.5rem; border-radius: 10px; border: none; font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; box-shadow: 0 4px 12px -3px rgba(238,121,0,0.3); } .ds-btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 20px -5px rgba(238,121,0,0.4); } .ds-btn-primary:active { transform: translateY(0) scale(0.96); } .ds-btn-primary:focus-visible { outline: 2px solid #002857; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ghost CTA for dark backgrounds.",
+      "html": "<button class=\"ds-btn-secondary\">Nuestros Servicios</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: #fff; padding: 1rem 2.5rem; border-radius: 10px; border: 2px solid #fff; font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, color 0.3s ease; } .ds-btn-secondary:hover { background: #fff; color: #002857; transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 20px -5px rgba(255,255,255,0.3); } .ds-btn-secondary:active { transform: translateY(0) scale(0.96); }"
+    },
+    {
+      "name": "Platform Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Two-column card for Jul-IA or Database features.",
+      "html": "<div class=\"ds-card-platform\"><div class=\"ds-card-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" width=\"32\" height=\"32\"><path d=\"M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z\"></path></svg></div><h3 class=\"ds-card-title\">Jul-IA</h3><p class=\"ds-card-subtitle\">Tu asesora inmobiliaria inteligente</p><p class=\"ds-card-desc\">Analiza 7,693+ propiedades en tiempo real. Calcula el ROI de cada una.</p><a class=\"ds-card-cta\" href=\"#\">Hablar por WhatsApp</a></div>",
+      "css": ".ds-card-platform { background: #f9fafb; padding: 2.5rem; border-radius: 16px; display: flex; flex-direction: column; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s ease; } .ds-card-platform:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,40,87,0.15); } .ds-card-icon { width: 64px; height: 64px; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; background: linear-gradient(135deg, #25d366, #128c7e); color: #fff; } .ds-card-title { font-family: 'Sora', sans-serif; font-size: 1.6rem; font-weight: 700; color: #1f2937; letter-spacing: -0.02em; margin-bottom: 0.25rem; } .ds-card-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.02em; color: #ee7900; margin-bottom: 1.25rem; } .ds-card-desc { color: #6b7280; line-height: 1.7; margin-bottom: 1.5rem; flex: 1; } .ds-card-cta { color: #002857; text-decoration: none; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Data Room",
+    "overview": "Citrino's visual system communicates institutional intelligence — the feeling of walking into a war room where every decision is backed by verified data. The palette anchors on deep navy for authority, with orange as the signal that sparks insight and emerald as the return on that insight. Typography pairs a precise geometric sans (Sora) with a warm, readable humanist sans (Source Sans 3). Layout favors generous vertical rhythm, asymmetrical composition, and data that breathes.",
+    "keyCharacteristics": [
+      "Data-forward: metrics and numbers are visual elements",
+      "Institutional weight: deep colors, controlled typography",
+      "Quiet authority: confident without shouting",
+      "Precision: every token has a job"
+    ],
+    "rules": [
+      {
+        "name": "The Signal Rule",
+        "body": "Orange is for intelligence and action. It's the color of insight, not decoration. Every orange element must communicate 'pay attention — there's a signal here.'",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. Shadows only appear as response to state (hover, focus), not as ambient decoration.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use orange sparingly — its rarity is the point",
+      "Do let numbers and metrics breathe as visual elements",
+      "Do use dark navy backgrounds for primary sections",
+      "Do pair Sora headlines with Source Sans 3 body for contrast"
+    ],
+    "donts": [
+      "Don't use house icons, warm family photos, or 'find your dream home' clichés",
+      "Don't use gradient text (background-clip: text)",
+      "Don't use cream/beige backgrounds",
+      "Don't use identical card grids with icon + heading + text repeated endlessly",
+      "Don't put an all-caps tracked eyebrow above every section heading"
+    ]
+  }
+}
