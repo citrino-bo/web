@@ -550,7 +550,7 @@ button:active {
 .value-prop {
     padding: 8rem 0;
     background: var(--primary-color);
-    color: var(--white);
+    color: var(--text-inverse);
     position: relative;
     overflow: hidden;
 }
@@ -622,7 +622,7 @@ button:active {
 }
 
 .value-item:hover .value-icon svg {
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .value-text h3 {
@@ -710,7 +710,7 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
+    color: var(--text-inverse);
     flex-shrink: 0;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -739,7 +739,7 @@ button:active {
 
 .footer {
     background-color: var(--bg-dark);
-    color: var(--white);
+    color: var(--text-inverse);
     padding: 6rem 0 2rem;
     position: relative;
     overflow: hidden;
@@ -807,7 +807,7 @@ button:active {
     align-items: center;
     justify-content: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .social-link:hover {
@@ -863,6 +863,13 @@ button:active {
 
     .platform-card {
         padding: 2rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) and (max-width: 480px) {
+    .logo-img {
+        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cpolygon points='20,2 38,12 38,32 20,40 2,32 2,12' fill='none' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='20' y1='2' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='38' y1='12' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='38' y1='32' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='20' y1='40' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='2' y1='32' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='2' y1='12' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Ctext x='48' y='28' font-family='Arial, sans-serif' font-size='18' font-weight='bold' fill='%23ffffff'%3ECITRINO%3C/text%3E%3C/svg%3E");
+        height: 32px;
     }
 }
 
@@ -1053,7 +1060,7 @@ button:active {
 
 .contact-info-box {
     background: var(--gradient-primary);
-    color: var(--white);
+    color: var(--text-inverse);
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
@@ -1061,7 +1068,7 @@ button:active {
 }
 
 .contact-info-box h3 {
-    color: var(--white);
+    color: var(--text-inverse);
     margin-bottom: 1rem;
 }
 
@@ -1234,12 +1241,12 @@ button:active {
 
 .platform-card-icon--julia {
     background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .platform-card-icon--database {
     background: var(--gradient-primary-medium);
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .platform-card-title {
@@ -1388,7 +1395,7 @@ button:active {
 
 .chat-header-bar {
     background: var(--primary-color);
-    color: var(--white);
+    color: var(--text-inverse);
     padding: 1rem 1.25rem;
     display: flex;
     align-items: center;
@@ -1407,7 +1414,7 @@ button:active {
 }
 
 .chat-avatar svg {
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .chat-info {
@@ -1500,7 +1507,7 @@ button:active {
 
 .property-roi {
     background: var(--gradient-secondary);
-    color: var(--white);
+    color: var(--text-inverse);
     padding: 0.2rem 0.5rem;
     border-radius: 6px;
     font-weight: 700;
@@ -1576,7 +1583,7 @@ button:active {
 .julia-feature-icon svg {
     width: 24px;
     height: 24px;
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .julia-feature:hover .julia-feature-icon {
@@ -1613,7 +1620,7 @@ button:active {
     padding: 1rem 2rem;
     border-radius: 100px;
     background: var(--whatsapp-green);
-    color: var(--white);
+    color: var(--text-inverse);
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 1rem;
@@ -1681,7 +1688,7 @@ button:active {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 1.25rem;
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .footer-nav-links {
@@ -1922,7 +1929,7 @@ button:active {
     align-items: center;
     justify-content: center;
     margin-bottom: 1.5rem;
-    color: var(--white);
+    color: var(--text-inverse);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2073,7 +2080,7 @@ button:active {
     height: 56px;
     border-radius: 50%;
     background: var(--gradient-secondary);
-    color: var(--white);
+    color: var(--text-inverse);
     font-family: var(--font-display);
     font-size: 1.4rem;
     font-weight: 800;
@@ -2125,7 +2132,7 @@ button:active {
 .julia-tech {
     padding: 8rem 0;
     background: var(--primary-color);
-    color: var(--white);
+    color: var(--text-inverse);
     position: relative;
     overflow: hidden;
 }
@@ -2188,7 +2195,7 @@ button:active {
 }
 
 .julia-tech-item:hover .julia-tech-icon svg {
-    color: var(--white);
+    color: var(--text-inverse);
 }
 
 .julia-tech-item h3 {
@@ -2210,7 +2217,7 @@ button:active {
 .julia-final-cta {
     padding: 8rem 0;
     background: linear-gradient(135deg, var(--primary-color-darker) 0%, var(--primary-color) 50%, var(--primary-color-deep) 100%);
-    color: var(--white);
+    color: var(--text-inverse);
     position: relative;
     overflow: hidden;
 }
@@ -2326,7 +2333,7 @@ button:active {
     align-items: center;
     justify-content: center;
     margin: 0;
-    color: var(--white);
+    color: var(--text-inverse);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2420,7 +2427,7 @@ button:active {
     font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--white);
+    color: var(--text-inverse);
     margin-bottom: 0.35rem;
 }
 
@@ -2659,7 +2666,7 @@ button:active {
     justify-content: center;
     padding: 6rem 2rem 4rem;
     background: var(--gradient-primary);
-    color: var(--white);
+    color: var(--text-inverse);
     overflow: hidden;
 }
 
@@ -2794,7 +2801,7 @@ button:active {
 .db-filter-btn.active,
 .db-toggle-btn.active {
     background: var(--primary-color);
-    color: var(--white);
+    color: var(--text-inverse);
     box-shadow: 0 2px 6px rgba(0, 40, 87, 0.25);
 }
 
@@ -2903,7 +2910,7 @@ button:active {
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.85rem;
-    color: var(--white);
+    color: var(--text-inverse);
 }
 .db-marker-cluster--small div {
     background: rgba(0, 40, 87, 0.75);
@@ -3008,7 +3015,7 @@ button:active {
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.25rem;
-    color: var(--white);
+    color: var(--text-inverse);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -3133,7 +3140,7 @@ button:active {
 .db-final-cta {
     padding: 8rem 0;
     background: linear-gradient(135deg, var(--primary-color-darker) 0%, var(--primary-color) 50%, var(--primary-color-deep) 100%);
-    color: var(--white);
+    color: var(--text-inverse);
     position: relative;
     overflow: hidden;
 }
@@ -3349,7 +3356,7 @@ button:active {
 .ii-final-cta {
     padding: 8rem 0;
     background: linear-gradient(135deg, var(--primary-color-darker) 0%, var(--primary-color) 50%, var(--primary-color-deep) 100%);
-    color: var(--white);
+    color: var(--text-inverse);
     position: relative;
     overflow: hidden;
 }
@@ -3404,7 +3411,7 @@ button:active {
     top: 1rem;
     right: 1rem;
     background: var(--accent-color);
-    color: var(--white);
+    color: var(--text-inverse);
     padding: 0.4rem 1rem;
     border-radius: 999px;
     font-family: var(--font-display);
@@ -3633,6 +3640,17 @@ a.use-case-card:hover {
         color: #e5e7eb;
     }
 
+    .privacy-section h2,
+    .back-link,
+    .platform-card-link,
+    .use-case-type,
+    .use-case-icon,
+    .jl-metric-value,
+    .db-metric-value,
+    .db-chart-card h3 {
+        color: var(--text-dark);
+    }
+
     .platform-card {
         background: #111827;
     }
@@ -3727,7 +3745,7 @@ a.use-case-card:hover {
     .db-filter-btn.active,
     .db-toggle-btn.active {
         background: var(--primary-color);
-        color: #0a0f1a;
+        color: var(--text-inverse);
     }
 
     .db-map-container {
@@ -3736,6 +3754,6 @@ a.use-case-card:hover {
 
     ::selection {
         background: var(--primary-color);
-        color: #0a0f1a;
+        color: var(--text-inverse);
     }
 }
