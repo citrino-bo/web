@@ -847,12 +847,6 @@ button:active {
 }
 
 @media (max-width: 480px) {
-    /* Compact logo for mobile: symbol only */
-    .logo-img {
-        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cpolygon points='20,2 38,12 38,32 20,40 2,32 2,12' fill='none' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='20' y1='2' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='38' y1='12' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='38' y1='32' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='20' y1='40' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='2' y1='32' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='2' y1='12' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Ctext x='48' y='28' font-family='Arial, sans-serif' font-size='18' font-weight='bold' fill='%23002857'%3ECITRINO%3C/text%3E%3C/svg%3E");
-        height: 32px;
-    }
-
     .client-logo {
         height: 100px;
     }
@@ -863,13 +857,6 @@ button:active {
 
     .platform-card {
         padding: 2rem;
-    }
-}
-
-@media (prefers-color-scheme: dark) and (max-width: 480px) {
-    .logo-img {
-        content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cpolygon points='20,2 38,12 38,32 20,40 2,32 2,12' fill='none' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='20' y1='2' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='38' y1='12' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='38' y1='32' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='20' y1='40' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='2' y1='32' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Cline x1='2' y1='12' x2='20' y2='22' stroke='%23ee7900' stroke-width='2'/%3E%3Ctext x='48' y='28' font-family='Arial, sans-serif' font-size='18' font-weight='bold' fill='%23ffffff'%3ECITRINO%3C/text%3E%3C/svg%3E");
-        height: 32px;
     }
 }
 
