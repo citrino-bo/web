@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    const logoImg = document.querySelector('.logo-img');
+    if (logoImg && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        logoImg.src = logoImg.src.replace('fondo-claro', 'fondo-oscuro');
+    }
+
     let ticking = false;
     window.addEventListener('scroll', function() {
         if (!ticking) {
