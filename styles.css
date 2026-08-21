@@ -3686,15 +3686,6 @@ a.use-case-card:hover {
         background: #0a1628;
     }
 
-    .hero-alliance {
-        background: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero-alliance-label {
-        color: #9ca3af;
-    }
-
     .footer {
         background-color: #060a12;
     }
