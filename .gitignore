@@ -28,3 +28,16 @@ yarn-error.log*
 # Environment variables
 .env
 .env.local
+
+# Dev artifacts y screenshots
+plataforma-*.png
+pricing-*.png
+v2-*.png
+v3-*.png
+v4-*.png
+.playwright-cli/
+.playwright-mcp/
+.impeccable/live/
+assets/referencias/
+openspec/config.yaml
+.opencode/package-lock.json
