@@ -38,9 +38,20 @@ def reemplazar_independiente(html: str, viejo_fmt: str, nuevo_fmt: str) -> tuple
     return patron.sub(nuevo_fmt, html), True
 
 
+def leer(path: Path) -> str:
+    # open() con newline="" preserva CRLF/LF; Path.read_text(newline=) es 3.13+
+    with open(path, encoding="utf-8", newline="") as fh:
+        return fh.read()
+
+
+def escribir(path: Path, contenido: str) -> None:
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        fh.write(contenido)
+
+
 def main() -> int:
     nuevos = floors()
-    canon = (ROOT / "index.html").read_text(encoding="utf-8")
+    canon = leer(ROOT / "index.html")
     viejos_raw = [int(v) for v in re.findall(r'data-target="(\d+)"', canon)]
     if len(viejos_raw) != 3:
         sys.exit(f"ERROR: index.html tiene {len(viejos_raw)} data-target, se esperaban 3")
@@ -50,8 +61,7 @@ def main() -> int:
     cambios = 0
     for pag in PAGINAS:
         f = ROOT / pag
-        # newline='' preserva los CRLF/LF originales del archivo
-        html = f.read_text(encoding="utf-8", newline="")
+        html = leer(f)
         for rol in ROLES:
             if viejos[rol] == nuevos[rol]:
                 continue
@@ -71,7 +81,7 @@ def main() -> int:
             html = html.replace(f"{m.group(1)}+ inmuebles", f"{nuevos['inmuebles']:,}+ inmuebles")
             cambios += 1
             print(f"{pag}: inmuebles {m.group(1)}+ -> {nuevos['inmuebles']:,}+")
-        f.write_text(html, encoding="utf-8", newline="")
+        escribir(f, html)
     print(f"OK: {cambios} cambio(s)" if cambios else "OK: HTML ya consistente")
     return 0
 
