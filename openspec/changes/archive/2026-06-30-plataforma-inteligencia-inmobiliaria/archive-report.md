@@ -1,10 +1,6 @@
 # Archive Report: Plataforma de Inteligencia Inmobiliaria
 
-**Change:** `plataforma-inteligencia-inmobiliaria`
-**Archived:** 2026-06-30
-**Project:** `web` (citrino-web)
-**Mode:** `hybrid` (openspec filesystem + engram persistence)
-**Verdict:** `PASS` (after remediation — 1 CRITICAL + 4 WARNINGs fixed in commit `072a1e7`)
+**Change:** `plataforma-inteligencia-inmobiliaria` **Archived:** 2026-06-30 **Project:** `web` (citrino-web) **Mode:** `hybrid` (openspec filesystem + engram persistence) **Verdict:** `PASS` (after remediation — 1 CRITICAL + 4 WARNINGs fixed in commit `072a1e7`)
 
 ---
 

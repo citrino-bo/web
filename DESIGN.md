@@ -102,9 +102,7 @@ Positive signals only. Used for success states, checkmarks, positive metrics, ch
 
 ## 3. Typography
 
-**Display Font:** Outfit (geometric sans-serif) — migrated from Sora (jul-2026)
-**Body Font:** DM Sans (humanist sans-serif) — migrated from Source Sans 3 (jul-2026)
-**Label Font:** JetBrains Mono (monospace)
+**Display Font:** Outfit (geometric sans-serif) — migrated from Sora (jul-2026) **Body Font:** DM Sans (humanist sans-serif) — migrated from Source Sans 3 (jul-2026) **Label Font:** JetBrains Mono (monospace)
 
 **Character:** A controlled geometric pair. Outfit brings precision and structure — the architecture of data. DM Sans provides readability at length. JetBrains Mono signals data fidelity.
 

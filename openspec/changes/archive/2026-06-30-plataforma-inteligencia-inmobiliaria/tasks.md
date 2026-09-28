@@ -11,10 +11,7 @@
 | Delivery strategy | auto-forecast |
 | Chain strategy | pending |
 
-Decision needed before apply: No
-Chained PRs recommended: No
-Chain strategy: pending
-400-line budget risk: Low
+Decision needed before apply: No Chained PRs recommended: No Chain strategy: pending 400-line budget risk: Low
 
 **Rationale**: ~190 changed lines. Single cohesive landing page with 4 small supporting edits (CSS append, nav in 3 existing pages, sitemap entry). Well under 400-line budget. One PR is appropriate.
 
