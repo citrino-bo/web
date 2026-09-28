@@ -1,7 +1,6 @@
 # Plataforma — Plan de Fix UI
 
-**Archivo(s) a tocar:** `inteligencia-inmobiliaria/index.html`, `styles.css`
-**Origen:** auditoría 2026-07-01 con `impeccable audit` (5 dimensiones) + `web-design-guidelines` (Vercel Labs) + comparativa con `index.html`, `base-de-datos/index.html`, `jul-ia/index.html`.
+**Archivo(s) a tocar:** `inteligencia-inmobiliaria/index.html`, `styles.css` **Origen:** auditoría 2026-07-01 con `impeccable audit` (5 dimensiones) + `web-design-guidelines` (Vercel Labs) + comparativa con `index.html`, `base-de-datos/index.html`, `jul-ia/index.html`.
 **Score inicial:** 15/20 (Good). Meta: 18/20.
 
 ---

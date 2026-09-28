@@ -40,9 +40,7 @@ Browser → /inteligencia-inmobiliaria/index.html
 ## Section-by-Section Layout Design
 
 ### 1. Hero
-**Reused classes**: `section.hero`, `.hero-content`, `.hero-title`, `.hero-subtitle`, `.hero-cta`, `.btn-primary`, `.btn-secondary`, `.hero-background`, `.animate-staggered`, `.animate-delay-{1-5}`
-**New class**: `.ii-badge` (inline-block badge, same visual pattern as `.julia-badge` / `.db-badge`)
-**Structure**:
+**Reused classes**: `section.hero`, `.hero-content`, `.hero-title`, `.hero-subtitle`, `.hero-cta`, `.btn-primary`, `.btn-secondary`, `.hero-background`, `.animate-staggered`, `.animate-delay-{1-5}` **New class**: `.ii-badge` (inline-block badge, same visual pattern as `.julia-badge` / `.db-badge`) **Structure**:
 - `.hero-background` (reused grid overlay via `::before`)
 - Badge: `<span class="ii-badge animate-staggered animate-delay-1">En alianza con la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI)</span>`
 - `<h1 class="hero-title animate-staggered animate-delay-2">` "Plataforma de Inteligencia Inmobiliaria"
@@ -60,9 +58,7 @@ Browser → /inteligencia-inmobiliaria/index.html
   3. "Metodología avalada por Harvard" — credibility differentiator
 
 ### 3. Methodology (4 Analysis Axes)
-**Reused classes**: `section` (no special reuse), `.container`, `.section-title`, `.section-subtitle`, `.scroll-reveal`
-**New classes**: `.ii-method-grid`, `.ii-method-card`, `.ii-method-icon`, `.ii-method-name`, `.ii-method-desc`, `.ii-method-tags`
-**Design pattern**: 4-column grid à la `.services-grid` but with tagged content. Cards have white bg, border-radius, hover lift. Icon per card.
+**Reused classes**: `section` (no special reuse), `.container`, `.section-title`, `.section-subtitle`, `.scroll-reveal` **New classes**: `.ii-method-grid`, `.ii-method-card`, `.ii-method-icon`, `.ii-method-name`, `.ii-method-desc`, `.ii-method-tags` **Design pattern**: 4-column grid à la `.services-grid` but with tagged content. Cards have white bg, border-radius, hover lift. Icon per card.
 **Cards**:
 1. "Ciclo inmobiliario" — tags: oferta/demanda/precios
 2. "Censo inmobiliario" — tags: inventario/tipología/absorción
@@ -70,31 +66,23 @@ Browser → /inteligencia-inmobiliaria/index.html
 4. "Análisis evolutivo" — tags: series históricas/tendencias/proyecciones
 
 ### 4. Platform Indicators (Split Layout)
-**New classes**: `.ii-platform-section`, `.ii-platform-grid` (2-column), `.ii-platform-copy`, `.ii-platform-features`, `.ii-platform-feature-item`
-**Reused classes**: `.container`, `.section-title`, `.scroll-reveal`, `.scroll-reveal-left`, `.scroll-reveal-right`
-**Layout**: Left column = descriptive copy about the platform. Right column = feature list with icons (inventory/stock, pricing analysis, macro indicators).
+**New classes**: `.ii-platform-section`, `.ii-platform-grid` (2-column), `.ii-platform-copy`, `.ii-platform-features`, `.ii-platform-feature-item` **Reused classes**: `.container`, `.section-title`, `.scroll-reveal`, `.scroll-reveal-left`, `.scroll-reveal-right` **Layout**: Left column = descriptive copy about the platform. Right column = feature list with icons (inventory/stock, pricing analysis, macro indicators).
 - Dark background section (`--primary-color`) with dot pattern
 - `.section-title` in white, copy in `--white-70`
 
 ### 5. City Links (3 cards)
-**Reused classes**: `.container`, `.section-title`, `.section-subtitle`, `.scroll-reveal`
-**New classes**: `.ii-cities-grid`, `.ii-city-card`, `.ii-city-name`, `.ii-city-link-indicator`
-**Design pattern**: 3-column card grid. Each `<a href="#" data-placeholder="true" class="ii-city-card">` with city name and "Acceder →" indicator.
+**Reused classes**: `.container`, `.section-title`, `.section-subtitle`, `.scroll-reveal` **New classes**: `.ii-cities-grid`, `.ii-city-card`, `.ii-city-name`, `.ii-city-link-indicator` **Design pattern**: 3-column card grid. Each `<a href="#" data-placeholder="true" class="ii-city-card">` with city name and "Acceder →" indicator.
 **Cards**: Santa Cruz, Cochabamba, La Paz
 - Cards are white, clickable (not disabled), with hover lift
 - `data-placeholder="true"` marks them for easy swap when real URLs arrive
 
 ### 6. Access Note + Impact
-**Reused classes**: `section`, `.container`, `.scroll-reveal`
-**New classes**: `.ii-access-section`, `.ii-access-note`, `.ii-access-rule`, `.ii-impact-grid`, `.ii-impact-card`
-**Structure**:
+**Reused classes**: `section`, `.container`, `.scroll-reveal` **New classes**: `.ii-access-section`, `.ii-access-note`, `.ii-access-rule`, `.ii-impact-grid`, `.ii-impact-card` **Structure**:
 - CBDI access note: describes member rules (up-to-date contributions, max 2 Gmail addresses per member)
 - Impact split: "Para el miembro CBDI" / "Para el sector" as 2 cards
 
 ### 7. Final WhatsApp CTA
-**Reused classes**: Pattern mirrors `.db-final-cta` and `.julia-final-cta`
-**New classes**: `.ii-final-cta`
-**Structure**:
+**Reused classes**: Pattern mirrors `.db-final-cta` and `.julia-final-cta` **New classes**: `.ii-final-cta` **Structure**:
 - Gradient dark background with grid overlay
 - Title + subtitle + single CTA button: `.btn.btn-primary` → `https://wa.me/59170933603?text=Quiero%20conocer%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria%20de%20Citrino`
 
