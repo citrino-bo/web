@@ -273,6 +273,35 @@ document.addEventListener('DOMContentLoaded', function() {
         marqueeObserver.observe(marqueeContent.closest('.marquee-container') || marqueeContent);
     }
 
+    // ── Lead form ────────────────────────────────
+    const leadForm = document.getElementById('lead-form');
+    if (leadForm) {
+        const leadSubject = document.getElementById('lead-subject');
+        const subjectByInterest = {
+            'Quiero desarrollar un terreno': '[Desarrollo] Nuevo contacto desde la web',
+            'Necesito datos o monitoreo del mercado': '[Datos] Nuevo contacto desde la web',
+            'Quiero invertir o comprar una propiedad': '[Inversión] Nuevo contacto desde la web',
+            'Quiero vender una propiedad': '[Vender] Nuevo contacto desde la web'
+        };
+        // Umami no segmenta custom events por data properties (ver citrino-gestion/AGENTS.d/infra.md),
+        // así que el interés se distingue por nombre de evento, no por propiedad.
+        const interestSlug = {
+            'Quiero desarrollar un terreno': 'desarrollo',
+            'Necesito datos o monitoreo del mercado': 'datos',
+            'Quiero invertir o comprar una propiedad': 'inversion',
+            'Quiero vender una propiedad': 'vender'
+        };
+
+        leadForm.addEventListener('submit', () => {
+            const selected = leadForm.querySelector('input[name="interes"]:checked');
+            if (!selected) return;
+            if (leadSubject) leadSubject.value = subjectByInterest[selected.value] || leadSubject.value;
+            track('lead-submit', { page: page });
+            const slug = interestSlug[selected.value];
+            if (slug) track('lead-' + slug, { page: page });
+        });
+    }
+
     // ── Citrino global namespace ──────────────────
     window.Citrino = window.Citrino || {};
 

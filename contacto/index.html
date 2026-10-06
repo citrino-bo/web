@@ -39,7 +39,7 @@
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+591-70933603",
+    "email": "info@citrino.com.bo",
     "contactType": "customer service",
     "availableLanguage": ["Spanish"]
   },
@@ -88,57 +88,86 @@
                 <h1 class="hero-title animate-staggered animate-delay-1">Contacto</h1>
                 <p class="hero-subtitle animate-staggered animate-delay-2">Estamos listos para asesorarte en tu próxima inversión inmobiliaria en Santa Cruz</p>
                 <div class="hero-cta animate-staggered animate-delay-3">
-                    <a href="https://wa.me/59170933603?text=Hola%20Citrino%2C%20vengo%20de%20la%20web%20y%20quiero%20asesoramiento%20inmobiliario%20en%20Santa%20Cruz." class="btn btn-primary" target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+                    <a href="#contacto" class="btn btn-primary">Solicitar asesoría</a>
                     <a href="mailto:info@citrino.com.bo" class="btn btn-secondary">Enviar email</a>
                 </div>
             </div>
             <div class="hero-background"></div>
         </section>
 
-        <section class="contact">
+        <section id="contacto" class="contact">
             <div class="container">
-                <h2 class="section-title scroll-reveal">Todos nuestros canales</h2>
-                <p class="section-subtitle scroll-reveal">Elegí el medio que prefieras para empezar</p>
+                <h2 class="section-title">Solicitá asesoría</h2>
+                <p class="section-subtitle">Elegí una opción y te contactamos en menos de 24 h</p>
 
-                <div class="contact-info">
-                    <a href="https://wa.me/59170933603?text=Hola%20Citrino%2C%20vengo%20de%20la%20web%20de%20contacto%20y%20quiero%20asesoramiento%20inmobiliario." class="contact-item scroll-reveal" target="_blank" rel="noopener noreferrer">
-                        <div class="contact-icon contact-icon--whatsapp">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                            </svg>
+                <form class="lead-form" id="lead-form" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="d4814654-6a57-4d70-8b35-e4c5795c0cbc">
+                    <input type="hidden" name="redirect" value="https://citrino.com.bo/gracias.html">
+                    <input type="hidden" name="subject" id="lead-subject" value="[Contacto] Nuevo contacto desde la web">
+                    <input type="hidden" name="from_name" value="Sitio Citrino">
+                    <input type="checkbox" name="botcheck" class="lead-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                    <fieldset class="lead-fieldset">
+                        <legend class="lead-question">¿Qué necesitás?</legend>
+                        <div class="lead-options">
+                            <label class="lead-option">
+                                <input type="radio" name="interes" value="Quiero desarrollar un terreno" required>
+                                <span class="lead-option-text">
+                                    <strong>Quiero desarrollar un terreno</strong>
+                                    <small>Consultoría y estudios para decidir si conviene desarrollar</small>
+                                </span>
+                            </label>
+                            <label class="lead-option">
+                                <input type="radio" name="interes" value="Necesito datos o monitoreo del mercado">
+                                <span class="lead-option-text">
+                                    <strong>Necesito datos o monitoreo del mercado</strong>
+                                    <small>Plataforma, estudios y reportes para empresas e instituciones</small>
+                                </span>
+                            </label>
+                            <label class="lead-option">
+                                <input type="radio" name="interes" value="Quiero invertir o comprar una propiedad">
+                                <span class="lead-option-text">
+                                    <strong>Quiero invertir o comprar una propiedad</strong>
+                                    <small>Oportunidades y asesoría de inversión</small>
+                                </span>
+                            </label>
+                            <label class="lead-option">
+                                <input type="radio" name="interes" value="Quiero vender una propiedad">
+                                <span class="lead-option-text">
+                                    <strong>Quiero vender una propiedad</strong>
+                                    <small>A qué precio vender, con un informe de valor de mercado</small>
+                                </span>
+                            </label>
                         </div>
-                        <div class="contact-text">
-                            <h3>WhatsApp</h3>
-                            <p>+591 70933603</p>
-                            <span class="contact-action">Escribinos ahora →</span>
-                        </div>
-                    </a>
-                    <div class="contact-item scroll-reveal">
-                        <div class="contact-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Email</h3>
-                            <p><a href="mailto:info@citrino.com.bo">info@citrino.com.bo</a></p>
-                            <span class="contact-action">Enviar mensaje →</span>
-                        </div>
+                    </fieldset>
+
+                    <div class="lead-field">
+                        <label for="lead-nombre">Nombre</label>
+                        <input id="lead-nombre" name="nombre" type="text" autocomplete="name" required>
                     </div>
-                    <div class="contact-item scroll-reveal">
-                        <div class="contact-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Ubicación</h3>
-                            <p>Santa Cruz, Bolivia</p>
-                            <span class="contact-action">Ver en el mapa →</span>
-                        </div>
+
+                    <div class="lead-field">
+                        <label for="lead-contacto">WhatsApp o Email</label>
+                        <input id="lead-contacto" name="contacto" type="text" autocomplete="email" required>
                     </div>
-                </div>
+
+                    <div class="lead-field">
+                        <label for="lead-mensaje">Contanos brevemente <span class="lead-optional">(opcional)</span></label>
+                        <textarea id="lead-mensaje" name="mensaje" rows="4"></textarea>
+                    </div>
+
+                    <div class="lead-field lead-field--consent">
+                        <label class="lead-consent">
+                            <input type="checkbox" name="consentimiento" id="lead-consent" required>
+                            <span>Acepto la <a href="../privacidad.html">política de privacidad</a> y el uso de mis datos para contactarme.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary lead-submit" id="lead-submit">Solicitar asesoría</button>
+                    <p class="lead-reassurance">Te respondemos en menos de 24 h. No compartimos tus datos.</p>
+                </form>
+
+                <p class="contact-secondary">¿Preferís escribirnos directo? <a href="mailto:info@citrino.com.bo">info@citrino.com.bo</a></p>
             </div>
         </section>
     </main>
