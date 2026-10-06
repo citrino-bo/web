@@ -43,25 +43,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     const scrollElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
-    
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    scrollElements.forEach(el => {
-        observer.observe(el);
-    });
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0 });
+
+        scrollElements.forEach(el => observer.observe(el));
+    } else {
+        scrollElements.forEach(el => el.classList.add('visible'));
+    }
 
     // ── Stats counter animation ──────────────────
     const statsObserver = new IntersectionObserver((entries) => {
@@ -78,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const progress = Math.min(elapsed / duration, 1);
                         const eased = 1 - Math.pow(1 - progress, 3);
                         const current = Math.round(target * eased);
-                        el.textContent = current.toLocaleString('es-BO');
+                        el.textContent = current.toLocaleString('en-US');
                         if (progress < 1) {
                             requestAnimationFrame(update);
                         }

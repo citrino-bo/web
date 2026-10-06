@@ -28,6 +28,7 @@ def floors() -> dict:
         "zonas": zonas // 10 * 10,
         "alquileres": d["por_operacion"]["alquiler"] // 100 * 100,
         "inmuebles": con_coords // 100 * 100,
+        "generado_mes": str(d.get("generado", ""))[:7],  # "2026-09-11" -> "2026-09"
     }
 
 
@@ -36,6 +37,68 @@ def reemplazar_independiente(html: str, viejo_fmt: str, nuevo_fmt: str) -> tuple
     if not patron.search(html):
         return html, False
     return patron.sub(nuevo_fmt, html), True
+
+
+def formatear_floor(n: int) -> str:
+    return f"{n:,}" if n >= 1000 else str(n)
+
+
+# "N+ zonas" en texto plano / meta / JSON-LD. El lookbehind evita arrancar
+# dentro de un numero mayor. Exige la palabra "zonas" tras el "+", asi no
+# toca "23,000+ propiedades" ni "4,000+ alquileres".
+RE_ZONAS_TEXTO = re.compile(r"(?<![\d,.])(\d[0-9,]*)\+(\s*[Zz]onas\b)")
+
+# <span class="jl-metric-value">N+</span> cuyo label inmediato es "Zonas mapeadas".
+# \s* entre spans preserva el CRLF/indentacion via grupos.
+RE_ZONAS_METRIC = re.compile(
+    r'(<span class="jl-metric-value">)([0-9][0-9,]*)(\+</span>\s*'
+    r'<span class="jl-metric-label">\s*[Zz]onas [Mm]apeadas</span>)'
+)
+
+
+def normalizar_texto_zonas(html: str, nuevo: int) -> tuple[str, int]:
+    """Normaliza todo texto 'N+ zonas' al floor vigente. Idempotente."""
+    nuevo_fmt = formatear_floor(nuevo)
+    cambios = 0
+
+    def _sub_texto(m: re.Match) -> str:
+        nonlocal cambios
+        if int(m.group(1).replace(",", "")) == nuevo:
+            return m.group(0)
+        cambios += 1
+        return f"{nuevo_fmt}+{m.group(2)}"
+
+    html = RE_ZONAS_TEXTO.sub(_sub_texto, html)
+
+    def _sub_metric(m: re.Match) -> str:
+        nonlocal cambios
+        if int(m.group(2).replace(",", "")) == nuevo:
+            return m.group(0)
+        cambios += 1
+        return f"{m.group(1)}{nuevo_fmt}{m.group(3)}"
+
+    html = RE_ZONAS_METRIC.sub(_sub_metric, html)
+    return html, cambios
+
+
+RE_ACTUALIZADO = re.compile(r'(<p class="hero-updated"[^>]*>Actualizado:\s*)\d{4}-\d{2}(</p>)')
+
+
+def actualizar_frescura(html: str, mes: str) -> tuple[str, int]:
+    """Reescribe 'Actualizado: YYYY-MM' desde d['generado'][:7]. Idempotente."""
+    if not mes:
+        return html, 0
+    cambios = 0
+
+    def _sub(m: re.Match) -> str:
+        nonlocal cambios
+        nueva = f"{m.group(1)}{mes}{m.group(2)}"
+        if nueva == m.group(0):
+            return m.group(0)
+        cambios += 1
+        return nueva
+
+    return RE_ACTUALIZADO.sub(_sub, html), cambios
 
 
 def leer(path: Path) -> str:
@@ -75,6 +138,12 @@ def main() -> int:
                     continue
                 html, ok = reemplazar_independiente(html, fmt_v, fmt_n)
                 cambios += ok
+        # Zonas: normaliza 'N+ zonas' y el jl-metric SIEMPRE (no depende del floor viejo)
+        html, n_zonas = normalizar_texto_zonas(html, nuevos["zonas"])
+        cambios += n_zonas
+        # Frescura: no-op en paginas sin la linea hero-updated
+        html, n_frescura = actualizar_frescura(html, nuevos["generado_mes"])
+        cambios += n_frescura
         # inmuebles con coordenadas (solo texto con sufijo, floor a centena)
         m = re.search(r"(?<![0-9.,])(\d{2},\d{3})\+ inmuebles", html)
         if m and int(m.group(1).replace(",", "")) != nuevos["inmuebles"]:
