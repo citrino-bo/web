@@ -7,7 +7,19 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 ## [Unreleased]
 
 ### Added
+- **Páginas nuevas**: `jul-ia/`, `base-de-datos/`, `inteligencia-inmobiliaria/`, `contacto/` y `gracias.html`, con navegación y footer unificados.
+- **Formulario de leads**: sección de conversión en la home con Web3Forms (`POST` nativo sin backend), `redirect` a `gracias.html` y honeypot `botcheck`. La `access_key` queda pendiente como placeholder hasta cargar la clave real.
+- **Ruteo de leads por interés**: el asunto del correo se setea con un listener de `submit` y deriva a Nicolás o Rolando; criterios en `docs/conversion-y-formularios.md` y spec en `specs/leads-form/spec.md`.
+- **SEO**: `sitemap.xml`, `robots.txt`, Open Graph, canonical y schema.org en las páginas vivas.
 - **Analytics Umami**: instrumentación de eventos custom (`page-view`, CTAs, `platform-cta`, `external-link-click`, `section-view`, `scroll-depth`, `engagement-time`) en `script.js` con website-id `072eb175-7fc1-4d66-b54f-32c2f817f940`. Reports creados en Umami: 3 funnels de plataforma por ciudad (SC/CBBA/LP), 5 goals de CTA, 2 breakdowns (páginas, referrers). Board "Informe semanal Citrino" con share público: `https://estadisticas.srv1406344.hstgr.cloud/share/ZW7HlPx7ZQptK9rs`.
+
+### Changed
+- **Navegación y footer**: unificados en todas las páginas vivas.
+- **Tipografía**: migración a Outfit + DM Sans + JetBrains Mono, unificada en el sitio.
+- **Contacto**: referencias a `info@citrino.com.bo`.
+
+### Removed
+- **Páginas Capitales y Desarrollos**: dadas de baja; redirigen a `/` con `noindex`.
 
 ### Fixed
 - **Mobile scroll vertical**: Corregido problema de scroll que ocultaba títulos al navegar en móvil y desktop

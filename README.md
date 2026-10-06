@@ -1,290 +1,76 @@
-# Citrino Capitales Inmobiliarios
+# Citrino — Sitio web
 
-Sitio web estático profesional para Citrino Capitales Inmobiliarios, empresa especializada en análisis de datos e intermediación inmobiliaria en Santa Cruz, Bolivia.
+Sitio estático de Citrino Capitales Inmobiliarios, consultora de inteligencia de datos aplicada al mercado inmobiliario de Bolivia.
+Se publica en GitHub Pages bajo el dominio `citrino.com.bo`.
+El repositorio es `web` dentro de la organización `citrino-bo` (remote `origin`: https://github.com/citrino-bo/web).
 
-## Descripción
+## Pilares de negocio
 
-Citrino Capitales Inmobiliarios es una empresa basada en Santa Cruz, Bolivia, que se especializa en:
+- **Citrino Inteligencia** — consultoría y datos: desarrollo, plataforma y reportes de mercado.
+- **Citrino Inversiones** — asesoría de inversión, compra y venta de inmuebles.
+- **Citrino Desarrollo** — desarrollo de proyectos inmobiliarios.
 
-- Recopilación de datos del sector inmobiliario desde fuentes públicas y privadas
-- Análisis de rentabilidad de inmuebles por zonas específicas
-- Consultorías para inversores corporativos con estrategias personalizadas
-- Generación y socialización de presentaciones sobre diagnóstico y perspectivas del sector inmobiliario
+El catálogo de productos, los segmentos y los criterios de marca viven en `PRODUCT.md`.
+El ruteo de leads por pilar está en `docs/conversion-y-formularios.md`.
 
-### Propuesta de Valor
+## Páginas
 
-- Asesoramiento integral a inversores particulares y corporativos
-- Big data especializado para el sector inmobiliario
-- Conocimiento profundo del mercado local de Santa Cruz
+| Ruta | Propósito |
+|---|---|
+| `index.html` | Home: hero, pilares, plataforma, servicios, alianzas y formulario de leads. |
+| `jul-ia/` | Jul-IA, chatbot para inversores (freemium). |
+| `base-de-datos/` | Base de datos Inmobiliaria: mapa interactivo y métricas del mercado. |
+| `inteligencia-inmobiliaria/` | Plataforma Citrino en alianza con la CBDI. |
+| `contacto/` | WhatsApp y email de contacto. |
+| `privacidad.html` | Política de privacidad. |
+| `gracias.html` | Confirmación de envío del formulario. |
 
-## Características Técnicas
+`capitales/` y `desarrollos/` redirigen a `/` y están marcadas `noindex`.
+`jul-ia.html`, `base-de-datos.html` e `inteligencia-inmobiliaria.html` son stubs de redirección a las URLs con barra final.
 
-- Diseño responsivo adaptado a todos los dispositivos (mobile-first)
-- Navegación fluida con scroll suave entre secciones
-- Optimizado para GitHub Pages
-- Sin dependencias externas complejas (solo HTML, CSS, JS vanilla)
-- Colores corporativos: Azul (#002857) y Naranja (#ee7900)
+## Stack
 
-## Estructura del Proyecto
+- HTML, CSS y JavaScript sin build ni bundler.
+- Leaflet 1.9.4 con Leaflet.markercluster y Chart.js, solo en `base-de-datos/`.
+- Umami como analítica sin cookies, servida desde `estadisticas.srv1406344.hstgr.cloud` (website-id `072eb175-7fc1-4d66-b54f-32c2f817f940`).
+- Google Fonts: Outfit (display), DM Sans (texto) y JetBrains Mono (detalle técnico).
+- Variables de color y tipografía en `styles.css`.
+- El dataset `data/propiedades.json` se genera desde `citrino-gestion`; no se edita a mano.
 
-```
-web_citrino/
-├── index.html           # Página principal
-├── styles.css           # Estilos CSS con variables
-├── script.js            # Funcionalidad JavaScript
-├── privacidad.html      # Política de privacidad
-├── CHANGELOG.md         # Historial de cambios
-├── ROADMAP.md           # Roadmap de mejoras
-├── README.md            # Documentación
-└── .gitignore          # Archivos excluidos de Git
-```
+## Formulario de leads
 
-## Secciones del Sitio
+La home incluye un formulario de calificación como acción primaria.
+Se envía con Web3Forms (`POST` nativo sin backend), con `redirect` a `gracias.html` y honeypot `botcheck`.
+La `access_key` está pendiente: el campo vale `REEMPLAZAR_CON_WEB3FORMS_KEY` hasta cargar la clave real.
+El asunto del correo se rutea por interés; ver `docs/conversion-y-formularios.md`.
 
-### Hero
-- Título principal con propuesta de valor
-- Descripción del servicio
-- Llamadas a la acción (Contacto, Servicios)
+## Quick start
 
-### Servicios (actualmente comentado)
-- Recopilación de Datos
-- Análisis de Rentabilidad por Zonas
-- Consultorías para Inversores Corporativos
-- Presentaciones del Sector
-
-### Diferenciadores
-- Asesoramiento Integral
-- Big Data Especializado
-- Enfoque Local
-
-### Nosotros
-- Descripción de la empresa y su enfoque
-
-### Contacto
-- Ubicación: Santa Cruz, Bolivia
-- Email: citrinocapitalesinmobiliario@gmail.com
-
-### Redes Sociales
-- Facebook: https://www.facebook.com/citrinocapitalesinmobiliarios
-- Instagram: https://www.instagram.com/citrinoinversion/
-- TikTok: https://www.tiktok.com/@citrinoinversion
-- LinkedIn: https://www.linkedin.com/company/citrino-capitales-inmobiliarios/
-- YouTube: https://www.youtube.com/@citrinocapitalesinmobiliarios
-
-## Colores Corporativos
-
-- **Primario (Azul)**: `#002857`
-  - Logo
-  - Header
-  - Hero background
-  - Sección diferenciadores
-  - Títulos de sección
-
-- **Secundario (Naranja)**: `#ee7900`
-  - Botones CTA
-  - Hover enlaces
-  - Footer logo
-  - Iconos de diferenciadores
-  - Redes sociales hover
-
-- **Variantes**:
-  - Naranja hover: `#cc6a00`
-  - Azul oscuro (degradado): `#001a38`
-  - Azul medio (degradado): `#004080`
-
-## Despliegue en GitHub Pages
-
-### Paso 1: Crear Repositorio
-
-1. Ve a [github.com](https://github.com)
-2. Crea un nuevo repositorio: `citrino-web`
-3. Inicializa con README (opcional)
-
-### Paso 2: Subir Archivos
+No se requiere build.
+Previsualizar en local:
 
 ```bash
-# Inicializar repositorio local
-git init
-
-# Agregar todos los archivos
-git add .
-
-# Crear primer commit
-git commit -m "Initial commit - Citrino web"
-
-# Renombrar rama a main
-git branch -M main
-
-# Conectar con repositorio remoto
-git remote add origin https://github.com/TU_USUARIO/citrino-web.git
-
-# Subir al repositorio
-git push -u origin main
+python -m http.server 8080
 ```
 
-### Paso 3: Activar GitHub Pages
+Abrir `http://localhost:8080`.
 
-1. Ve a **Settings** > **Pages**
-2. En **Source**, selecciona **Deploy from a branch**
-3. En **Branch**, selecciona `main` y `/ (root)`
-4. Haz clic en **Save**
-
-### Paso 4: Acceder al Sitio
-
-El sitio estará disponible en: `https://TU_USUARIO.github.io/citrino-web/`
-
-El despliegue suele tardar 1-3 minutos.
-
-## Dominio Personalizado (Opcional)
-
-### Paso 1: Configurar DNS
-
-Si tienes un dominio propio, configura los siguientes registros:
-
-```
-Type: A
-Name: @
-Value: 185.199.108.153
-Value: 185.199.109.153
-Value: 185.199.110.153
-Value: 185.199.111.153
-```
-
-### Paso 2: Crear Archivo CNAME
-
-Crea un archivo `CNAME` en la raíz del repositorio con tu dominio:
-
-```
-www.tudominio.bo
-```
-
-### Paso 3: Configurar en GitHub
-
-1. Ve a **Settings** > **Pages**
-2. En **Custom domain**, ingresa tu dominio
-3. Haz clic en **Save**
-4. Espera la propagación DNS (hasta 48 horas)
-
-## Personalización
-
-### Modificar Contenido
-
-Los archivos principales son:
-
-- **index.html**: Estructura y contenido
-- **styles.css**: Estilos y diseño
-- **script.js**: Funcionalidad interactiva
-
-### Modificar Colores
-
-En `styles.css`, ajusta las variables CSS:
-
-```css
-:root {
-    --primary-color: #002857;
-    --secondary-color: #ee7900;
-    --accent-color: #10b981;
-}
-```
-
-### Agregar Logo
-
-1. Prepara tu logo en formato PNG o SVG
-2. Colócalo en la carpeta `/assets/images/`
-3. Reemplaza el texto del logo en `index.html`:
-
-```html
-<a href="#" class="logo">
-    <img src="assets/images/logo.svg" alt="Citrino Logo">
-</a>
-```
-
-### Agregar Favicon
-
-1. Crea un favicon (recomendado: 32x32px o 16x16px)
-2. Colócalo en la raíz como `favicon.ico`
-3. Agrega el link en `index.html`:
-
-```html
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-```
-
-## Scripts Disponibles
-
-### Desarrollo
-
-No se requiere proceso de build. Simplemente:
+## Verificación
 
 ```bash
-# Abrir en navegador
-start index.html  # Windows
-open index.html   # macOS
-xdg-open index.html  # Linux
+bash scripts/verificar_navs.sh
+bash scripts/verificar_stats.sh
 ```
 
-### Opcional: Live Server
+## Documentación
 
-Para desarrollo con recarga automática:
-
-```bash
-# Si tienes Node.js instalado
-npm install -g live-server
-live-server
-```
-
-## Optimización
-
-### Performance
-
-- Imágenes optimizadas en formato WebP cuando sea posible
-- CSS y JS sin dependencias externas
-- Carga rápida debido a contenido estático
-
-### SEO
-
-Meta tags configurados en `index.html`:
-
-```html
-<meta name="description" content="...">
-<title>Citrino Capitales Inmobiliarios | Data & Real Estate</title>
-```
-
-## Políticas
-
-### Política de Privacidad
-
-Ver archivo `privacidad.html` para la política de privacidad adaptada a la legislación boliviana.
-
-### Cookies
-
-El sitio actualmente no utiliza cookies ni recopila datos personales de usuarios.
-
-## Soporte y Contacto
-
-Para información sobre Citrino Capitales Inmobiliarios:
-
-- **Ubicación**: Santa Cruz, Bolivia
-- **Email**: citrinocapitalesinmobiliario@gmail.com
-- **Facebook**: https://www.facebook.com/citrinocapitalesinmobiliarios
-- **Instagram**: https://www.instagram.com/citrinoinversion/
-- **TikTok**: https://www.tiktok.com/@citrinoinversion
-- **LinkedIn**: https://www.linkedin.com/company/citrino-capitales-inmobiliarios/
-- **YouTube**: https://www.youtube.com/@citrinocapitalesinmobiliarios
-
-## Roadmap
-
-Ver archivo `ROADMAP.md` para las mejoras y features pendientes.
-
-## Changelog
-
-Ver archivo `CHANGELOG.md` para el historial de cambios.
+- `PRODUCT.md` — pilares, catálogo de productos, segmentos y personalidad de marca.
+- `ROADMAP.md` — plan por feature y estado.
+- `CHANGELOG.md` — historial de cambios.
+- `DESIGN.md` — sistema de diseño.
+- `docs/conversion-y-formularios.md` — criterios de conversión y ruteo de leads.
+- `specs/leads-form/spec.md` — spec del formulario de captación.
 
 ## Licencia
 
 © 2026 Citrino Capitales Inmobiliarios. Todos los derechos reservados.
-
-## Créditos
-
-- Iconos: SVG integrados
-- Fuente: Inter (Google Fonts)
-- Diseño: Sitio estático profesional para GitHub Pages

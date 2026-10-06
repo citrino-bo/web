@@ -6,40 +6,71 @@ brand
 
 ## Users
 
-Institutional investors, real estate developers, bankers, insurers, and high-net-worth individuals in Santa Cruz and La Paz, Bolivia. They manage or evaluate real estate portfolios and need data-backed confidence to allocate capital. Context: researching investment opportunities, structuring acquisitions, validating development projects, monitoring market cycles.
+Inversores institucionales, desarrolladores inmobiliarios, bancos, aseguradoras y personas de alto patrimonio en Santa Cruz y el eje troncal de Bolivia.
+Administran o evalúan portafolios inmobiliarios y necesitan confianza respaldada en datos para asignar capital.
+Contexto de uso: investigar oportunidades, estructurar adquisiciones, validar proyectos de desarrollo y monitorear el ciclo de mercado.
+
+## Segmentos
+
+Grupo familiar, desarrollador inmobiliario, vendedor de inmueble familiar, cámara de desarrolladores, inversor independiente local, agente inmobiliario independiente, banco y negocio de hotelería.
 
 ## Product Purpose
 
-Citrino Capitales Inmobiliarios is a real estate investment intelligence firm, founded as an Equity Research company. We transform geospatial and market data into strategic investment decisions through three business units:
+Citrino Capitales Inmobiliarios es una firma de inteligencia de datos aplicada al mercado inmobiliario, nacida como casa de Equity Research.
+Transforma datos geoespaciales y de mercado en decisiones de inversión a través de tres pilares.
 
-- **Inteligencia Inmobiliaria** (core) — consulting, market reports, feasibility analysis, and the CBDI platform with real estate indicators for Santa Cruz, Cochabamba, and La Paz. This is the primary unit with a fully expanded page.
-- **Estrategia de Capitales** (secondary) — structuring capital deployment through crowdfunding, coinvestment vehicles, and portfolio management. Landing page minimal: hero + CTA WhatsApp.
-- **Desarrollos Inmobiliarios** (secondary) — SPV-based project development from $500K, turn-key delivery, and equity partnerships. Landing page minimal: hero + CTA WhatsApp.
+- **Citrino Inteligencia** (núcleo) — consultoría y datos.
+- **Citrino Inversiones** — asesoría de inversión, compra y venta de inmuebles.
+- **Citrino Desarrollo** — desarrollo de proyectos inmobiliarios.
 
-Success = a visitor trusts Citrino's intelligence enough to reach out via WhatsApp for strategic advisory.
+### Catálogo de Citrino Inteligencia
+
+- Consultoría de desarrollo.
+- Plataforma Citrino: mapa y métricas, licencia institucional B2B, vendida a la CBDI, con v2 en migración.
+- AMC: informe referencial de valor de mercado, para el vendedor de un inmueble familiar.
+- Mapa socioeconómico (en desarrollo).
+- Segmentación de tipo de cambio (por desarrollar).
+- Chatbot para agentes inmobiliarios.
+- Jul-IA: chatbot para inversores, freemium, con funnel a Citrino Inversiones.
+- Mapa y plataforma de red médica (Grupo Nacional Vida).
+- Valorización de mercado de alquileres.
+- Informe de estrategia para portafolio inmobiliario.
+
+Las landings de Capitales y Desarrollos ya no existen: redirigen a la home.
+
+## Éxito
+
+El éxito es que un visitante confíe en la inteligencia de Citrino y complete el formulario de leads de la home.
+El formulario es la acción primaria del sitio; el ruteo por interés está en `docs/conversion-y-formularios.md`.
 
 ## Brand Personality
 
-Premium, sophisticated, data-driven. The feel should be an exclusive intelligence firm — not a traditional real estate broker. Think: McKinsey meets Bloomberg Terminal, not Century21. The brand speaks with quiet authority: confident, precise, and institutional. Intelligence is the product; real estate is the vertical.
+Premium, sofisticada y orientada a datos.
+La sensación debe ser la de una firma de inteligencia exclusiva, no la de un bróker inmobiliario tradicional.
+Referencia de tono: McKinsey con Bloomberg Terminal, no Century 21.
+La marca habla con autoridad serena: segura, precisa e institucional.
+La inteligencia es el producto; el sector inmobiliario es la vertical.
 
 ## Anti-references
 
-- Traditional real estate agency sites (house icons, warm family photos, "find your dream home" clichés)
-- Generic SaaS landing pages (cream backgrounds, gradient text, identical card grids)
-- Consulting firm websites that look generic and templated
-- Any aesthetic that feels small or local-only; the brand punches above its weight
-- "Broker" or "agent" tropes — Citrino is an intelligence firm, not an intermediary
+- Sitios de agencias inmobiliarias tradicionales (íconos de casas, fotos familiares cálidas, clichés de "encontrá la casa de tus sueños").
+- Landings SaaS genéricas (fondos crema, texto con gradiente, grillas de cards idénticas).
+- Sitios de consultoras con aspecto genérico y de plantilla.
+- Cualquier estética que se sienta chica o solo local; la marca juega por encima de su tamaño.
+- Tropos de "bróker" o "agente": Citrino es una firma de inteligencia, no un intermediario.
 
 ## Design Principles
 
-1. **Evidence Over Intuition.** Every design element exists because data supports it. Numbers, maps, and analytics are the visual language. Let data breathe — it's the differentiator.
+1. **Evidencia antes que intuición.** Cada elemento de diseño existe porque los datos lo respaldan. Números, mapas y analítica son el lenguaje visual; los datos respiran porque son el diferenciador.
 
-2. **Structure as Architecture.** Like the three methodological pillars (Market Intelligence, Strategic Structuring, Risk Management), the design has clear, defensible structure. Each section earns its place.
+2. **Estructura como arquitectura.** Como los pilares metodológicos del negocio, el diseño tiene una estructura clara y defendible; cada sección se gana su lugar.
 
-3. **Quiet Authority.** Premium restraint over volume. Fewer elements, stronger execution. No hype language, no urgency tactics. The brand speaks with confidence without shouting.
+3. **Autoridad serena.** Restricción premium por encima del volumen; menos elementos, mejor ejecución. Sin lenguaje grandilocuente ni tácticas de urgencia.
 
-4. **Precision at Every Layer.** From spacing to copy to typography, everything is deliberate. The polish signals institutional credibility.
+4. **Precisión en cada capa.** Del espaciado al copy y la tipografía, todo es deliberado; el pulido transmite credibilidad institucional.
 
 ## Accessibility & Inclusion
 
-WCAG 2.2 AA. The site serves a professional audience that may include older investors; legibility and contrast matter. Reduced motion support for scroll animations.
+WCAG 2.2 AA.
+El sitio sirve a una audiencia profesional que puede incluir inversores mayores; la legibilidad y el contraste importan.
+Soporte de movimiento reducido para las animaciones de scroll.
