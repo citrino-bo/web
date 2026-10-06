@@ -7,6 +7,7 @@
     
     --primary-color: #002857;
     --secondary-color: #ee7900;
+    --secondary-ink: #a14c00;
     --accent-color: #10b981;
     
     --gradient-primary: linear-gradient(135deg, #002857 0%, var(--primary-color-darker) 100%);
@@ -90,37 +91,21 @@ html {
 .animate-delay-4 { animation-delay: 0.4s; }
 .animate-delay-5 { animation-delay: 0.5s; }
 
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.scroll-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.scroll-reveal-left {
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.scroll-reveal-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
+.scroll-reveal,
+.scroll-reveal-left,
 .scroll-reveal-right {
-    opacity: 0;
-    transform: translateX(40px);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.scroll-reveal-right.visible {
+.js .scroll-reveal { opacity: 0; transform: translateY(40px); }
+.js .scroll-reveal-left { opacity: 0; transform: translateX(-40px); }
+.js .scroll-reveal-right { opacity: 0; transform: translateX(40px); }
+
+.js .scroll-reveal.visible,
+.js .scroll-reveal-left.visible,
+.js .scroll-reveal-right.visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: none;
 }
 
 /* Skip to content link */
@@ -275,7 +260,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-menu a:hover {
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
 }
 
 .nav-menu a:hover::after {
@@ -516,7 +501,7 @@ button:active {
 
 .service-description strong,
 .about-text strong {
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
     font-weight: 600;
 }
 
@@ -1212,7 +1197,7 @@ button:active {
 }
 
 .back-link:hover {
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
     text-decoration: underline;
 }
 
@@ -1270,6 +1255,15 @@ button:active {
     opacity: 0.8;
     margin-top: 0.4rem;
     letter-spacing: 0.02em;
+}
+
+.hero-updated {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 2rem;
 }
 
 /* ── Platform Section (Hub) ──────────────────── */
@@ -1389,7 +1383,7 @@ button:active {
     font-weight: 500;
 
     letter-spacing: 0.02em;
-    color: var(--secondary-color);
+    color: var(--text-medium);
     margin-bottom: 1.25rem;
 }
 
@@ -1445,7 +1439,8 @@ button:active {
 }
 
 .platform-card-link:hover {
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
+    text-decoration: underline;
     transform: translateX(4px);
 }
 
@@ -1785,14 +1780,14 @@ button:active {
 }
 
 .contact-text a:hover {
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
 }
 
 .contact-action {
     display: block;
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
     margin-top: 0.5rem;
     transition: transform 0.3s ease;
 }
@@ -1962,7 +1957,7 @@ button:active {
 
 /* Nav active state */
 .nav-menu a.nav-active {
-    color: var(--secondary-color);
+    color: var(--secondary-ink);
 }
 
 .nav-menu a.nav-active::after {
@@ -2284,7 +2279,7 @@ button:active {
 }
 
 .julia-tech-item {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 2.5rem;
     border-radius: 16px;
@@ -2822,10 +2817,16 @@ button:active {
 
     letter-spacing: 0.03em;
     color: var(--secondary-color);
-    background: rgba(238, 121, 0, 0.15);
+    background: rgba(238, 121, 0, 0.10);
     padding: 0.4rem 1rem;
     border-radius: 100px;
     margin-bottom: 1rem;
+}
+
+.platform-section .julia-badge,
+.julia-header .julia-badge,
+.db-map-header .db-badge {
+    color: var(--secondary-ink);
 }
 
 /* ── Plataforma (Inteligencia Inmobiliaria) Page ─*/
@@ -3170,7 +3171,7 @@ button:active {
     font-weight: 500;
 
     letter-spacing: 0.02em;
-    color: var(--secondary-color);
+    color: var(--text-medium);
     margin-bottom: 0.75rem;
 }
 
@@ -3727,6 +3728,8 @@ a.use-case-card:hover {
         --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
         --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+        --secondary-ink: var(--secondary-color);
     }
 
     body {

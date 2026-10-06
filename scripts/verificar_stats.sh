@@ -30,6 +30,7 @@ done
 
 # 2. El floor de total con formato debe aparecer en cada pagina
 TOTAL_FMT=$(python3 -c "print(f'{$TOTAL:,}')")   # 22000 -> 22,000
+ZONAS_FMT=$(python3 -c "print(f'{$ZONAS:,}')")   # 940 -> 940 ; 1240 -> 1,240
 for p in $PAGES; do
   grep -q "$TOTAL_FMT" "$p" || { echo "FALTA $TOTAL_FMT en $p"; fail=1; }
 done
@@ -41,6 +42,26 @@ for p in $PAGES; do
   if grep -qE "$LEGACY" "$p"; then
     echo "STATS VIEJAS: $p"; grep -nE "$LEGACY" "$p" | head -5; fail=1
   fi
+done
+
+# 4. Todo texto "N+ zonas" (meta/OG/JSON-LD y jl-metric) debe coincidir con el floor.
+for p in $PAGES; do
+  while read -r n; do
+    [ -n "$n" ] || continue
+    n_clean=${n//,/}
+    case "$n_clean" in "$ZONAS") ;; *)
+      echo "ZONAS TEXTO VIEJO (${n}+ != ${ZONAS_FMT}+): $p"; fail=1 ;;
+    esac
+  done < <(grep -oE '[0-9][0-9,]*\+[[:space:]]*[Zz]onas' "$p" | grep -oE '^[0-9][0-9,]*' || true)
+
+  while read -r n; do
+    [ -n "$n" ] || continue
+    n_clean=${n//,/}
+    case "$n_clean" in "$ZONAS") ;; *)
+      echo "ZONAS METRIC VIEJO (${n}+ != ${ZONAS_FMT}+): $p"; fail=1 ;;
+    esac
+  done < <(awk '/jl-metric-value/{val=$0} /[Zz]onas [Mm]apeadas/{print val}' "$p" \
+           | grep -oE 'jl-metric-value">[0-9][0-9,]*\+' | grep -oE '[0-9][0-9,]*' || true)
 done
 
 if [ "$fail" -eq 0 ]; then
