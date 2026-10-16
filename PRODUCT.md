@@ -31,12 +31,11 @@ Transforma datos geoespaciales y de mercado en decisiones de inversión a travé
 - Mapa socioeconómico (en desarrollo).
 - Segmentación de tipo de cambio (por desarrollar).
 - Chatbot para agentes inmobiliarios.
-- Jul-IA: chatbot para inversores, freemium, con funnel a Citrino Inversiones.
 - Mapa y plataforma de red médica (Grupo Nacional Vida).
 - Valorización de mercado de alquileres.
 - Informe de estrategia para portafolio inmobiliario.
 
-Las landings de Capitales y Desarrollos ya no existen: redirigen a la home.
+Las landings de Jul-IA, Capitales y Desarrollos ya no existen: redirigen a la home.
 
 ## Éxito
 

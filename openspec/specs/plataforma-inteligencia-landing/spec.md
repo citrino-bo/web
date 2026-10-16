@@ -1,8 +1,10 @@
 # Plataforma de Inteligencia Inmobiliaria — Landing Page Specification
 
+> **Actualización (2026-10-16) — WhatsApp superseded.** Este spec definía CTAs de WhatsApp (`https://wa.me/59170933603`). Fueron **reemplazados por el formulario de leads**. La página viva no contiene ningún enlace `wa.me`: el hero ya no tiene CTA y el CTA final es "Solicitar asesoría" apuntando a `../#contacto`. Los requisitos de WhatsApp marcados *superseded* abajo se conservan como referencia histórica; ante cualquier conflicto, el HTML es la fuente de verdad. Además, `jul-ia/` ya no es una página del sitio: es un stub que redirige a `/`.
+
 ## Purpose
 
-A sober platform-focused landing page at `/inteligencia-inmobiliaria/` that presents the "Plataforma de Inteligencia Inmobiliaria" — a set of market analysis tools covering Bolivia's eje troncal (Santa Cruz, Cochabamba, La Paz). The page describes what the platform includes, links to the live Looker Studio dashboards for cities already available, marks La Paz as "Próximamente", and routes interested parties to WhatsApp.
+A sober platform-focused landing page at `/inteligencia-inmobiliaria/` that presents the "Plataforma de Inteligencia Inmobiliaria" — a set of market analysis tools covering Bolivia's eje troncal (Santa Cruz, Cochabamba, La Paz). The page describes what the platform includes, links to the live Looker Studio dashboards for cities already available, marks La Paz as "Próximamente", and routes interested parties to the lead form on the home (`/#contacto`), which supersedes the former WhatsApp CTAs (see note above).
 
 ## Out of Scope
 
@@ -14,14 +16,14 @@ The following are explicitly NOT covered by this spec: authed portal or login sc
 
 ### Requirement: Landing Page — 4-Block Sober Structure
 
-The page at `/inteligencia-inmobiliaria/` MUST contain exactly four content blocks in order: (1) page header with title, factual subtitle, and a single WhatsApp CTA, (2) value proposition listing the four analysis axes, (3) access links for three cities, (4) final WhatsApp CTA. Each block MUST contain only the content defined below. The page MUST NOT include any access-note or CBDI-membership-notice block.
+The page at `/inteligencia-inmobiliaria/` MUST contain exactly four content blocks in order: (1) page header with title and factual subtitle, (2) value proposition listing the four analysis axes, (3) access links for three cities, (4) final lead-form CTA. Each block MUST contain only the content defined below. The page MUST NOT include any access-note or CBDI-membership-notice block. *(Superseded: the former hero and final WhatsApp CTAs were replaced by the lead form; the hero no longer carries any CTA — see note above.)*
 
-#### Scenario: Page header displays title, factual subtitle, and a single WhatsApp CTA
+#### Scenario: Page header displays title, factual subtitle, and a single WhatsApp CTA *(superseded)*
 
 - GIVEN a browser navigates to `/inteligencia-inmobiliaria/`
 - WHEN the page loads
 - THEN the hero section displays the title "Plataforma de Inteligencia Inmobiliaria" and a single sober subtitle: "Información del mercado inmobiliario del eje troncal — Santa Cruz, La Paz y Cochabamba: ciclo, censo, financiamiento e indicadores del sector."
-- AND the hero contains exactly one CTA button labeled "Solicitar acceso" linking to `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` with `target="_blank" rel="noopener noreferrer"`
+- AND the hero contains NO CTA (the former button labeled "Solicitar acceso" linking to `https://wa.me/59170933603?text=...` was removed)
 - AND the hero contains NO badge, NO dual CTA, NO marketing taglines, NO Citrino corporate positioning
 
 #### Scenario: Value prop lists the four analysis axes with factual descriptions
@@ -41,12 +43,12 @@ The page at `/inteligencia-inmobiliaria/` MUST contain exactly four content bloc
 - WHEN the section is visible
 - THEN it displays a heading "Acceso a la plataforma" and three city cards: Santa Cruz and Cochabamba as live `<a>` elements pointing to Looker Studio, and La Paz as a disabled card with a "Próximamente" badge
 
-#### Scenario: Final CTA contains a single WhatsApp button
+#### Scenario: Final CTA contains a single lead-form button
 
 - GIVEN the user scrolls to the final CTA section
 - WHEN the section is visible
-- THEN it displays the title "Si te interesa tener acceso a esta información, escribinos." and a single WhatsApp button labeled "Escribinos por WhatsApp" linking to `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` with `target="_blank" rel="noopener noreferrer"`
-- AND NO dual CTA or description paragraph appears
+- THEN it displays the title "Si no sos asociado a CBDI y querés acceder a esta plataforma, dale click al siguiente link." and a single button labeled "Solicitar asesoría" linking to `../#contacto`
+- AND NO `wa.me` link, NO dual CTA, and NO description paragraph appears
 
 ### Requirement: Banned Content
 
@@ -85,25 +87,26 @@ The city access section MUST render three cards representing the three cities of
 - AND it displays the title "Inteligencia inmobiliaria La Paz" and a "Próximamente" badge
 - AND clicking or focusing the card does NOT navigate anywhere
 
-### Requirement: Lead-Gen WhatsApp CTA
+### Requirement: Lead-Gen CTA (lead form) — supersedes WhatsApp CTAs
 
-The page MUST provide exactly two WhatsApp CTAs (one in the hero, one in the final CTA section), both targeting `+59170933603` with the pre-filled message "Hola Citrino, me interesa la Plataforma de Inteligencia Inmobiliaria." URL-encoded. The hero CTA MUST be labeled "Solicitar acceso" and the final CTA MUST be labeled "Escribinos por WhatsApp". Both links MUST use `https://wa.me/59170933603?text=...` and open in a new tab with `target="_blank" rel="noopener noreferrer"`.
+The former requirement mandated exactly two WhatsApp CTAs (hero "Solicitar acceso", final "Escribinos por WhatsApp"), both targeting `+59170933603` with the pre-filled message "Hola Citrino, me interesa la Plataforma de Inteligencia Inmobiliaria." URL-encoded, using `https://wa.me/59170933603?text=...`. **This is superseded by the lead form on the home.** The page MUST NOT contain any `wa.me` link. The hero MUST NOT contain a CTA, and the final CTA MUST be a single sober button labeled "Solicitar asesoría" linking to `../#contacto` (the home lead form).
 
-#### Scenario: Hero WhatsApp link opens correct pre-filled chat
-
-- GIVEN a user is on the hero section
-- WHEN they click "Solicitar acceso"
-- THEN the browser opens `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` in a new tab
-
-#### Scenario: Final CTA WhatsApp link opens correct pre-filled chat
+#### Scenario: Final CTA routes to the lead form
 
 - GIVEN a user scrolls to the final CTA section
-- WHEN they click "Escribinos por WhatsApp"
-- THEN the browser opens `https://wa.me/59170933603?text=Hola%20Citrino%2C%20me%20interesa%20la%20Plataforma%20de%20Inteligencia%20Inmobiliaria.` in a new tab
+- WHEN they click "Solicitar asesoría"
+- THEN the browser navigates to `../#contacto` on the home page (the lead form)
+- AND no WhatsApp chat opens and no `wa.me` link exists on the page
+
+#### Scenario: No WhatsApp CTA remains on the page
+
+- GIVEN a browser loads `/inteligencia-inmobiliaria/`
+- WHEN inspecting all links
+- THEN no `href` contains `wa.me`
 
 ### Requirement: Navigation & Discoverability — "Plataforma" Nav Entry
 
-A "Plataforma" navigation entry MUST be present in the header nav AND footer nav on all four site pages: `index.html`, `jul-ia/index.html`, `base-de-datos/index.html`, and `inteligencia-inmobiliaria/index.html`. On the active page (`inteligencia-inmobiliaria/index.html`), the nav entry SHALL have `aria-current="page"`.
+A "Plataforma" navigation entry MUST be present in the header nav AND footer nav on the shared-nav pages (`index.html`, `base-de-datos/index.html`, `inteligencia-inmobiliaria/index.html` and `contacto/index.html`). On the active page (`inteligencia-inmobiliaria/index.html`), the nav entry SHALL have `aria-current="page"`. *(Superseded: `jul-ia/index.html` was removed from the site — it is now a redirect stub — and the live nav labels this entry "Inteligencia".)*
 
 #### Scenario: "Plataforma" appears in header nav on root index.html
 

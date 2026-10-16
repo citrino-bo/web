@@ -423,6 +423,17 @@ button:active {
     text-align: center;
 }
 
+.section-title::after,
+.value-prop-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-secondary);
+    border-radius: 2px;
+    margin: 1rem auto 0;
+}
+
 .section-subtitle {
     text-align: center;
     color: var(--text-medium);
@@ -518,16 +529,6 @@ button:active {
     font-size: clamp(1.1rem, 2vw, 1.25rem);
     line-height: 1.9;
     color: var(--text-medium);
-}
-
-.about-text::before {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: var(--gradient-secondary);
-    margin: 0 auto 2rem;
-    border-radius: 2px;
 }
 
 .about-highlights {
@@ -953,14 +954,6 @@ button:active {
     .client-logo {
         height: 100px;
     }
-
-    .platform-grid {
-        gap: 2rem;
-    }
-
-    .platform-card {
-        padding: 2rem;
-    }
 }
 
 @media (max-width: 768px) {
@@ -1100,18 +1093,6 @@ button:active {
         height: 70px;
     }
 
-    .platform-card {
-        padding: 1.5rem;
-    }
-
-    .platform-card-title {
-        font-size: 1.25rem;
-    }
-
-    .platform-card-icon {
-        width: 52px;
-        height: 52px;
-    }
     .marquee-container {
         margin-left: -1.25rem;
         margin-right: -1.25rem;
@@ -1264,184 +1245,6 @@ button:active {
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.6);
     margin: 0 0 2rem;
-}
-
-/* ── Platform Section (Hub) ──────────────────── */
-
-.platform-section {
-    padding: 8rem 0;
-    background: var(--white);
-    position: relative;
-    overflow: hidden;
-}
-
-.platform-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(0,40,87,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-}
-
-.platform-header {
-    text-align: center;
-    margin-bottom: 4rem;
-    position: relative;
-    z-index: 1;
-}
-
-.platform-grid {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 2.5rem;
-    position: relative;
-    z-index: 1;
-}
-
-.platform-card {
-    background: var(--bg-light);
-    padding: 3rem;
-    border-radius: 16px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.platform-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.platform-card:first-child::before {
-    background: var(--gradient-secondary);
-}
-
-.platform-card:last-child::before {
-    background: var(--gradient-primary);
-}
-
-.platform-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px -10px rgba(0, 40, 87, 0.15);
-}
-
-.platform-card:hover::before {
-    transform: scaleX(1);
-}
-
-.platform-card-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.platform-card:hover .platform-card-icon {
-    transform: scale(1.1);
-}
-
-.platform-card-icon--julia {
-    background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
-    color: var(--text-inverse);
-}
-
-.platform-card-icon--database {
-    background: var(--gradient-primary-medium);
-    color: var(--text-inverse);
-}
-
-.platform-card-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 0.25rem;
-    letter-spacing: -0.02em;
-}
-
-.platform-card-subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-
-    letter-spacing: 0.02em;
-    color: var(--text-medium);
-    margin-bottom: 1.25rem;
-}
-
-.platform-card-desc {
-    color: var(--text-medium);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    flex: 1;
-}
-
-.platform-card-features {
-    list-style: none;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-}
-
-.platform-card-features li {
-    position: relative;
-    padding-left: 1.5rem;
-    color: var(--text-medium);
-    font-size: 0.93rem;
-    line-height: 1.5;
-}
-
-.platform-card-features li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent-color);
-}
-
-.platform-card-cta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: flex-start;
-}
-
-.platform-card-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-}
-
-.platform-card-link:hover {
-    color: var(--secondary-ink);
-    text-decoration: underline;
-    transform: translateX(4px);
 }
 
 /* ── Jul-IA Chatbot Section (legacy, kept for chat demo on jul-ia.html) ──── */
@@ -1894,23 +1697,6 @@ button:active {
         width: 100%;
         max-width: 340px;
         justify-content: center;
-    }
-
-    .platform-section {
-        padding: 6rem 0;
-    }
-
-    .platform-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .platform-card {
-        padding: 2rem;
-    }
-
-    .platform-card-title {
-        font-size: 1.4rem;
     }
 }
 
@@ -2823,7 +2609,6 @@ button:active {
     margin-bottom: 1rem;
 }
 
-.platform-section .julia-badge,
 .julia-header .julia-badge,
 .db-map-header .db-badge {
     color: var(--secondary-ink);
@@ -3776,17 +3561,12 @@ a.use-case-card:hover {
 
     .privacy-section h2,
     .back-link,
-    .platform-card-link,
     .use-case-type,
     .use-case-icon,
     .jl-metric-value,
     .db-metric-value,
     .db-chart-card h3 {
         color: var(--text-dark);
-    }
-
-    .platform-card {
-        background: #111827;
     }
 
     .use-case-card {
@@ -4018,6 +3798,10 @@ a.use-case-card:hover {
     outline: none;
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px var(--secondary-20);
+}
+
+.lead-field--consent {
+    gap: 0.75rem;
 }
 
 .lead-consent {

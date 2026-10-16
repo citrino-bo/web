@@ -127,33 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', () => track('cta-julia-click', { page: page, href: btn.getAttribute('href') || '' }));
     });
 
-    // Platform card CTAs (index.html)
-    document.querySelectorAll('.platform-card .btn-julia').forEach(btn => {
-        btn.addEventListener('click', () => track('platform-cta', { product: 'jul-ia', action: 'whatsapp' }));
-    });
-    document.querySelectorAll('.platform-card .btn-primary').forEach(btn => {
-        btn.addEventListener('click', () => track('platform-cta', { product: 'base-de-datos', action: 'explore' }));
-    });
-    document.querySelectorAll('.platform-card-link').forEach(link => {
-        link.addEventListener('click', () => track('platform-cta', {
-            product: link.getAttribute('href').indexOf('jul-ia') !== -1 ? 'jul-ia' : 'base-de-datos',
-            action: 'learn-more'
-        }));
-    });
-
-    // Jul-IA use-case conversions (jul-ia.html)
-    if (page === 'jul-ia') {
-        var useCaseBtns = document.querySelectorAll('.use-case-card .btn-julia');
-        var useCaseLabels = ['portafolio', 'alquiler'];
-        useCaseBtns.forEach(function(btn, i) {
-            btn.addEventListener('click', function() {
-                track('julia-use-case', { use_case: useCaseLabels[i] || 'unknown' });
-            });
-        });
-    }
-
     // Cross-page navigation
-    document.querySelectorAll('a[href*="base-de-datos"], a[href*="jul-ia"]').forEach(function(link) {
+    document.querySelectorAll('a[href*="base-de-datos"]').forEach(function(link) {
         var href = link.getAttribute('href');
         if (href && href.endsWith('.html') && !link.hasAttribute('data-tracked-cross')) {
             link.setAttribute('data-tracked-cross', '1');
@@ -296,6 +271,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const slug = interestSlug[selected.value];
             if (slug) track('lead-' + slug, { page: page });
         });
+
+        const leadEmail = document.getElementById('lead-email');
+        const leadWhats = document.getElementById('lead-whatsapp');
+        if (leadEmail && leadWhats) {
+            const msg = 'Completá tu email o tu WhatsApp para que podamos contactarte.';
+            const syncContacto = () => {
+                const ok = leadEmail.value.trim() !== '' || leadWhats.value.trim() !== '';
+                leadEmail.setCustomValidity(ok ? '' : msg);
+            };
+            leadEmail.addEventListener('input', syncContacto);
+            leadWhats.addEventListener('input', syncContacto);
+            syncContacto();
+        }
     }
 
     // ── Citrino global namespace ──────────────────

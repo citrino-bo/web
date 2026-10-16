@@ -13,17 +13,18 @@ Cada feature tiene estado y, cuando aplica, su spec o doc de referencia.
 
 ### Páginas
 
-- `jul-ia/`: Jul-IA, chatbot para inversores.
 - `base-de-datos/`: mapa interactivo (Leaflet) y métricas (Chart.js).
 - `inteligencia-inmobiliaria/`: Plataforma Citrino en alianza con la CBDI.
-- `contacto/`: WhatsApp y email.
-- Baja de `capitales/` y `desarrollos/`, que redirigen a `/`.
+- `contacto/`: formulario, email y ubicación.
+- Baja de `jul-ia/`, `capitales/` y `desarrollos/`, que redirigen a `/`.
 
 ### Captación
 
 - Formulario de leads en la home con Web3Forms, `redirect` a `gracias.html` y honeypot.
 - Ruteo de leads por interés; criterios en `docs/conversion-y-formularios.md`.
 - Spec del formulario en `specs/leads-form/spec.md`.
+- `access_key` real de Web3Forms cargada y envío verificado end-to-end.
+- Retiro de los `wa.me`: el formulario es el único canal de conversión (issue #5).
 
 ### SEO y medición
 
@@ -35,11 +36,6 @@ Cada feature tiene estado y, cuando aplica, su spec o doc de referencia.
 - Logos en header y footer, favicon y Apple touch icon, con variantes responsive.
 
 ## Pendiente
-
-### Formulario
-
-- Cargar la `access_key` real de Web3Forms (hoy es un placeholder).
-- Verificar el envío real end-to-end; después, retirar los `wa.me` de las páginas que corresponda (issue #5).
 
 ### Contenido
 

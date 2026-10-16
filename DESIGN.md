@@ -124,6 +124,10 @@ Flat-by-default with controlled depth on interaction. Depth is conveyed through 
 
 ## 5. Components
 
+### Section Heading
+- **Canonical treatment:** every section title (`.section-title`, `.value-prop-title`) carries one orange accent bar via a shared `::after` — 60×4px, `--gradient-secondary`, radius 2px, centered, `margin: 1rem auto 0`.
+- **One place:** the bar is defined once in `styles.css`. Never redraw it per page or with a one-off pseudo-element on the section body.
+
 ### Buttons
 - **Shape:** Slightly rounded (10px). Not pill, not square.
 - **Primary:** Orange fill (#ee7900), white text, 1rem/2.5rem padding. Hover: translateY(-3px) + high shadow. Active: scale(0.96).

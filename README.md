@@ -18,15 +18,14 @@ El ruteo de leads por pilar está en `docs/conversion-y-formularios.md`.
 | Ruta | Propósito |
 |---|---|
 | `index.html` | Home: hero, pilares, plataforma, servicios, alianzas y formulario de leads. |
-| `jul-ia/` | Jul-IA, chatbot para inversores (freemium). |
 | `base-de-datos/` | Base de datos Inmobiliaria: mapa interactivo y métricas del mercado. |
 | `inteligencia-inmobiliaria/` | Plataforma Citrino en alianza con la CBDI. |
-| `contacto/` | WhatsApp y email de contacto. |
+| `contacto/` | Formulario, email y ubicación. |
 | `privacidad.html` | Política de privacidad. |
 | `gracias.html` | Confirmación de envío del formulario. |
 
-`capitales/` y `desarrollos/` redirigen a `/` y están marcadas `noindex`.
-`jul-ia.html`, `base-de-datos.html` e `inteligencia-inmobiliaria.html` son stubs de redirección a las URLs con barra final.
+`jul-ia/`, `capitales/` y `desarrollos/` redirigen a `/` y están marcadas `noindex`.
+`base-de-datos.html` e `inteligencia-inmobiliaria.html` son stubs de redirección a las URLs con barra final.
 
 ## Stack
 
@@ -41,7 +40,7 @@ El ruteo de leads por pilar está en `docs/conversion-y-formularios.md`.
 
 La home incluye un formulario de calificación como acción primaria.
 Se envía con Web3Forms (`POST` nativo sin backend), con `redirect` a `gracias.html` y honeypot `botcheck`.
-La `access_key` está pendiente: el campo vale `REEMPLAZAR_CON_WEB3FORMS_KEY` hasta cargar la clave real.
+La `access_key` real de Web3Forms ya está cargada en el HTML.
 El asunto del correo se rutea por interés; ver `docs/conversion-y-formularios.md`.
 
 ## Quick start

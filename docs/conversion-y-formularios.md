@@ -13,7 +13,7 @@ Regla binaria: si el interés es de Citrino Inteligencia, va a Nicolás; cualqui
 | Quiero desarrollar un terreno | Consultoría de desarrollo | Citrino Inteligencia | Nicolás | `[Desarrollo]` |
 | Necesito datos o monitoreo del mercado | Plataforma Citrino y reportes B2B | Citrino Inteligencia | Nicolás | `[Datos]` |
 | Quiero invertir o comprar una propiedad | Asesoría de inversión | Citrino Inversiones | Rolando | `[Inversión]` |
-| Quiero vender una propiedad | AMC (informe de valor de mercado), alcance de Jul-IA | Citrino Inversiones | Rolando | `[Vender]` |
+| Quiero vender una propiedad | AMC (informe de valor de mercado) | Citrino Inversiones | Rolando | `[Vender]` |
 
 El formulario envía el asunto al correo de contacto (`info@citrino.com.bo`), donde hoy se delega.
 El filtro por asunto permite derivar sin ambigüedad.
@@ -36,9 +36,11 @@ Campos del MVP, en orden:
 
 1. ¿Qué necesitás? — las cuatro opciones que rutean (ver tabla de arriba).
 2. Nombre.
-3. WhatsApp o Email.
-4. Contanos brevemente (opcional).
-5. Consentimiento con enlace a la política de privacidad.
+3. Email.
+4. WhatsApp — uno de los dos (email o WhatsApp) obligatorio.
+5. Mensaje "Cómo podemos ayudarte" (obligatorio).
+6. Consentimiento de privacidad — aceptar la política (con enlace).
+7. Autorización de contacto.
 
 Reglas:
 
@@ -54,7 +56,7 @@ Reglas:
 
 Envío: Web3Forms (sin backend), con `POST` nativo y `redirect` a `gracias.html`.
 El asunto por interés se setea con un listener de `submit`; si el JS no corre, el interés igual viaja como campo.
-La `access_key` va como placeholder hasta que se cargue la clave real.
+La `access_key` real de Web3Forms ya está cargada en el HTML.
 
 Fuentes (independientes): Antforms, 2026; Capconvert, 2026; Verlua, 2026; PromptlyForms, 2026.
 
@@ -62,7 +64,7 @@ Fuentes (independientes): Antforms, 2026; Capconvert, 2026; Verlua, 2026; Prompt
 
 Primero el formulario; el chatbot, después.
 El chatbot aporta cuando hay que calificar y rutear en conversación, pero necesita infraestructura propia (proxy para la key de LLM).
-El AMC (informe de valor de mercado) es el alcance que cubrirá Jul-IA; hasta que Jul-IA esté operativo para leads web, ese interés rutea a Rolando.
+El AMC (informe de valor de mercado) es el alcance que cubrirá la asesora inteligente; hasta que esté operativa para leads web, ese interés rutea a Rolando.
 La evidencia a favor del bot es mayormente de vendors (Conferbot, Chatonbo, getaiform) y no es reproducible; se trata como hipótesis, no como dato.
 
 Fuentes (independientes): Harvard (respuesta en menos de 5 minutos multiplica la conexión con el lead); Gartner 2026 (67% de compradores B2B prefieren no hablar con un vendedor, pero 87% exige poder llegar a un humano).

@@ -6,7 +6,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-PAGES="index.html jul-ia/index.html base-de-datos/index.html"
+PAGES="index.html base-de-datos/index.html"
 
 set -- $(python3 -c "
 import json
@@ -19,8 +19,8 @@ TOTAL=$1; ZONAS=$2; ALQ=$3
 fail=0
 
 # 1. Todo data-target debe ser uno de los floors vigentes
-#    (solo index y jul-ia; base-de-datos usa placeholders dinamicos)
-for p in index.html jul-ia/index.html; do
+#    (solo index; base-de-datos usa placeholders dinamicos)
+for p in index.html; do
   while read -r t; do
     case "$t" in "$TOTAL"|"$ZONAS"|"$ALQ") ;; *)
       echo "DATA-TARGET VIEJO ($t != $TOTAL/$ZONAS/$ALQ): $p"; fail=1 ;;

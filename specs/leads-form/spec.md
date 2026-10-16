@@ -2,7 +2,7 @@
 
 ## Problema
 
-Todos los leads entran por `wa.me` sin estructura; no se pueden filtrar ni derivar.
+Todos los leads entraban por `wa.me` sin estructura; no se podían filtrar ni derivar.
 El dueño recibe volumen creciente y no logra calificarlo.
 
 ## Objetivo
@@ -13,7 +13,7 @@ Criterios completos en `docs/conversion-y-formularios.md`.
 ## Alcance
 
 - Superficie: sección de conversión de la home (reemplaza las tarjetas de contacto). Luego, página de contacto.
-- Campos: interés (rutea) → nombre → WhatsApp o email → mensaje (opcional) → consentimiento.
+- Campos: interés (rutea) → nombre → email → WhatsApp (al menos uno de los dos obligatorio) → mensaje obligatorio ("Cómo podemos ayudarte") → dos consentimientos (privacidad y autorización de contacto).
 - Interés: las cuatro opciones que rutean (desarrollar terreno, datos/monitoreo, invertir, vender).
 - Ruteo por asunto: `[Desarrollo]`/`[Datos]` → Nicolás; `[Inversión]`/`[Vender]` → Rolando.
 - Envío sin backend: Web3Forms con `POST` nativo y `redirect` a `gracias.html`.
@@ -25,16 +25,16 @@ Criterios completos en `docs/conversion-y-formularios.md`.
 
 - Backend propio / CRM.
 - Chatbot (va en Fase 2, issue #16).
-- Reemplazo de `wa.me` en otras páginas antes de verificar este formulario.
+- Reemplazo de `wa.me` en otras páginas antes de verificar este formulario (ya hecho; ver Orden).
 
 ## Orden
 
-Construir → verificar (envío real con la key cargada) → recién entonces quitar los `wa.me` (issue #5).
+Construir → verificar (envío real con la key cargada) → quitar los `wa.me` (hecho, issue #5).
 
 ## Estados
 
-Default, focus, hover, validación nativa del navegador (error), honeypot lleno (se descarta en el servicio), confirmación en `gracias.html`.
+Default, focus, hover, validación del navegador (error), contacto sin email ni WhatsApp (aviso propio), honeypot lleno (se descarta en el servicio), confirmación en `gracias.html`.
 
 ## Verificación
 
-Envío real desde desktop y mobile; confirmar llegada, asunto por interés, consentimiento, ruteo y redirect a `gracias.html`.
+Envío real desde desktop y mobile; confirmar llegada, asunto por interés, los dos consentimientos, ruteo y redirect a `gracias.html`.
