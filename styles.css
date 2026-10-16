@@ -3775,6 +3775,8 @@ a.use-case-card:hover {
 }
 
 .lead-field input[type="text"],
+.lead-field input[type="email"],
+.lead-field input[type="tel"],
 .lead-field textarea {
     font-family: var(--font-body);
     font-size: 1rem;
@@ -3794,6 +3796,8 @@ a.use-case-card:hover {
 }
 
 .lead-field input[type="text"]:focus-visible,
+.lead-field input[type="email"]:focus-visible,
+.lead-field input[type="tel"]:focus-visible,
 .lead-field textarea:focus-visible {
     outline: none;
     border-color: var(--secondary-color);
@@ -3864,6 +3868,8 @@ a.use-case-card:hover {
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     }
     .lead-field input[type="text"],
+    .lead-field input[type="email"],
+    .lead-field input[type="tel"],
     .lead-field textarea {
         background: #0f1724;
     }
