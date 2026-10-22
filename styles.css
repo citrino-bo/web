@@ -613,22 +613,32 @@ button:active {
 
 .marquee-container {
     position: relative;
+    overflow-x: hidden;
     margin-top: 3rem;
     width: 100%;
+    max-width: 100%;
 }
 
 .marquee-track {
     display: flex;
+    overflow: hidden;
     width: 100%;
+    max-width: 100%;
 }
 
 .marquee-content {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
     gap: 3rem;
-    width: 100%;
+    animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .client-logo {
@@ -640,8 +650,13 @@ button:active {
     flex-shrink: 0;
 }
 
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
 .marquee-content:hover .client-logo {
     filter: grayscale(0%) opacity(1);
+    transform: scale(1.05);
 }
 
 .value-prop {
@@ -954,20 +969,17 @@ button:active {
     .marquee-content {
         gap: 2rem;
     }
+
+    .marquee-container {
+        margin-left: -2rem;
+        margin-right: -2rem;
+        overflow-x: hidden;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 0 1.25rem;
-    }
-
-    .marquee-content {
-        gap: 1.5rem;
-    }
-
-    .client-logo {
-        height: 64px;
-        max-width: 44%;
     }
 
     .hero {

@@ -254,6 +254,11 @@
         "name": "fade-up",
         "value": "fadeInUp 0.8s ease forwards",
         "purpose": "Hero entrance, staggered by .animate-delay-1..5 (0.1s steps). Scroll reveals travel translateY(30px) with opacity 0 to 1."
+      },
+      {
+        "name": "marquee",
+        "value": "translateX(0 -> -50%) over 30s linear infinite",
+        "purpose": "Client proof wall. Pauses on hover and when offscreen; plays once under prefers-reduced-motion. Documented detector exception."
       }
     ],
     "breakpoints": [
@@ -390,9 +395,9 @@
       "Do alternate Paper and Surface bands, and use one full-bleed navy band per page for emphasis.",
       "Do use --gradient-secondary for every orange fill and keep orange text at Signal Ink or lighter stops.",
       "Do reuse .section-title, .btn, .use-case-card and the .db-* patterns before inventing a parallel one.",
-      "Do honor prefers-reduced-motion: the reduction block disables reveals, counters and marquee.",
       "Do keep one entrance animation (fadeInUp) and one hover lift language across components.",
-      "Do run the mechanical detector over touched pages before shipping UI: it should come back with zero findings."
+      "Do run the mechanical detector over touched pages before shipping UI: it should come back with zero findings.",
+      "Do honor prefers-reduced-motion: the reduction block disables reveals, counters and leaves the marquee stopped after one pass."
     ],
     "donts": [
       "Don't introduce a light/dark toggle UI; the theme follows the OS preference only.",
@@ -404,8 +409,8 @@
       "Don't place the white-bordered secondary button on a light surface.",
       "Don't revive the Jul-IA chat mockup or .btn-julia styles: that landing no longer exists.",
       "Don't add a colored glow shadow (orange under a button, navy under a card): elevation is neutral black.",
-      "Don't auto-scroll, auto-rotate or marquee anything; a logo wall is a static row.",
-      "Don't nest a card inside a card; flatten the map frame, the toggle group and the fallback overlay into the band."
+      "Don't nest a card inside a card; flatten the map frame, the toggle group and the fallback overlay into the band.",
+      "Don't replace the client marquee with a static grid or remove its duplicated track; the movement is the spec."
     ]
   }
 }

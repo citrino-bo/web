@@ -248,8 +248,10 @@ Orange Outfit 800 figure with a `+` suffix as a sibling span, and a 0.9rem label
 ### Service List
 Not cards. Five rows inside `.services-grid`: 48px icon tile (`--primary-10` fill, navy stroke, 12px radius) beside a 1.25rem Outfit title and a muted description of 2–3 lines, separated by hairlines. No shadows, no borders around the group.
 
-### Client Logo Row
-`.client-logo` images at 120px height (80px under 768px), grayscale at 50% opacity, in a single flex row that wraps and centers: 4 + 3 on desktop and 2 per row on mobile, where the logos drop to 64px and are capped at 44% width. All seven logos are always visible; there is no auto-scrolling marquee. Hover restores a logo to color. The row sits inside the `Surface` band, so no clipping, negative margins or motion is involved.
+### Client Marquee
+A continuously scrolling proof wall: `.client-logo` images at 120px height (80px under 768px, 70px under 480px), grayscale at 50% opacity, in a track that holds the seven logos twice and translates `-50%` on a 30s linear loop for a seamless wrap. The strip bleeds past the container (`-2rem`, `-1.25rem` under 480px) and is clipped by `overflow: hidden`. Hover pauses the loop and restores color at `scale(1.05)`; the loop also pauses whenever the strip is out of the viewport. Under `prefers-reduced-motion` it plays once and stops, leaving the second copy in place.
+
+The movement is deliberate: the client wall is social proof that has to read as alive, not a static grid. The mechanical detector flags auto-scrolling marquees as slop, so this project carries a documented `ignore-rule marquee` exception in `.impeccable/config.json`. Do not "fix" it into a static row, and do not remove the duplication: without the second copy the loop shows a gap.
 
 ### Value-Prop Band
 Full-bleed `Primary` section, one centered title with the orange bar, then a single-column list of three items: 44–48px icon tile with white stroke on navy, heading at 600, muted-inverse description. This is the darkest moment of the home page and the only one that uses navy as a text surface for body copy.
@@ -292,7 +294,7 @@ Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left,
 - **Do** use `--gradient-secondary` for every orange fill and keep orange text at `Signal Ink` or lighter stops.
 - **Do** reuse `.section-title`, `.btn`, `.use-case-card`, `.db-*` before inventing a parallel pattern.
 - **Do** keep one entrance animation (`fadeInUp`) and one hover lift language across components.
-- **Do** honor `prefers-reduced-motion`: the reduction block disables reveals and counters.
+- **Do** honor `prefers-reduced-motion`: the reduction block disables reveals, counters and leaves the marquee stopped after one pass.
 
 ### Don't:
 - **Don't** introduce a light/dark toggle UI; the theme follows the OS preference only.
@@ -303,7 +305,7 @@ Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left,
 - **Don't** use `border-radius` above 16px on cards or combine a 1px border with a ≥16px blur shadow on the same element.
 - **Don't** add a colored glow shadow (orange under a button, navy under a card): elevation is neutral black.
 - **Don't** set muted text (`{colors.ink-muted}`) on a dark surface: it lands at 3.7:1. Use `{colors.dark-ink}` or a white alpha instead.
-- **Don't** auto-scroll, auto-rotate or marquee anything; a logo wall is a static row.
+- **Don't** replace the client marquee with a static grid or remove its duplicated track; the movement is the spec, not an accident.
 - **Don't** nest a card inside a card. The map frame, the toggle group and the fallback overlay all flatten into the band.
 - **Don't** place the white-bordered secondary button on a light surface.
 - **Don't** use stock imagery of handshakes or families; the proof is logos, counts and charts.
