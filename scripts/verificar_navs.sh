@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-PAGES="index.html inteligencia-inmobiliaria.html servicios.html quienes-somos.html contacto.html privacidad.html gracias.html"
+PAGES="index.html inteligencia-inmobiliaria.html servicios.html quienes-somos.html contacto.html privacidad.html gracias.html 404.html"
 
 canon_nav() {
   printf 'index.html|Inicio\n'
