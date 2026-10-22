@@ -37,18 +37,18 @@
         <nav aria-label="Principal">
             <div class="nav-container">
                 <a href="index.html" data-umami-event="nav" data-umami-event-ubicacion="logo" data-umami-event-destino="inicio" class="logo"><img src="assets/citrino-logo-claro.png" alt="Citrino Capitales Inmobiliarios" class="logo-img" fetchpriority="high"></a>
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="nav-menu">
                     <li><a href="index.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="inicio">Inicio</a></li>
                     <li><a href="inteligencia-inmobiliaria.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="inteligencia">Inteligencia Inmobiliaria</a></li>
                     <li><a href="servicios.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="servicios" aria-current="page" class="nav-active">Nuestros Servicios</a></li>
                     <li><a href="quienes-somos.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="quienes">Quiénes Somos</a></li>
                     <li><a href="contacto.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="contacto">Contacto</a></li>
                 </ul>
-                <div class="hamburger" id="hamburger" role="button" aria-label="Abrir menú de navegación" aria-expanded="false" tabindex="0">
+                <button type="button" class="hamburger" id="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </nav>
     </header>
@@ -65,9 +65,11 @@
         <section class="section section--paper">
             <div class="container">
                 <div class="unidades">
-                    <article class="unidad">
-                        <img src="assets/unidades/inteligencia.png" alt="Citrino Inteligencia Inmobiliaria" class="unidad-logo" width="360" height="158" loading="lazy" decoding="async">
-                        <h2>Citrino Inteligencia Inmobiliaria</h2>
+                    <article class="unidad scroll-reveal">
+                        <div class="unidad-cabeza">
+                            <img src="assets/unidades/inteligencia.png" alt="" class="unidad-logo" width="360" height="158" loading="lazy" decoding="async">
+                            <h2>Citrino Inteligencia Inmobiliaria</h2>
+                        </div>
                         <p class="unidad-descripcion">Somos expertos en consultoría inmobiliaria, desde investigación de mercado, desarrollo de proyectos con su respectivo análisis y modelo financiero hasta la valoración y reestructuración de portafolios de inmuebles particulares y empresariales.</p>
                         <ul class="unidad-lista">
                             <li>Estudios de mercado: oferta y demanda</li>
@@ -78,9 +80,11 @@
                         </ul>
                     </article>
 
-                    <article class="unidad">
-                        <img src="assets/unidades/inversiones.png" alt="Citrino Inversiones Inmobiliarias" class="unidad-logo" width="360" height="158" loading="lazy" decoding="async">
-                        <h2>Citrino Inversiones Inmobiliarias</h2>
+                    <article class="unidad scroll-reveal">
+                        <div class="unidad-cabeza">
+                            <img src="assets/unidades/inversiones.png" alt="" class="unidad-logo" width="360" height="158" loading="lazy" decoding="async">
+                            <h2>Citrino Inversiones Inmobiliarias</h2>
+                        </div>
                         <p class="unidad-descripcion">Somos asesores inmobiliarios abocados a los intereses del comprador inversor. Usamos big data para analizar la oferta vigente y su potencial rentabilidad por alquiler y plusvalía en base a datos históricos y actuales de mercado. Te asesoramos para que tu inversión sea racional y fundamentada en datos.</p>
                         <ul class="unidad-lista">
                             <li>Asesoría prospectiva para definir el perfil de tu inversión</li>
@@ -90,9 +94,11 @@
                         </ul>
                     </article>
 
-                    <article class="unidad">
-                        <img src="assets/unidades/desarrollo.png" alt="Citrino Desarrollos Inmobiliarios" class="unidad-logo" width="360" height="158" loading="lazy" decoding="async">
-                        <h2>Citrino Desarrollos Inmobiliarios</h2>
+                    <article class="unidad scroll-reveal">
+                        <div class="unidad-cabeza">
+                            <img src="assets/unidades/desarrollo.png" alt="" class="unidad-logo" width="360" height="158" loading="lazy" decoding="async">
+                            <h2>Citrino Desarrollos Inmobiliarios</h2>
+                        </div>
                         <p class="unidad-descripcion">Detectamos necesidades de mercado, viabilizamos oportunidades de inversión pasiva y gestionamos proyectos inmobiliarios que responden a las necesidades y circunstancias del mercado actual.</p>
                         <ul class="unidad-lista">
                             <li><strong>Gestión de capitales pasivos:</strong> si disponés de un capital que busca una mayor rentabilidad, te invitamos a participar de proyectos inmobiliarios como socio pasivo. La inversión se realiza en vehículos de propósito específico (SPV) por proyecto, con un activo real de respaldo, y su ingeniería legal y financiera a medida.</li>

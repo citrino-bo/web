@@ -38,18 +38,18 @@
         <nav aria-label="Principal">
             <div class="nav-container">
                 <a href="index.html" data-umami-event="nav" data-umami-event-ubicacion="logo" data-umami-event-destino="inicio" class="logo"><img src="assets/citrino-logo-claro.png" alt="Citrino Capitales Inmobiliarios" class="logo-img" fetchpriority="high"></a>
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="nav-menu">
                     <li><a href="index.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="inicio">Inicio</a></li>
                     <li><a href="inteligencia-inmobiliaria.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="inteligencia">Inteligencia Inmobiliaria</a></li>
                     <li><a href="servicios.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="servicios">Nuestros Servicios</a></li>
                     <li><a href="quienes-somos.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="quienes">Quiénes Somos</a></li>
                     <li><a href="contacto.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="contacto" aria-current="page" class="nav-active">Contacto</a></li>
                 </ul>
-                <div class="hamburger" id="hamburger" role="button" aria-label="Abrir menú de navegación" aria-expanded="false" tabindex="0">
+                <button type="button" class="hamburger" id="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </nav>
     </header>
@@ -57,15 +57,15 @@
     <main id="main-content">
         <section class="hero hero--interior">
             <div class="hero-content">
-                <h1 class="hero-title animate-staggered animate-delay-1">Estamos listos para asesorarte en tu próxima decisión inmobiliaria</h1>
+                <h1 class="hero-title animate-staggered animate-delay-1">Contacto</h1>
+                <p class="hero-subtitle animate-staggered animate-delay-2">Estamos listos para asesorarte en tu próxima decisión inmobiliaria</p>
             </div>
             <div class="hero-background"></div>
         </section>
 
         <section class="contacto">
             <div class="container">
-                <h2 class="section-title">Solicitá asesoría</h2>
-                <p class="section-subtitle">Elegí una opción y nos pondremos en contacto</p>
+                <p class="section-subtitle section-subtitle--center">Elegí una opción y nos pondremos en contacto</p>
 
                 <form class="lead-form" id="lead-form" action="https://api.web3forms.com/submit" method="POST">
                     <input type="hidden" name="access_key" value="d4814654-6a57-4d70-8b35-e4c5795c0cbc">

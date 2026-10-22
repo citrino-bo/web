@@ -194,15 +194,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function inicializarPanel(contenedor) {
         const CORTES = [10, 25, 75, 200];
         const RADIOS = [4, 6, 8, 11, 14];
-        const ESCALA = [
-            'rgba(0, 40, 87, 0.18)',
-            'rgba(0, 40, 87, 0.35)',
-            'rgba(0, 40, 87, 0.6)',
-            'rgba(0, 64, 128, 0.85)',
-            'rgba(238, 121, 0, 0.9)'
-        ];
-        const CENTRO = [-17.0, -64.4];
-        const ZOOM = 6;
+        // Una sola rampa para mapa y gráficos, definida en los tokens --dens-*.
+        const estiloRaiz = getComputedStyle(document.documentElement);
+        const ESCALA = [1, 2, 3, 4, 5].map(function(i) {
+            return estiloRaiz.getPropertyValue('--dens-' + i).trim();
+        });
+        const CENTRO = [-17.55, -63.75];
+        const ZOOM = window.innerWidth < 768 ? 8 : 9;
         let panel = null;
         let mapa = null;
         let capa = null;
@@ -215,6 +213,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (n < CORTES[i]) return i;
             }
             return CORTES.length;
+        }
+
+        function leyenda() {
+            const cont = document.getElementById('mapa-leyenda-tramos');
+            if (!cont || !panel) return;
+            const rangos = [];
+            let desde = panel.k;
+            CORTES.forEach(function(corte) {
+                rangos.push(desde + '–' + (corte - 1));
+                desde = corte;
+            });
+            rangos.push(desde + '+');
+            cont.innerHTML = rangos.map(function(r, i) {
+                return '<span class="leyenda-tramo"><i style="background:var(--dens-' + (i + 1) + ')"></i>' + r + '</span>';
+            }).join('');
         }
 
         function color(n) {
@@ -247,9 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 visibles++;
                 const punto = L.circleMarker([celda.lat, celda.lng], {
                     radius: radio(n),
-                    stroke: false,
+                    stroke: true,
+                    color: '#ffffff',
+                    weight: 1,
                     fillColor: color(n),
-                    fillOpacity: 0.8,
+                    fillOpacity: 1,
                     renderer: lienzo
                 });
                 punto.bindPopup('<strong>' + n.toLocaleString('es-BO') + '</strong> propiedades');
@@ -295,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 },
                 scales: {
-                    x: { grid: { display: false }, ticks: { color: texto, maxRotation: 0, autoSkip: false } },
+                    x: { grid: { display: false }, ticks: { color: texto, maxRotation: 45, autoSkip: true } },
                     y: { beginAtZero: true, grid: { color: grilla }, ticks: { color: texto } }
                 }
             };
@@ -332,16 +347,14 @@ document.addEventListener('DOMContentLoaded', function() {
         function mostrarError() {
             const cargando = document.getElementById('mapa-loading');
             const fallback = document.getElementById('mapa-fallback');
+            const chartsFallback = document.getElementById('charts-fallback');
             if (cargando) cargando.hidden = true;
             if (fallback) fallback.hidden = false;
+            if (chartsFallback) chartsFallback.hidden = false;
             track('mapa', { page: pagina, accion: 'error' });
         }
 
         function arrancar() {
-            if (typeof L === 'undefined') {
-                mostrarError();
-                return;
-            }
             fetch('data/panel.json')
                 .then(function(r) {
                     if (!r.ok) throw new Error('respuesta ' + r.status);
@@ -349,6 +362,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(function(datos) {
                     panel = datos;
+                    leyenda();
+                    graficos(panel);
+
+                    if (typeof L === 'undefined') {
+                        mostrarError();
+                        return;
+                    }
 
                     mapa = L.map(contenedor, {
                         center: CENTRO,
@@ -373,7 +393,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (cargando) cargando.hidden = true;
 
                     pintar();
-                    graficos(panel);
                     track('mapa', { page: pagina, accion: 'carga', celdas: panel.celdas });
                 })
                 .catch(function() {

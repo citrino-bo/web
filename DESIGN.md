@@ -10,6 +10,13 @@ colors:
   signal-gradient-end: "#cc6a00"
   signal-hover: "#ff9f30"
   signal-ink: "#a14c00"
+  on-signal: "#0a0a0a"
+  hairline: "rgba(0, 40, 87, 0.14)"
+  density-1: "#dbe7f2"
+  density-2: "#a8c4de"
+  density-3: "#6d9bc7"
+  density-4: "#3a6ea3"
+  density-5: "#002857"
   return: "#10b981"
   ink: "#1f2937"
   ink-medium: "#4b5563"
@@ -29,13 +36,13 @@ colors:
 typography:
   display:
     fontFamily: "Outfit, sans-serif"
-    fontSize: "clamp(2.2rem, 5.6vw, 3.75rem)"
+    fontSize: "clamp(2.75rem, 1.9rem + 3.2vw, 4.25rem)"
     fontWeight: 800
     lineHeight: 1.2
     letterSpacing: "-0.03em"
   headline:
     fontFamily: "Outfit, sans-serif"
-    fontSize: "clamp(1.9rem, 3.8vw, 2.5rem)"
+    fontSize: "clamp(2.125rem, 1.3rem + 2.4vw, 3rem)"
     fontWeight: 700
     lineHeight: 1.2
     letterSpacing: "-0.02em"
@@ -53,7 +60,7 @@ typography:
     letterSpacing: "normal"
   heading:
     fontFamily: "Outfit, sans-serif"
-    fontSize: "1.5rem"
+    fontSize: "1.625rem"
     fontWeight: 600
     lineHeight: 1.3
     letterSpacing: "-0.01em"
@@ -63,6 +70,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.3
     letterSpacing: "normal"
+  rail-heading:
+    fontFamily: "Outfit, sans-serif"
+    fontSize: "clamp(1.5rem, 2.2vw, 2rem)"
+    fontWeight: 700
+    lineHeight: 1.3
+    letterSpacing: "-0.02em"
   lead:
     fontFamily: "DM Sans, sans-serif"
     fontSize: "1.125rem"
@@ -104,11 +117,11 @@ rounded:
   card: "16px"
   pill: "100px"
 spacing:
-  section: "6rem"
+  section: "7rem"
   section-roomy: "7rem"
-  container-max: "1200px"
+  container-max: "1320px"
   container-narrow: "820px"
-  container-padding: "2rem"
+  container-padding: "clamp(1.25rem, 3.5vw, 3rem)"
   grid-gap: "2rem"
 components:
   button-primary:
@@ -195,7 +208,7 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 - `--heading-ink` is the one token that carries heading color: navy in light, `dark-ink` in dark. Headings never use `--primary-color` directly, so the navy can stay navy for gradients and fills.
 
 ### Named Rules
-**The Signal Rule.** Orange marks what the reader should act on or read as a number: figures, links, primary buttons, the densest data, the title bar. It is not a decorative wash and not a card accent.
+**The Signal Rule.** Orange marks what the reader should act on or read as a number: figures, links, primary buttons, list markers, the title bar. It is not a decorative wash, not a card accent, and never a data category: the density ramp is one blue family so orange stays available for action.
 
 **The Two-Theme Rule.** Every new surface must be checked in both themes. A component that only defines light values is unfinished, and any color hardcoded in JS (Chart.js datasets, map ramps) must exist in both.
 
@@ -213,30 +226,31 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 The ramp has seven fixed steps and three fluid ones. Nothing else is allowed; a size that is not on this list is drift.
 
 - **Display** (`{typography.display}`): `.hero-title`, Outfit 800 at `clamp(2.2rem, 5.6vw, 3.75rem)`, centered, one per page.
-- **Headline** (`{typography.headline}`): `.section-title`, `.banda-titulo`, `.cta-final-title` and the interior hero title (`.hero--interior .hero-title`), Outfit 700, centered, with the orange bar beneath, capped at 26ch (40ch with `.section-title--wide`).
+- **Headline** (`{typography.headline}`): `.section-title`, `.banda-titulo`, `.cta-final-title` and the interior hero title (`.hero--interior .hero-title`), Outfit 700 at `clamp(2.125rem, 1.3rem + 2.4vw, 3rem)`, with the orange bar beneath. `.section-title` is left-aligned to the container edge and capped at 26ch (32ch with `.section-title--wide`); `.banda-titulo` and `.cta-final-title` stay centered because they sit on full-bleed navy bands.
 - **Stat** (`{typography.stat}`): `.cifra-valor`, Outfit 800 orange at `clamp(2rem, 3.6vw, 2.75rem)`, always paired with a label underneath. Static values, no counter.
-- **Heading** (`{typography.heading}`): `1.5rem` for `.censo-article h3`, `.mapa-header h3`, `.unidad h2`, and the `.hero-title` under 480px.
+- **Heading** (`{typography.heading}`): `1.625rem` for `.censo-article h3` and `.mapa-header h2/h3`. `.unidad h2` uses `{typography.rail-heading}` at 700 inside its rail.
 - **Title** (`{typography.title}`): `1.25rem` for `.chart-card h3`, `.acceso h3`, `.lead-question`, `.documento h2`.
 - **Lead** (`{typography.lead}`): `1.125rem` at 1.75 for `.censo-article p`, `.unidad-descripcion`, `.cta-final-text`; capped at 72ch.
-- **Subtitle** (`{typography.subtitle}`): `.hero-subtitle` and `.section-subtitle`, `clamp(1.125rem, 2.2vw, 1.375rem)` and `1.125rem` respectively.
+- **Subtitle** (`{typography.subtitle}`): `.hero-subtitle` at `clamp(1.125rem, 2.2vw, 1.375rem)` and `.section-subtitle` at `1.25rem`, left-aligned with the section title unless `.section-subtitle--center` is set.
 - **Body** (`{typography.body}`): `1rem` for nav labels, buttons, list items and form fields.
 - **Small** (`{typography.small}`): `0.875rem` for helper copy, consent rows, reassurance, chart notes, company rubros, roles and footer bottom.
 - **Label** (`{typography.label}`): JetBrains Mono 500 at `0.75rem` with `0.06em` tracking, uppercase, for `.tabla-censo thead th`, `.mapa-leyenda`, `.alianza-label` and `.footer-nav-title`.
 - **Display compact** (`{typography.display-compact}`): `2rem`, only for `.persona-iniciales`, the monogram that replaces a missing team photo.
 
 ### Named Rules
-**The One Bar Rule.** Section titles get the orange underline exactly once, from `.section-title::after` / `.banda-titulo::after`: 60×4px, `--gradient-secondary`, 2px radius, `margin: 1rem auto 0`. Document pages (`privacidad.html`) are the one sanctioned variant: their `h2` uses a full-width 2px orange bottom border instead. Never redraw either locally.
+**The One Bar Rule.** Section titles get the orange underline exactly once, from `.section-title::after` / `.banda-titulo::after`: 60×4px, `--gradient-secondary`, 2px radius, `margin: 1rem 0 0` on the left-aligned titles and `1rem auto 0` on the centered navy bands. Document pages (`privacidad.html`) are the one sanctioned variant: their `h2` uses a full-width 2px orange bottom border instead. Never redraw either locally.
 
 **The Mono Means Data Rule.** JetBrains Mono only marks machine output — table headers, vintages, counts, the map legend. Never body copy, never headlines.
 
 ## Layout
 
-A single centered container of `1200px` with `2rem` side padding (`820px` for `.container--narrow`), sitting inside full-bleed color bands. Sections alternate `Paper` → `Surface` → `Primary` → `Surface` → `Footer` down the home page, so the eye moves between evidence (light) and authority (navy) without a hard edge.
+A single centered container of `1320px` with fluid side padding (`clamp(1.25rem, 3.5vw, 3rem)`, so 1200px of content at 1440) and `820px` for `.container--narrow`, sitting inside full-bleed color bands. Inner blocks never re-cap the width: `.censo`, `.mapa-header`, `.logros` and `.empresas` start at the container edge and cap the measure in `ch`, not the box. Sections alternate `Paper` → `Surface` → `Primary` → `Surface` → `Footer` down the home page, so the eye moves between evidence (light) and authority (navy) without a hard edge.
 
-- **Section rhythm:** `6rem` padding for standard sections, `7rem` for the closing CTA band, `5rem` for `.mapa`, `4rem` on mobile.
-- **Grids:** two-up for `.charts-grid`, three-up for `.accesos`, four-up for `.equipo` (three under 1024px, two under 768px, one under 480px), with a consistent `2rem` gap.
-- **Divided lists, not cards:** `.censo-article`, `.unidad`, `.empresa` and `.logro` are rows separated by a `1px` hairline. The only cards in the system are `.chart-card` and `.acceso`.
-- **Hero:** full viewport (`92vh`) on the home page, content centered, `8rem 2rem 5rem` padding, with a 24px white-dot radial grid behind the headline. Interior heroes (`.hero--interior`) drop to `min-height: auto` with `9rem/5rem` padding.
+- **Section rhythm:** `7rem` for standard sections and the footer, `4rem` for `.mapa` and `.visualizaciones` (each with a `--hairline` top border), `4rem` for `.censo-article`, `7rem` for the closing CTA band, `4rem` on mobile.
+- **Grids:** two-up for `.charts-grid` and `.empresas` (one column under 900px), three-up for `.accesos`, four-up for `.equipo` (three under 1024px, two under 768px, one under 480px), with a consistent `2rem` gap.
+- **Rails:** above 1024px, `.censo-article` and `.unidad` are a `280–288px` label rail plus a content column. The rail carries the heading, the column carries the evidence, and both start on the container's left edge: the one axis the page uses.
+- **Divided lists, not cards:** `.censo-article`, `.unidad`, `.empresa` and `.logro` are rows separated by a `1px` `--hairline` rule (`rgba(0, 40, 87, 0.14)`; `--bg-lighter` measured 1.05:1 and was invisible). The only cards in the system are `.chart-card` and `.acceso`.
+- **Hero:** full viewport (`92vh`) on the home page, content centered, `8rem 2rem 5rem` padding, with a 24px white-dot radial grid behind the headline. Interior heroes (`.hero--interior`) drop to `min-height: auto` with `9rem/5rem` padding and a lighter gradient (`primary-light → primary`), so the navy band below reads as a second, deeper surface instead of a continuation.
 - **Breakpoints:** 1024px (team to three-up), 900px (charts and accesos to one column, footer to two), 768px (single column, hamburger nav, cifras stack), 480px (type and padding shrink, hero buttons go full width).
 - **Mobile nav:** the fixed header keeps the logo and swaps `.nav-menu` for a full-width dropdown under the header, driven by the hamburger button and closed on link click.
 
@@ -266,9 +280,9 @@ Borders are mostly absent: cards rely on fill and a neutral shadow, sections on 
 
 ### Buttons
 - **Shape:** 10px radius, `2px solid transparent` so variants do not shift layout, `1rem 2.5rem` padding, 600 weight, 44px minimum height.
-- **Primary:** `--gradient-secondary` fill with white text and `--shadow-md`. Hover: `translateY(-3px)` and `--shadow-lg`. Active: `translateY(0) scale(0.97)`.
+- **Primary:** `--gradient-secondary` fill with `--on-signal` (`#0a0a0a`) text and `--shadow-md`. White on the orange gradient measures 2.85:1 and fails AA on every CTA; near-black clears 5:1 across the whole gradient. Hover: `translateY(-3px)` and `--shadow-lg`. Active: `translateY(0) scale(0.97)`.
 - **Secondary:** transparent with a 2px white border; on hover it fills white and the label turns navy (`#002857` literal, so dark mode keeps the contrast). It only works on navy surfaces — never place it on a light band.
-- **Focus:** the global `:focus-visible` is a 2px navy outline at 2px offset; never remove it. `.lead-submit` stretches to the form width.
+- **Focus:** the global `:focus-visible` is a 2px navy outline at 2px offset, and orange on `.hero`, `.cta-final`, `.banda-oscura` and `.footer`, where navy measures 1.3:1. Never remove it. `.lead-submit` stretches to the form width.
 
 ### Cifras
 `.cifras` is a single ruled row, not three cards: three `.cifra` columns inside a `1px` top and bottom rule, divided by `1px` vertical rules. Orange Outfit 800 figure, `0.9rem` label at 70% white below, `22ch` cap. Under 768px the columns stack and the vertical rules become horizontal ones. Values are static text (no counter animation), because two of the three carry a currency suffix.
@@ -283,12 +297,12 @@ Borders are mostly absent: cards rely on fill and a neutral shadow, sections on 
 `.mapa` sits on a `Paper` band: a `h3` heading, a mono meta line (total · corte de la base), two `.filtro-grupo` pill groups (type, operation), the map frame and a legend.
 
 - **Frame:** `.mapa-wrapper` is a 16px-radius clipped box with a `1px` hairline, `520px` tall (`420px` under 768px). Leaflet tiles inside; the container carries `role="application"` and an `aria-label`.
-- **Rendering:** one `L.circleMarker` per aggregated cell on a shared `L.canvas` renderer, no stroke, radius 4/6/8/11/14px and color by count bucket. Radius is in pixels on purpose: at country scale a 550 m cell would be sub-pixel, so density is drawn as a cloud of constant-size dots that separates as you zoom in. Scroll-wheel zoom is off so the page keeps scrolling; the zoom control, drag and popups carry interaction.
-- **Initial view:** Bolivia, zoom 6, so the country is the first read. No fly-to on load.
-- **Legend:** `Densidad de propiedades` plus five swatches in a mono line, revealed once the layer paints.
+- **Rendering:** one `L.circleMarker` per aggregated cell on a shared `L.canvas` renderer, a 1px white halo, `fillOpacity: 1`, radius 4/6/8/11/14px and colour by count bucket read from the `--dens-1..5` tokens: one blue family with monotonic luminance, never orange, which belongs to action. Radius is in pixels on purpose: at country scale a 550 m cell would be sub-pixel, so density is drawn as a cloud of constant-size dots that separates as you zoom in. Scroll-wheel zoom is off so the page keeps scrolling; the zoom control, drag and popups carry interaction.
+- **Initial view:** the Santa Cruz metropolitan area, zoom 9 on desktop and 8 under 768px, so density reads on the first look; `minZoom: 4` still allows the country view. No fly-to on load.
+- **Legend:** `Densidad de propiedades` plus five swatches with their ranges as visible text, generated in JS from `CORTES` and `k` so a filter that hides the top bucket cannot leave the legend lying. Revealed once the layer paints.
 - **States:** `.mapa-loading` with a spinner while the JSON is in flight, `.mapa-fallback` with an explanatory block on failure. Both use `[hidden]`, never `display` juggling.
 - **Filters:** buttons carry `aria-pressed`; only one per group is true. Filtering recomputes each cell's count from its per-type and per-operation breakdown and re-paints the layer.
-- **Data:** `data/panel.json` only. Never an individual-property feed.
+- **Data:** `data/panel.json` only. Never an individual-property feed. The charts come from the same file and do not depend on Leaflet: if either fails, both fallbacks are revealed.
 
 ### Charts
 `.charts-grid` is two-up (`1fr` under 900px). A `Surface` card, `--shadow-sm`, `2rem` padding, a `1.15rem` heading, a `300px` (340px full-width) canvas wrapper and an optional muted note. Chart.js colors come from the `--chart-*` tokens, so the same charts stay legible in both themes. Labels use short forms (`Depto`) and never rotate. If Chart.js fails, `.charts-fallback` is revealed.
@@ -299,10 +313,10 @@ A continuously scrolling proof wall: `.client-logo` images at 64px height (48px 
 The movement is deliberate: the client wall is social proof that has to read as alive, not a static grid. The mechanical detector flags auto-scrolling marquees as slop, so this project carries a documented `ignore-rule marquee` exception in `.impeccable/config.json`. Do not "fix" it into a static row, and do not remove the duplication: without the second copy the loop shows a gap.
 
 ### Unidades (servicios.html)
-`.unidades` (980px) holds three `.unidad` rows separated by hairlines. Each row: the unit's official logo at 64px height (60px under 768px), an `h2` at `clamp(1.4rem, 2.6vw, 1.7rem)`, a description at 72ch, and `.unidad-lista` — a one-column list with a 10×2px orange dash per item, `1.75rem` hanging indent, and an optional `<strong>` lead-in for the three long service descriptions.
+`.unidades` (1040px) holds three `.unidad` rows separated by `--hairline` rules. Above 1024px each row is a `288px` rail (`.unidad-cabeza`: the official logo at 64px plus the unit's `h2` at `clamp(1.5rem, 2.2vw, 2rem)`, 700) and a content column with the description at 72ch and `.unidad-lista`. The list is one column with a 10×2px orange dash per item, a `1.75rem` hanging indent and a `<strong>` lead-in that renders as a block, so the three long service descriptions read as titled services instead of one wall. Under 1024px the row collapses to one column.
 
 ### Empresas del grupo (quienes-somos.html)
-`.empresas` (900px) is a divided list. Each `.empresa` row is a flex line: a `120×56px` logo box with `object-fit: contain`, name plus rubro, and an orange `↗` for the rows that link out. The whole row is the link when there is one; MegaObras has no site, so it renders as a non-interactive row.
+`.empresas` (900px, left-aligned with the section title) is a two-up grid of divided rows, one column under 900px. Each `.empresa` is a flex line: an `88×44px` logo box with `object-fit: contain`, name plus rubro, and an orange `↗` for the rows that link out. Two-up keeps the text track at ~284px instead of the ~698px a full-width row leaves empty. The whole row is the link when there is one; MegaObras has no site, so it renders as a non-interactive row.
 
 ### Logros
 `.logros` is a divided list, not a card grid: `1.5rem` bottom padding, `1px` hairline, `<strong>` lead-in in `--heading-ink`, copy in `--text-medium`. No colored side borders.
@@ -321,13 +335,13 @@ The conversion component, used on `/contacto.html`. `.lead-form` is a `Surface` 
 - **Routing:** the interest value maps to a subject (`[Inversión]`, `[Asesoría]`, `[Datos]`, `[Socio pasivo]`, `[Desarrollo]`, `[Vender]`) and to the `interes` property of the Umami `form` event. See `docs/conversion-y-formularios.md`.
 
 ### Header & Navigation
-Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left, five text links right (`Inicio`, `Inteligencia Inmobiliaria`, `Nuestros Servicios`, `Quiénes Somos`, `Contacto`). Active page is marked with `aria-current="page"` and an orange underline that animates in from the left; hover turns the label `Signal Ink`. Below 768px the links collapse into a hamburger-triggered dropdown. In dark mode the header goes `rgba(10, 15, 26, 0.95)` and the logo swaps to the dark-background asset via JS and CSS `content`.
+Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left, five text links right. The mobile trigger is a real `<button>` with `aria-controls`, not a `div[role=button]` (`Inicio`, `Inteligencia Inmobiliaria`, `Nuestros Servicios`, `Quiénes Somos`, `Contacto`). Active page is marked with `aria-current="page"` and an orange underline that animates in from the left; hover turns the label `Signal Ink`. Below 768px the links collapse into a hamburger-triggered dropdown. In dark mode the header goes `rgba(10, 15, 26, 0.95)` and the logo swaps to the dark-background asset via JS and CSS `content`.
 
 ### Closing CTA Bands
 `.cta-final`: `7rem` padding on a three-stop navy gradient, centered white headline, one supporting line, one orange button, with the same dot grid as the hero at 40% opacity. Used on the home page, servicios and inteligencia-inmobiliaria. It carries no heading when it is a pure hand-off (servicios), only the supporting line and the button.
 
 ### Banda Oscura
-`.banda-oscura`: the one navy band inside a light page (inteligencia-inmobiliaria). Centered `.banda-titulo` with the orange bar, then `.banda-lista` — a one-column list of `.banda-item` rows with a 48px icon tile at 10% white, a 600-weight heading and 70%-white copy capped at 62ch.
+`.banda-oscura`: the one navy band inside a light page (inteligencia-inmobiliaria), flat `primary-dark` with a `--white-10` top seam so it separates from the interior hero above. Centered `.banda-titulo` with the orange bar, then `.banda-lista` — a one-column list of `.banda-item` rows with a 48px icon tile at 10% white, a 600-weight heading and 70%-white copy capped at 62ch.
 
 ### Accesos
 `.accesos`: three-up grid (one column under 900px) of `.acceso` links to the Looker Studio reports. White 16px-radius card, `2rem` padding, `1.15rem` title, 2-line muted description with `flex: 1`, and an orange "Acceder →" line pinned to the bottom. Hover: `-4px` and `--shadow-lg`.

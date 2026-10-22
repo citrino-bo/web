@@ -61,6 +61,7 @@
   "url": "https://citrino.com.bo"
 }
 </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="styles.css">
     <link rel="preload" href="assets/citrino-logo-claro.png" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +69,6 @@
     <link rel="preconnect" href="https://estadisticas.srv1406344.hstgr.cloud">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <script defer src="https://estadisticas.srv1406344.hstgr.cloud/script.js" data-website-id="072eb175-7fc1-4d66-b54f-32c2f817f940"></script>
 </head>
 <body>
@@ -77,18 +77,18 @@
         <nav aria-label="Principal">
             <div class="nav-container">
                 <a href="index.html" data-umami-event="nav" data-umami-event-ubicacion="logo" data-umami-event-destino="inicio" class="logo"><img src="assets/citrino-logo-claro.png" alt="Citrino Capitales Inmobiliarios" class="logo-img" fetchpriority="high"></a>
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="nav-menu">
                     <li><a href="index.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="inicio" aria-current="page" class="nav-active">Inicio</a></li>
                     <li><a href="inteligencia-inmobiliaria.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="inteligencia">Inteligencia Inmobiliaria</a></li>
                     <li><a href="servicios.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="servicios">Nuestros Servicios</a></li>
                     <li><a href="quienes-somos.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="quienes">Quiénes Somos</a></li>
                     <li><a href="contacto.html" data-umami-event="nav" data-umami-event-ubicacion="header" data-umami-event-destino="contacto">Contacto</a></li>
                 </ul>
-                <div class="hamburger" id="hamburger" role="button" aria-label="Abrir menú de navegación" aria-expanded="false" tabindex="0">
+                <button type="button" class="hamburger" id="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </nav>
     </header>
@@ -185,7 +185,7 @@
                         </div>
                     </div>
                     <div class="mapa-wrapper">
-                        <div id="mapa" aria-label="Mapa de densidad de propiedades por zona" role="application"></div>
+                        <div id="mapa" aria-label="Mapa de densidad de propiedades por zona" role="region"></div>
                         <div class="mapa-loading" id="mapa-loading" role="status">
                             <div class="mapa-spinner"></div>
                             <p>Cargando la base de propiedades…</p>
@@ -197,11 +197,7 @@
                     </div>
                     <p class="mapa-leyenda" id="mapa-leyenda" hidden>
                         <span>Densidad de propiedades</span>
-                        <i style="background:rgba(0,40,87,0.18)" title="5 a 9"></i>
-                        <i style="background:rgba(0,40,87,0.35)" title="10 a 24"></i>
-                        <i style="background:rgba(0,40,87,0.6)" title="25 a 74"></i>
-                        <i style="background:rgba(0,64,128,0.85)" title="75 a 199"></i>
-                        <i style="background:rgba(238,121,0,0.9)" title="200 o más"></i>
+                        <span id="mapa-leyenda-tramos"></span>
                     </p>
                 </div>
             </div>
@@ -209,7 +205,7 @@
             <div class="container">
                 <div class="visualizaciones" id="visualizaciones">
                     <div class="mapa-header">
-                        <h3>Visualizaciones</h3>
+                        <h2>Visualizaciones</h2>
                     </div>
                     <div class="charts-grid">
                         <div class="chart-card">
