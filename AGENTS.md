@@ -8,12 +8,21 @@ Reglas operativas para agentes y humanos en este repo. Quirúrgicas. Si no está
 - CSS con variables `:root`, fuentes Outfit + DM Sans + JetBrains Mono, colores `#002857` / `#ee7900` / `#10b981`.
 - Analítica: Umami — detalle operativo en `citrino-gestion/AGENTS.d/infra.md`.
 - Conversión, CTAs y formularios: criterios en `docs/conversion-y-formularios.md`.
-- Fuente de datos: `citrino-gestion` genera `data/propiedades.json` y corre el pipeline de stats.
+- Fuente de datos: `citrino-gestion` genera la base completa de propiedades (privada); `scripts/agregar_panel.py` la agrega a `data/panel.json`, que es lo único que el sitio sirve.
+
+## Estructura
+
+Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una concern, nunca una página.**
+
+- Páginas: `index.html`, `inteligencia-inmobiliaria.html`, `servicios.html`, `quienes-somos.html`, `contacto.html`, `privacidad.html`, `gracias.html`.
+- Carpetas: `assets/` (imágenes), `data/` (artefactos derivados), `docs/` (documentación), `scripts/` (utilidades del repo). Nada más.
+- Nombres kebab-case, sin espacios ni mayúsculas, en archivos y carpetas.
+- No se crean stubs de redirección: si una página deja de existir, se borra y se actualiza `sitemap.xml`.
 
 ## Comandos
 
-- Verificar navegación: `bash scripts/verificar_navs.sh`
-- Verificar métricas del HTML: `bash scripts/verificar_stats.sh`
+- Verificar navegación y que no queden páginas huérfanas: `bash scripts/verificar_navs.sh`
+- Regenerar el panel de datos publicado: `python scripts/agregar_panel.py <ruta_al_json_completo>`
 - Previsualizar local: `python -m http.server 8080`
 
 ## Diseño y CSS
@@ -26,12 +35,14 @@ Reglas operativas para agentes y humanos en este repo. Quirúrgicas. Si no está
 ## Verificación antes de proponer
 
 - El HTML es la fuente de verdad; la spec puede estar stale. Antes de proponer cambios, leé la versión live (`*.html`, `styles.css`, `script.js`) y reflejá el estado real. Si la spec difiere, marcalo y proponé corregirla primero.
-- Antes de declarar "listo", verificá con el navegador en desktop y mobile y mostrá evidencia (captura + DOM). Sin verificación, no está listo.
+- Antes de declarar "listo", verificá con el navegador en desktop, mobile y modo oscuro, y mostrá evidencia (captura + DOM). Sin verificación, no está listo.
+- El detector de diseño tiene que volver sin hallazgos: `.pi/skills/impeccable/scripts/impeccable detect --json <archivos>`.
 - Un test A/B se aprueba solo con primary metric, baseline rate y duración esperada.
 
 ## No hagas
 
-- No edites `data/propiedades.json` a mano: se genera desde `citrino-gestion`.
+- No commitees la base de propiedades individual: es el activo del negocio. El sitio publica solo agregados (`data/panel.json`, celdas con piso de k-anonimato).
+- No edites `data/panel.json` a mano: se regenera con `scripts/agregar_panel.py`.
 - No commitees claves ni secretos.
 
 ## Proceso

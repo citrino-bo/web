@@ -35,6 +35,7 @@ def main() -> None:
     props = d["propiedades"]
 
     celdas = Counter()
+    detalle = {}
     descartadas = 0
     for p in props:
         lat, lng = p.get("lat"), p.get("lng")
@@ -44,22 +45,26 @@ def main() -> None:
         if not (BBOX[0] <= lat <= BBOX[1] and BBOX[2] <= lng <= BBOX[3]):
             descartadas += 1
             continue
-        i = math.floor(lat / CELDA)
-        j = math.floor(lng / CELDA)
-        celdas[(i, j)] += 1
+        clave = (math.floor(lat / CELDA), math.floor(lng / CELDA))
+        celdas[clave] += 1
+        det = detalle.setdefault(clave, Counter())
+        det[p.get("tipo_operacion")] += 1
+        det[p.get("tipo_inmueble")] += 1
 
     publicables = {
-        (i, j): n for (i, j), n in celdas.items() if n >= K
+        clave: n for clave, n in celdas.items() if n >= K
     }
 
     # Red de seguridad: el total publicado nunca puede reconstruir el total real.
     ocultas = sum(n for (i, j), n in celdas.items() if n < K)
 
+    claves = ("venta", "alquiler", "anticretico", "casa", "departamento", "terreno")
     grilla = [
         {
-            "i": round((i + 0.5) * CELDA, 4),
-            "j": round((j + 0.5) * CELDA, 4),
+            "lat": round((i + 0.5) * CELDA, 4),
+            "lng": round((j + 0.5) * CELDA, 4),
             "n": n,
+            **{k: detalle[(i, j)][k] for k in claves},
         }
         for (i, j), n in sorted(publicables.items(), key=lambda kv: -kv[1])
     ]
@@ -84,6 +89,7 @@ def main() -> None:
         encoding="utf-8",
     )
 
+    assert panel["total"] > 0 and panel["generado"], "encabezado vacío: se pisó la variable del JSON"
     assert all(c["n"] >= K for c in panel["grilla"]), "celda bajo el piso de k"
     assert panel["celdas"] < len(celdas), "la grilla no ocultó ninguna celda"
     print(

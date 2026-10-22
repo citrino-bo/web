@@ -2,20 +2,18 @@
 
 ## Problema
 
-Todos los leads entraban por `wa.me` sin estructura; no se podían filtrar ni derivar.
-El dueño recibe volumen creciente y no logra calificarlo.
+Todos los leads entraban por `wa.me` sin estructura; no se podían filtrar ni derivar. El dueño recibe volumen creciente y no logra calificarlo.
 
 ## Objetivo
 
-Un formulario de calificación que (1) capture el interés, (2) rutee al responsable correcto y (3) sea el único destino de conversión del sitio.
-Criterios completos en `docs/conversion-y-formularios.md`.
+Un formulario de calificación que (1) capture el interés, (2) rutee al responsable correcto y (3) sea el único destino de conversión del sitio. Criterios completos en `docs/conversion-y-formularios.md`.
 
 ## Alcance
 
 - Superficie: sección de conversión de la home (reemplaza las tarjetas de contacto). Luego, página de contacto.
 - Campos: interés (rutea) → nombre → email → WhatsApp (al menos uno de los dos obligatorio) → mensaje obligatorio ("Cómo podemos ayudarte") → dos consentimientos (privacidad y autorización de contacto).
-- Interés: las cuatro opciones que rutean (desarrollar terreno, datos/monitoreo, invertir, vender).
-- Ruteo por asunto: `[Desarrollo]`/`[Datos]` → Nicolás; `[Inversión]`/`[Vender]` → Rolando.
+- Interés: las seis opciones que rutean (comprar como inversión, asesoría personalizada, datos/monitoreo online, socio pasivo, desarrollar terreno, vender).
+- Ruteo por asunto: `[Asesoría]`/`[Datos]` → Nicolás; `[Inversión]`/`[Vender]`/`[Socio pasivo]`/`[Desarrollo]` → ver `docs/conversion-y-formularios.md`, que es el documento normativo.
 - Envío sin backend: Web3Forms con `POST` nativo y `redirect` a `gracias.html`.
 - Accesibilidad WCAG 2.2 AA: etiquetas visibles, foco visible, targets 44px, inputs 16px.
 - Anti-spam: honeypot `botcheck` del servicio.

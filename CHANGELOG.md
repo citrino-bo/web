@@ -4,29 +4,34 @@ Este archivo registra todos los cambios notables en el sitio web de Citrino Capi
 
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] - 2026-10-22
+
+Refactor total de contenido y arquitectura según `docs/refactorizacion_octubre_26/input_julio`. La estética no cambia; el copy y las secciones sí.
 
 ### Added
-- **Páginas nuevas**: `jul-ia/`, `base-de-datos/`, `inteligencia-inmobiliaria/`, `contacto/` y `gracias.html`, con navegación y footer unificados.
-- **Formulario de leads**: sección de conversión en la home con Web3Forms (`POST` nativo sin backend), `redirect` a `gracias.html` y honeypot `botcheck`. La `access_key` queda pendiente como placeholder hasta cargar la clave real.
-- **Ruteo de leads por interés**: el asunto del correo se setea con un listener de `submit` y deriva a Nicolás o Rolando; criterios en `docs/conversion-y-formularios.md` y spec en `specs/leads-form/spec.md`.
-- **SEO**: `sitemap.xml`, `robots.txt`, Open Graph, canonical y schema.org en las páginas vivas.
-- **Analytics Umami**: instrumentación de eventos custom (`page-view`, CTAs, `platform-cta`, `external-link-click`, `section-view`, `scroll-depth`, `engagement-time`) en `script.js` con website-id `072eb175-7fc1-4d66-b54f-32c2f817f940`. Reports creados en Umami: 3 funnels de plataforma por ciudad (SC/CBBA/LP), 5 goals de CTA, 2 breakdowns (páginas, referrers). Board "Informe semanal Citrino" con share público: `https://estadisticas.srv1406344.hstgr.cloud/share/ZW7HlPx7ZQptK9rs`.
+- **Nuestros Servicios** (`servicios.html`): las tres unidades de negocio con su logo oficial, descripción y lista de servicios.
+- **Quiénes Somos** (`quienes-somos.html`): identidad, grupo, seis empresas con logo y enlace, logros del grupo y equipo completo con fotos y LinkedIn.
+- **Inicio**: censo de nuevos proyectos con tabla por ciudad, censo de oferta pública online con mapa de densidad y tres visualizaciones, cifras de negocio y cierre «Convertí datos en decisiones».
+- **Densidad de propiedades**: mapa Leaflet sobre `data/panel.json` con filtros por tipo y operación, leyenda de cinco tramos y carga diferida por `IntersectionObserver`.
+- **`scripts/agregar_panel.py`**: agrega la base completa a 885 celdas de ~550 m con piso de k-anonimato k=5 y descarte de coordenadas inválidas.
 
 ### Changed
-- **Navegación y footer**: unificados en todas las páginas vivas.
-- **Tipografía**: migración a Outfit + DM Sans + JetBrains Mono, unificada en el sitio.
-- **Contacto**: referencias a `info@citrino.com.bo`.
+- **Navegación**: Inicio, Inteligencia Inmobiliaria, Nuestros Servicios, Quiénes Somos y Contacto. El mapa y las visualizaciones se mudan de `/base-de-datos/` a Inicio.
+- **Formulario de contacto**: seis opciones de interés en lugar de cuatro, con asuntos `[Inversión]`, `[Asesoría]`, `[Datos]`, `[Socio pasivo]`, `[Desarrollo]` y `[Vender]`. Ver `docs/conversion-y-formularios.md`.
+- **Estructura del repo**: la raíz queda solo con páginas planas y archivos del sitio; toda carpeta es una concern (`assets`, `data`, `docs`, `scripts`).
+- **Assets**: renombrados a kebab-case sin espacios, organizados en `unidades/`, `grupo/`, `clientes/` y `equipo/`.
+- **`styles.css` y `script.js`**: reescritos sobre el mismo sistema de diseño, sin selectores muertos. Rampa tipográfica cerrada en siete pasos fijos y tres fluidos.
+- **Documentación**: `DESIGN.md` reescrito sobre la implementación real, `PRODUCT.md` actualizado, `AGENTS.md` con la convención de estructura.
 
 ### Removed
-- **Páginas Capitales y Desarrollos**: dadas de baja; redirigen a `/` con `noindex`.
+- **Páginas**: `base-de-datos/`, `capitales/`, `desarrollos/`, `jul-ia/` y sus stubs de redirección. Nada de eso existe en el input de julio.
+- **`data/propiedades.json`**: 23.222 inmuebles con lat/lng, precio y superficies ya no se sirven ni se versionan; el repo es público y esa base es el activo del negocio.
+- **`scripts/actualizar_stats.py` y `scripts/verificar_stats.sh`**: sincronizaban cifras hardcodeadas que el sitio nuevo ya no tiene.
+- **Imágenes sueltas en la raíz**: capturas de verificación de iteraciones anteriores.
 
 ### Fixed
-- **Mobile scroll vertical**: Corregido problema de scroll que ocultaba títulos al navegar en móvil y desktop
-  - Cambiado `.marquee-container` de `overflow: hidden` a `overflow-x: hidden`
-  - Eliminado `overflow-x: hidden` redundante del `.container`
-  - Agregado `overflow-x: hidden` explícito en media queries de móvil para el marquee
-  - Solucionado conflicto de contexto de scroll que capturaba gestor táctil
+- **Mapa fuera del país**: 241 registros con coordenadas inválidas (0,0, La Habana, San Francisco) ya no se dibujan.
+- **Accesibilidad**: `aria-pressed` en los filtros del mapa, `aria-current` en la navegación, contraste de titulares en modo oscuro mediante `--heading-ink`, y etiquetas de formulario asociadas por `for`/`id`.
 
 ## [1.2.1] - 2026-02-22
 

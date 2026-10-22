@@ -1,7 +1,6 @@
 # Roadmap
 
-Plan por feature del sitio de Citrino Capitales Inmobiliarios.
-Cada feature tiene estado y, cuando aplica, su spec o doc de referencia.
+Plan por feature del sitio de Citrino Capitales Inmobiliarios. Cada feature tiene estado y, cuando aplica, su spec o doc de referencia.
 
 ## Hecho
 
@@ -13,10 +12,10 @@ Cada feature tiene estado y, cuando aplica, su spec o doc de referencia.
 
 ### Páginas
 
-- `base-de-datos/`: mapa interactivo (Leaflet) y métricas (Chart.js).
-- `inteligencia-inmobiliaria/`: Plataforma Citrino en alianza con la CBDI.
+- Inicio: mapa de densidad (Leaflet) y visualizaciones (Chart.js), movidos desde `base-de-datos/`.
+- `inteligencia-inmobiliaria.html`: Plataforma Citrino en alianza con la CBDI.
 - `contacto/`: formulario, email y ubicación.
-- Baja de `jul-ia/`, `capitales/` y `desarrollos/`, que redirigen a `/`.
+- Baja de `jul-ia/`, `capitales/`, `desarrollos/` y `base-de-datos/`: no existen en el input de julio y no dejan redirecciones.
 
 ### Captación
 
