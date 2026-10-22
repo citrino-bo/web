@@ -15,7 +15,9 @@ Sin argumento lee data/propiedades.json (gitignoreado).
 """
 import json
 import math
+import re
 import sys
+import unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -28,6 +30,19 @@ K = 5          # piso de k-anonimato por celda
 # Bbox de Bolivia: descarta geocodificaciones fallidas que caen en (0,0),
 # La Habana o San Francisco y dibujarian marcadores fuera del pais.
 BBOX = (-23.0, -9.0, -70.0, -57.0)  # lat_min, lat_max, lng_min, lng_max
+
+
+def normalizar_zona(nombre):
+    """Colapsa las variantes que son la misma zona escrita distinto.
+
+    Solo corrige mayusculas, acentos y espacios: 'Urubó' y 'Urubo' son la misma
+    zona, 'Zona Norte' y 'zona norte' tambien. No une 'Zona Centro' con 'Centro'
+    ni recorta descripciones como 'Zona norte entre 3er y 4to anillo Radial 26':
+    eso requiere un catalogo de zonas, que hoy no existe.
+    """
+    limpio = unicodedata.normalize("NFD", str(nombre).strip().lower())
+    limpio = "".join(c for c in limpio if unicodedata.category(c) != "Mn")
+    return re.sub(r"\s+", " ", limpio)
 
 
 def main() -> None:
@@ -69,15 +84,24 @@ def main() -> None:
         for (i, j), n in sorted(publicables.items(), key=lambda kv: -kv[1])
     ]
 
-    zonas = len({p["zona"] for p in props if p.get("zona")})
+    # top_zonas agrupado por zona normalizada; la etiqueta es la variante mas usada.
+    por_zona = {}
+    for p in props:
+        if not p.get("zona"):
+            continue
+        por_zona.setdefault(normalizar_zona(p["zona"]), Counter())[p["zona"]] += 1
+    top_zonas = [
+        {"zona": variantes.most_common(1)[0][0], "count": sum(variantes.values())}
+        for variantes in por_zona.values()
+    ]
+    top_zonas.sort(key=lambda z: -z["count"])
     panel = {
         "generado": d.get("generado"),
         "fuente": d.get("fuente"),
         "total": d["total"],
-        "zonas": zonas,
         "por_tipo": d.get("por_tipo", {}),
         "por_operacion": d.get("por_operacion", {}),
-        "top_zonas": d.get("top_zonas", []),
+        "top_zonas": top_zonas[:10],
         "celda": CELDA,
         "k": K,
         "celdas": len(grilla),
@@ -93,6 +117,7 @@ def main() -> None:
     assert all(c["n"] >= K for c in panel["grilla"]), "celda bajo el piso de k"
     assert panel["celdas"] < len(celdas), "la grilla no ocultó ninguna celda"
     print(
+        f"zonas normalizadas {len(por_zona)} (crudas {len({p['zona'] for p in props if p.get('zona')})}) | "
         f"celdas publicadas {panel['celdas']}/{len(celdas)} | "
         f"propiedades ocultas en celdas chicas {ocultas} | "
         f"descartadas por coordenada invalida {descartadas} | "

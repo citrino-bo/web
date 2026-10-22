@@ -393,8 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     const meta = document.getElementById('mapa-meta');
                     if (meta) {
-                        meta.textContent = panel.total.toLocaleString('es-BO') + ' propiedades · ' +
-                            panel.zonas.toLocaleString('es-BO') + ' zonas · corte ' + panel.generado;
+                        meta.textContent = panel.total.toLocaleString('es-BO') + ' propiedades · corte ' + panel.generado;
                     }
 
                     pintar();

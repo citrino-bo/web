@@ -280,7 +280,7 @@ Borders are mostly absent: cards rely on fill and a neutral shadow, sections on 
 `.tabla-censo`: full width, `border-collapse`, right-aligned numerics with tabular figures, left-aligned first column at zero side padding, `0.75rem` uppercase mono headers over a `2px` navy hairline, `1px` row hairlines, and the inmuebles column in `--secondary-ink` at 600. A `.tabla-censo caption` in `0.9rem` muted sits above. The row header is a `<th scope="row">`.
 
 ### Density Map
-`.mapa` sits on a `Paper` band: a `h3` heading, a mono meta line (total · zonas · corte), two `.filtro-grupo` pill groups (type, operation), the map frame and a legend.
+`.mapa` sits on a `Paper` band: a `h3` heading, a mono meta line (total · corte de la base), two `.filtro-grupo` pill groups (type, operation), the map frame and a legend.
 
 - **Frame:** `.mapa-wrapper` is a 16px-radius clipped box with a `1px` hairline, `520px` tall (`420px` under 768px). Leaflet tiles inside; the container carries `role="application"` and an `aria-label`.
 - **Rendering:** one `L.circleMarker` per aggregated cell on a shared `L.canvas` renderer, no stroke, radius 4/6/8/11/14px and color by count bucket. Radius is in pixels on purpose: at country scale a 550 m cell would be sub-pixel, so density is drawn as a cloud of constant-size dots that separates as you zoom in. Scroll-wheel zoom is off so the page keeps scrolling; the zoom control, drag and popups carry interaction.
