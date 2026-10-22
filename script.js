@@ -72,13 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
     })();
     track('page-view', { page: pagina });
 
-    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            track(btn.classList.contains('btn-primary') ? 'cta-primary-click' : 'cta-secondary-click', {
-                page: pagina,
-                href: btn.getAttribute('href') || ''
-            });
-        });
+    // Un solo listener para todo lo que lleva data-evento. El nombre del evento es único por elemento (nav-inicio, cta-hero-servicios, social-linkedin...) porque Umami no segmenta custom events por propiedades: la única dimensión disponible es el nombre.
+    document.addEventListener('click', function(e) {
+        const el = e.target.closest && e.target.closest('[data-evento]');
+        if (!el) return;
+        track(el.getAttribute('data-evento'), { page: pagina });
     });
 
     document.querySelectorAll('section[id]').forEach(function(seccion) {
@@ -91,18 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, { threshold: 0.4 });
         observadorSeccion.observe(seccion);
-    });
-
-    document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-            track('external-link-click', { page: pagina, href: link.getAttribute('href') || '' });
-        });
-    });
-
-    document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-            track('contact-link-click', { page: pagina, href: link.getAttribute('href') });
-        });
     });
 
     (function() {
@@ -165,6 +151,24 @@ document.addEventListener('DOMContentLoaded', function() {
             'Quiero desarrollar mi terreno': { asunto: '[Desarrollo] Nuevo contacto desde la web', slug: 'desarrollo' },
             'Quiero vender una propiedad': { asunto: '[Vender] Nuevo contacto desde la web', slug: 'vender' }
         };
+
+        let formularioIniciado = false;
+        leadForm.addEventListener('focusin', function() {
+            if (formularioIniciado) return;
+            formularioIniciado = true;
+            track('form-inicio', { page: pagina });
+        });
+
+        leadForm.querySelectorAll('input[name="interes"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                const destino = ruteo[radio.value];
+                if (destino) track('interes-' + destino.slug, { page: pagina });
+            });
+        });
+
+        leadForm.addEventListener('invalid', function() {
+            track('form-invalido', { page: pagina });
+        }, true);
 
         leadForm.addEventListener('submit', function() {
             const elegido = leadForm.querySelector('input[name="interes"]:checked');
@@ -257,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 punto.bindPopup('<strong>' + n.toLocaleString('es-BO') + '</strong> propiedades');
                 punto.on('click', function() {
-                    track('mapa-celda-click', { page: pagina, n: n, tipo: tipo, operacion: operacion });
+                    track('mapa-celda-click', { page: pagina });
                 });
                 capa.addLayer(punto);
             });
@@ -330,27 +334,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 options: base
             });
-
-            const zonas = datos.top_zonas.slice(0, 10);
-            new Chart(document.getElementById('chart-zonas'), {
-                type: 'bar',
-                data: {
-                    labels: zonas.map(function(z) { return z.zona; }),
-                    datasets: [{
-                        data: zonas.map(function(z) { return z.count; }),
-                        backgroundColor: zonas.map(function(_, i) { return i === 0 ? acento : barra; }),
-                        borderRadius: 6,
-                        maxBarThickness: 22
-                    }]
-                },
-                options: Object.assign({}, base, {
-                    indexAxis: 'y',
-                    scales: {
-                        x: { beginAtZero: true, grid: { color: grilla }, ticks: { color: texto } },
-                        y: { grid: { display: false }, ticks: { color: texto } }
-                    }
-                })
-            });
         }
 
         function mostrarError() {
@@ -382,6 +365,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         scrollWheelZoom: false,
                         zoomControl: true
                     });
+                    mapa.on('zoomend', function() {
+                        const z = mapa.getZoom();
+                        track('mapa-zoom-' + (z < 8 ? 'pais' : z < 11 ? 'departamento' : z < 13 ? 'ciudad' : 'detalle'), { page: pagina });
+                    });
+
                     lienzo = L.canvas({ padding: 0.6 });
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -390,11 +378,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     const cargando = document.getElementById('mapa-loading');
                     if (cargando) cargando.hidden = true;
-
-                    const meta = document.getElementById('mapa-meta');
-                    if (meta) {
-                        meta.textContent = panel.total.toLocaleString('es-BO') + ' propiedades · corte ' + panel.generado;
-                    }
 
                     pintar();
                     graficos(panel);
@@ -414,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (esTipo) tipo = btn.getAttribute('data-tipo');
                     else operacion = btn.getAttribute('data-operacion');
                     pintar();
-                    track('mapa-filtro', { page: pagina, tipo: tipo, operacion: operacion });
+                    track(esTipo ? 'mapa-filtro-tipo-' + tipo : 'mapa-filtro-op-' + operacion, { page: pagina });
                 });
             });
         }

@@ -50,3 +50,7 @@ data/propiedades.json
 .pi/
 .agents/
 skills-lock.json
+
+# Python
+__pycache__/
+*.pyc
