@@ -54,3 +54,7 @@ skills-lock.json
 # Python
 __pycache__/
 *.pyc
+
+# Originales del brief: los binarios de Word quedan en disco, fuera del repo.
+docs/refactorizacion_octubre_26/input_julio/*.docx
+docs/refactorizacion_octubre_26/input_julio/*.rtf
