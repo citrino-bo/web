@@ -41,3 +41,12 @@ v4-*.png
 assets/referencias/
 openspec/config.yaml
 .opencode/package-lock.json
+
+# Datos crudos: la base completa no se publica ni se versiona.
+# El sitio consume data/panel.json, generado por scripts/agregar_panel.py.
+data/propiedades.json
+
+# Artefactos de agentes
+.pi/
+.agents/
+skills-lock.json
