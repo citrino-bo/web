@@ -308,7 +308,7 @@ Borders are mostly absent: cards rely on fill and a neutral shadow, sections on 
 `.charts-grid` is two-up (`1fr` under 900px). A `Surface` card, `--shadow-sm`, `2rem` padding, a `1.15rem` heading, a `300px` (340px full-width) canvas wrapper and an optional muted note. Chart.js colors come from the `--chart-*` tokens, so the same charts stay legible in both themes. Labels use short forms (`Depto`) and never rotate. If Chart.js fails, `.charts-fallback` is revealed.
 
 ### Client Marquee
-A continuously scrolling proof wall: `.client-logo` images at 64px height (48px under 768px), grayscale at 60% opacity, in a track that holds the seven logos twice and translates `-50%` on a 34s linear loop for a seamless wrap. The strip is clipped by `overflow: hidden` with an 8% edge mask. Hover pauses the loop and restores color. Under `prefers-reduced-motion` it does not animate.
+A continuously scrolling proof wall: `.client-logo` images at 64px height (48px under 768px), grayscale at 60% opacity, in a track that holds the seven logos twice and translates `-50%` on a 34s linear loop for a seamless wrap. The strip is clipped by `overflow: hidden` with an 8% edge mask. Hover pauses the loop and restores color, and a visible `.marquesina-pausa` button toggles `.pausada` for keyboard and switch users (WCAG 2.2.2). Under `prefers-reduced-motion` it does not animate.
 
 The movement is deliberate: the client wall is social proof that has to read as alive, not a static grid. The mechanical detector flags auto-scrolling marquees as slop, so this project carries a documented `ignore-rule marquee` exception in `.impeccable/config.json`. Do not "fix" it into a static row, and do not remove the duplication: without the second copy the loop shows a gap.
 
@@ -350,7 +350,8 @@ Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left,
 `{colors.footer}`, `5rem` top / `2rem` bottom padding, three columns (brand with the dark-background logo plus the tagline, navigation list, five social icons as 44px tiles with a 12px radius at 8–10% white). Bottom row holds the copyright and the privacy link in `0.875rem` at 50% white.
 
 ### Browser Surfaces
-Selection is navy with white text, the caret is orange, the scrollbar is tinted from `--primary-20`, `:focus-visible` is a 2px navy outline at 2px offset, and `font-variant-numeric: tabular-nums` is set on `body` so every figure column aligns.
+
+The viewport meta carries `viewport-fit=cover` and the hero, the container and the footer pad with `env(safe-area-inset-*)`, so nothing sits under a notch or a home indicator. `og:image` is `citrino-og.png` at 1200×630 (1.91:1, the ratio `summary_large_image` expects); the square `citrino-social.png` stays as the touch icon and the JSON-LD logo. Selection is navy with white text, the caret is orange, the scrollbar is tinted from `--primary-20`, `:focus-visible` is a 2px navy outline at 2px offset, and `font-variant-numeric: tabular-nums` is set on `body` so every figure column aligns.
 
 ## Do's and Don'ts
 

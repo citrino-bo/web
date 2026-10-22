@@ -183,7 +183,7 @@ img {
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    padding-inline: clamp(1.25rem, 3.5vw, 3rem);
+    padding-inline: max(clamp(1.25rem, 3.5vw, 3rem), env(safe-area-inset-left));
 }
 
 .container--narrow {
@@ -260,6 +260,7 @@ img {
 .logo {
     display: flex;
     align-items: center;
+    min-height: 44px;
     text-decoration: none;
 }
 
@@ -347,7 +348,7 @@ img {
     min-height: 92vh;
     display: flex;
     align-items: center;
-    padding: 8rem 2rem 5rem;
+    padding: 8rem max(2rem, env(safe-area-inset-right)) 5rem max(2rem, env(safe-area-inset-left));
     overflow: hidden;
 }
 
@@ -406,7 +407,7 @@ img {
 .hero--interior {
     min-height: auto;
     padding: 9rem 2rem 5rem;
-    background: linear-gradient(135deg, var(--primary-color-light) 0%, var(--primary-color) 100%);
+    background: linear-gradient(135deg, var(--primary-color-light) 0%, #00325e 100%);
 }
 
 .hero--interior .hero-title {
@@ -936,6 +937,32 @@ img {
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
+.marquesina-pausa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    margin-top: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-20);
+    border-radius: 10px;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-medium);
+    cursor: pointer;
+}
+
+.marquesina-pausa:hover {
+    border-color: var(--secondary-color);
+    color: var(--heading-ink);
+}
+
+.marquee-content.pausada {
+    animation-play-state: paused;
+}
+
 .marquee-content {
     display: flex;
     align-items: center;
@@ -1015,7 +1042,7 @@ img {
 
 .banda-oscura {
     background: var(--primary-color-darker);
-    border-top: 1px solid var(--white-10);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
     color: #fff;
     padding: 6rem 0;
     position: relative;
@@ -1142,7 +1169,8 @@ img {
 }
 
 .acceso-link {
-    margin-top: 1.5rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
     font-size: 1rem;
     font-weight: 600;
     color: var(--secondary-ink);
@@ -1405,6 +1433,12 @@ a.empresa:hover .empresa-nombre {
     line-height: 1.45;
 }
 
+.icono-flecha {
+    width: 0.85em;
+    height: 0.85em;
+    flex-shrink: 0;
+}
+
 .persona-linkedin {
     margin-top: auto;
     display: inline-flex;
@@ -1565,15 +1599,16 @@ a.empresa:hover .empresa-nombre {
 
 .lead-consent {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.6rem;
+    min-height: 44px;
     font-size: 0.875rem;
     color: var(--text-medium);
     cursor: pointer;
 }
 
 .lead-consent input {
-    margin-top: 0.2rem;
+    margin-top: 0;
     accent-color: var(--secondary-color);
     width: 18px;
     height: 18px;
@@ -1618,7 +1653,7 @@ a.empresa:hover .empresa-nombre {
 .footer {
     background: var(--bg-dark);
     color: var(--white-70);
-    padding: 7rem 0 2rem;
+    padding: 7rem 0 max(2rem, env(safe-area-inset-bottom));
 }
 
 .footer-content {
@@ -1659,8 +1694,10 @@ a.empresa:hover .empresa-nombre {
 }
 
 .footer-nav-links a {
-    display: inline-block;
-    padding: 0.25rem 0;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
     font-size: 1rem;
     color: var(--white-90);
     text-decoration: none;
@@ -1713,6 +1750,18 @@ a.empresa:hover .empresa-nombre {
     font-size: 0.875rem;
     color: var(--white-50);
     text-decoration: none;
+}
+
+.footer-bottom a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+}
+
+.footer-brand-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 .footer-bottom a:hover {

@@ -121,8 +121,17 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('pagehide', informar);
     })();
 
-    // ── Marquesina: pausa fuera de viewport ──────
+    // ── Marquesina: pausa manual y pausa fuera de viewport ──────
     const marquesina = document.querySelector('.marquee-content');
+    const botonPausa = document.getElementById('marquesina-pausa');
+    if (marquesina && botonPausa) {
+        botonPausa.addEventListener('click', function() {
+            const pausada = marquesina.classList.toggle('pausada');
+            botonPausa.setAttribute('aria-pressed', String(pausada));
+            botonPausa.textContent = pausada ? 'Reanudar movimiento' : 'Pausar movimiento';
+            track('marquesina', { page: pagina, accion: pausada ? 'pausa' : 'reanuda' });
+        });
+    }
     if (marquesina && 'IntersectionObserver' in window) {
         const observadorMarquesina = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
