@@ -288,6 +288,11 @@ img {
     display: block;
 }
 
+/* El tema lo decide el CSS, así que el logo se cambia acá y no por JS */
+.logo-img--oscuro {
+    display: none;
+}
+
 .nav-menu {
     display: flex;
     align-items: center;
@@ -2465,6 +2470,14 @@ a.empresa:hover .empresa-nombre {
 
     .header {
         background: rgba(10, 15, 26, 0.95);
+    }
+
+    .logo-img--claro {
+        display: none;
+    }
+
+    .logo-img--oscuro {
+        display: block;
     }
 
     .hero,

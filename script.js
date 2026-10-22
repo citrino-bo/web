@@ -22,12 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ── Logo según el tema ───────────────────────
-    const logoImg = document.querySelector('.logo-img');
-    if (logoImg && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        logoImg.src = logoImg.src.replace('logo-claro', 'logo-oscuro');
-    }
-
     // ── Sombra del header al scrollear ───────────
     let ticking = false;
     window.addEventListener('scroll', function() {
