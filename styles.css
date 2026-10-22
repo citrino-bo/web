@@ -589,11 +589,6 @@ img {
     transform: scaleX(1);
 }
 
-.section-subtitle.section-subtitle--center {
-    text-align: center;
-    margin-inline: auto;
-}
-
 .section-title--wide {
     max-width: 32ch;
 }
@@ -1266,22 +1261,43 @@ img {
 
 .banda-lista {
     list-style: none;
-    max-width: 860px;
+    max-width: 1100px;
     margin: 3rem auto 0;
     display: grid;
-    gap: 2rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--white-20);
+}
+
+@media (max-width: 900px) {
+    .banda-lista {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .banda-item,
+    .banda-item:nth-child(even) {
+        padding: 1.75rem 0;
+        border-left: 0;
+    }
 }
 
 .banda-item {
     display: flex;
     gap: 1.25rem;
     align-items: flex-start;
+    padding: 2rem 2rem 2rem 0;
+    border-bottom: 1px solid var(--white-20);
+}
+
+.banda-item:nth-child(even) {
+    padding: 2rem 0 2rem 2rem;
+    border-left: 1px solid var(--white-20);
 }
 
 .banda-icono {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1291,12 +1307,12 @@ img {
 }
 
 .banda-icono svg {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
 }
 
 .banda-item h3 {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: #fff;
     margin-bottom: 0.35rem;
@@ -1429,6 +1445,11 @@ img {
     letter-spacing: -0.02em;
     color: var(--heading-ink);
     margin-bottom: 1rem;
+}
+
+.grupo-texto {
+    margin-top: 2.5rem;
+    max-width: 38rem;
 }
 
 .unidad-descripcion + .unidad-descripcion {
@@ -1713,16 +1734,82 @@ a.empresa:hover .empresa-nombre {
     background: var(--bg-light);
 }
 
+/* Riel + formulario: la tarjeta llena su columna en vez de flotar en 780px de papel. */
+.contacto-grid {
+    display: grid;
+    gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+    .contacto-grid {
+        grid-template-columns: 288px minmax(0, 1fr);
+        column-gap: clamp(2rem, 4vw, 4.5rem);
+        align-items: start;
+    }
+
+    .contacto-riel {
+        position: sticky;
+        top: 7rem;
+    }
+
+    .lead-form {
+        max-width: none;
+        margin: 0;
+    }
+
+    .lead-field,
+    .lead-submit,
+    .lead-reassurance {
+        max-width: 34rem;
+    }
+}
+
+.contacto-promesa {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--text-medium);
+    max-width: 26ch;
+}
+
+.contacto-directo {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+    font-size: 1rem;
+    color: var(--text-medium);
+}
+
+.contacto-directo a {
+    color: var(--secondary-ink);
+    font-weight: 600;
+    text-underline-offset: 3px;
+}
+
 .lead-form {
     background: var(--white);
     border-radius: 16px;
-    padding: clamp(1.5rem, 4vw, 2.75rem);
+    padding: 0;
+    overflow: hidden;
     max-width: 660px;
     margin: 3rem auto 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
     box-shadow: var(--shadow-md);
+}
+
+.lead-form > :not(.lead-masthead) {
+    margin-inline: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.lead-form > :last-child {
+    margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.lead-masthead {
+    background: var(--gradient-primary);
+    padding: 2rem clamp(1.5rem, 4vw, 2.75rem) 1.75rem;
+    color: #fff;
 }
 
 .lead-honeypot {
@@ -1739,31 +1826,38 @@ a.empresa:hover .empresa-nombre {
 
 .lead-question {
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--heading-ink);
-    margin-bottom: 1rem;
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
     padding: 0;
 }
 
 .lead-options {
     display: grid;
-    gap: 0.6rem;
+    gap: 0;
 }
 
+/* Lista dividida, no seis cajas: la selección se marca con fill, no con contorno. */
 .lead-option {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--primary-20);
-    border-radius: 12px;
+    padding: 0.95rem 1rem;
+    margin-inline: -1rem;
+    border: 0;
+    border-top: 1px solid var(--hairline);
+    border-radius: 0;
     cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: background 0.2s ease;
+}
+
+.lead-option:last-child {
+    border-bottom: 1px solid var(--hairline);
 }
 
 .lead-option:hover {
-    border-color: var(--secondary-color);
+    background: var(--bg-light);
 }
 
 .lead-option input {
@@ -1775,7 +1869,6 @@ a.empresa:hover .empresa-nombre {
 }
 
 .lead-option:has(input:checked) {
-    border-color: var(--secondary-color);
     background: var(--secondary-10);
 }
 
@@ -1883,19 +1976,6 @@ a.empresa:hover .empresa-nombre {
     font-size: 0.875rem;
     color: var(--text-light);
     text-align: center;
-}
-
-.contact-secondary {
-    margin-top: 1.75rem;
-    font-size: 1rem;
-    color: var(--text-medium);
-    text-align: center;
-}
-
-.contact-secondary a {
-    color: var(--secondary-ink);
-    font-weight: 600;
-    text-underline-offset: 3px;
 }
 
 /* ── Footer ─────────────────────────────────── */

@@ -64,8 +64,11 @@
         </section>
 
         <section class="contacto">
-            <div class="container">
-                <p class="section-subtitle section-subtitle--center">Elegí una opción y nos pondremos en contacto</p>
+            <div class="container contacto-grid">
+                <aside class="contacto-riel">
+                    <p class="contacto-promesa">Elegí una opción y nos pondremos en contacto</p>
+                    <p class="contacto-directo">¿Preferís escribirnos directo? <a href="mailto:info@citrino.com.bo" data-umami-event="outbound" data-umami-event-tipo="email" data-umami-event-destino="info">info@citrino.com.bo</a></p>
+                </aside>
 
                 <form class="lead-form" id="lead-form" action="https://api.web3forms.com/submit" method="POST">
                     <input type="hidden" name="access_key" value="d4814654-6a57-4d70-8b35-e4c5795c0cbc">
@@ -74,8 +77,11 @@
                     <input type="hidden" name="from_name" value="Sitio Citrino">
                     <input type="checkbox" name="botcheck" class="lead-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-                    <fieldset class="lead-fieldset">
-                        <legend class="lead-question">¿Qué necesitás?</legend>
+                    <div class="lead-masthead">
+                        <h2 class="lead-question" id="lead-pregunta">¿Qué necesitás?</h2>
+                    </div>
+
+                    <fieldset class="lead-fieldset" aria-labelledby="lead-pregunta">
                         <div class="lead-options">
                             <label class="lead-option">
                                 <input type="radio" name="interes" value="Quiero comprar una propiedad como inversión" required>
@@ -156,8 +162,6 @@
                     <button type="submit" class="btn btn-primary lead-submit" id="lead-submit">Solicitar asesoría</button>
                     <p class="lead-reassurance">Nos pondremos en contacto. No compartimos tus datos.</p>
                 </form>
-
-                <p class="contact-secondary">¿Preferís escribirnos directo? <a href="mailto:info@citrino.com.bo" data-umami-event="outbound" data-umami-event-tipo="email" data-umami-event-destino="info">info@citrino.com.bo</a></p>
             </div>
         </section>
     </main>
