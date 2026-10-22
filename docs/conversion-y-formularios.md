@@ -27,9 +27,6 @@ El formulario vive en una sola página, `contacto.html`. En el resto del sitio l
 
 Nunca dos botones del mismo peso en el mismo bloque, ni un botón dentro de una card informativa.
 
-Riesgo asumido: el home ya no captura el lead en el lugar, así que el camino a la conversión suma una navegación.
-No hay umbral definido de antemano: la comparación es el conteo semanal de `lead-submit` en las cuatro semanas previas al cambio contra las cuatro posteriores, mismo evento y misma unidad, más `page-view` de `contacto` para ver si la gente llega. Si el conteo cae de forma sostenida, se repone el formulario en Inicio.
-
 Fuente (independiente): Unbounce, *2026 Conversion Benchmark*, 44M conversiones sobre 18.639 landings: 1 CTA 13,5%; 2 CTA 11,9%; 3+ CTA 10,5%.
 Fuente (independiente): Levri, 2026, 340 landings SaaS: 1 CTA above-the-fold 8,4% vs 3+ CTA 3,2%.
 

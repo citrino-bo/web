@@ -173,7 +173,7 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 - **Authority Dark / Deep** (`{colors.primary-dark}`, `{colors.primary-deep}`): the two dark stops of the hero and closing CTA gradients.
 
 ### Secondary
-- **Signal** (`{colors.signal}`): primary buttons, statistic figures, the 60×4px bar under section titles, the densest map cells, the first bar of the top-zones chart, list markers, LinkedIn links.
+- **Signal** (`{colors.signal}`): primary buttons, statistic figures, the 60×4px bar under section titles, the densest map cells, list markers, LinkedIn links.
 - **Signal Gradient End** (`{colors.signal-gradient-end}`): second stop of `--gradient-secondary`, so orange fills are gradients, never flat.
 - **Signal Hover** (`{colors.signal-hover}`): defined for the orange hover state.
 - **Signal Ink** (`{colors.signal-ink}`): the darker orange for text on light surfaces (links, table totals, `.persona-linkedin`) where the base orange would fail contrast.
@@ -291,7 +291,7 @@ Borders are mostly absent: cards rely on fill and a neutral shadow, sections on 
 - **Data:** `data/panel.json` only. Never an individual-property feed.
 
 ### Charts
-`.charts-grid` is two-up (`1fr` under 900px) with `.chart-card--full` spanning both. A `Surface` card, `--shadow-sm`, `2rem` padding, a `1.15rem` heading, a `300px` (340px full-width) canvas wrapper and an optional muted note. Chart.js colors come from the `--chart-*` tokens, so the same charts stay legible in both themes. Labels use short forms (`Depto`) and never rotate. If Chart.js fails, `.charts-fallback` is revealed.
+`.charts-grid` is two-up (`1fr` under 900px). A `Surface` card, `--shadow-sm`, `2rem` padding, a `1.15rem` heading, a `300px` (340px full-width) canvas wrapper and an optional muted note. Chart.js colors come from the `--chart-*` tokens, so the same charts stay legible in both themes. Labels use short forms (`Depto`) and never rotate. If Chart.js fails, `.charts-fallback` is revealed.
 
 ### Client Marquee
 A continuously scrolling proof wall: `.client-logo` images at 64px height (48px under 768px), grayscale at 60% opacity, in a track that holds the seven logos twice and translates `-50%` on a 34s linear loop for a seamless wrap. The strip is clipped by `overflow: hidden` with an 8% edge mask. Hover pauses the loop and restores color. Under `prefers-reduced-motion` it does not animate.
