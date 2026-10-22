@@ -36,9 +36,9 @@
     --bg-lighter: #f3f4f6;
     --bg-dark: #111827;
     
-    --shadow-sm: 0 1px 2px 0 rgba(0, 40, 87, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 40, 87, 0.08), 0 2px 4px -1px rgba(0, 40, 87, 0.04);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 40, 87, 0.1), 0 4px 6px -2px rgba(0, 40, 87, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --transition-transform: transform 0.3s ease, box-shadow 0.3s ease;
 
     --primary-color-light: #004080;
@@ -49,6 +49,15 @@
     --whatsapp-dark: #128c7e;
     --chat-bg: #e5ddd5;
     --chat-outgoing: #dcf8c6;
+
+    /* chart + map data colors (overridden in dark mode) */
+    --chart-bar: rgba(0, 40, 87, 0.8);
+    --chart-bar-alt: rgba(0, 64, 128, 0.8);
+    --chart-bar-accent: rgba(238, 121, 0, 0.8);
+    --chart-bar-return: rgba(16, 185, 129, 0.8);
+    --chart-text: #4b5563;
+    --chart-grid: rgba(0, 40, 87, 0.08);
+    --focus-ring: rgba(238, 121, 0, 0.2);
 
     --z-skip-link: 9999;
     --z-header: 1000;
@@ -195,13 +204,13 @@ h1, h2, h3, h4, h5, h6 {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 1px 3px 0 rgba(0, 40, 87, 0.08);
+    box-shadow: var(--shadow-sm);
     z-index: var(--z-header);
     transition: box-shadow 0.3s ease;
 }
 
 .header.scrolled {
-    box-shadow: 0 4px 12px 0 rgba(0, 40, 87, 0.12);
+    box-shadow: var(--shadow-md);
 }
 
 .nav {
@@ -348,12 +357,12 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
     background: var(--gradient-secondary);
     color: var(--text-inverse);
-    box-shadow: 0 4px 12px -3px rgba(238, 121, 0, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 20px -5px rgba(238, 121, 0, 0.4);
+    box-shadow: var(--shadow-lg);
 }
 
 .btn-primary:active {
@@ -370,7 +379,7 @@ h1, h2, h3, h4, h5, h6 {
     background: #ffffff;
     color: var(--primary-color);
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 20px -5px rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .btn-secondary:active {
@@ -499,7 +508,7 @@ button:active {
 }
 
 .service-title {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 0.5rem;
@@ -569,7 +578,7 @@ button:active {
     height: 28px;
 }
 
-.about-highlight-text h4 {
+.about-highlight-text h3 {
     font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 600;
@@ -604,32 +613,22 @@ button:active {
 
 .marquee-container {
     position: relative;
-    overflow-x: hidden;
     margin-top: 3rem;
     width: 100%;
-    max-width: 100%;
 }
 
 .marquee-track {
     display: flex;
-    overflow: hidden;
     width: 100%;
-    max-width: 100%;
 }
 
 .marquee-content {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 3rem;
-    animation: marquee 30s linear infinite;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+    width: 100%;
 }
 
 .client-logo {
@@ -641,13 +640,8 @@ button:active {
     flex-shrink: 0;
 }
 
-.marquee-content:hover {
-    animation-play-state: paused;
-}
-
 .marquee-content:hover .client-logo {
     filter: grayscale(0%) opacity(1);
-    transform: scale(1.05);
 }
 
 .value-prop {
@@ -768,78 +762,6 @@ button:active {
     z-index: 1;
 }
 
-.contact-item {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 40, 87, 0.08);
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-}
-
-.contact-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.contact-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px -8px rgba(16, 185, 129, 0.15);
-}
-
-.contact-item:hover::before {
-    transform: scaleX(1);
-}
-
-.contact-icon {
-    width: 56px;
-    height: 56px;
-    background: var(--gradient-accent);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-inverse);
-    flex-shrink: 0;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.contact-item:hover .contact-icon {
-    transform: scale(1.1);
-}
-
-.contact-icon svg {
-    width: 28px;
-    height: 28px;
-}
-
-.contact-text h3 {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-dark);
-}
-
-.contact-text p {
-    color: var(--text-medium);
-    font-size: 1.05rem;
-}
-
 .footer {
     background-color: var(--bg-dark);
     color: var(--text-inverse);
@@ -892,7 +814,7 @@ button:active {
 }
 
 .footer-social-title {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 1rem;
 }
@@ -917,7 +839,7 @@ button:active {
 .social-link:hover {
     background: var(--secondary-color);
     transform: translateY(-5px) rotate(8deg);
-    box-shadow: 0 8px 20px -5px rgba(238, 121, 0, 0.4);
+    box-shadow: var(--shadow-md);
 }
 
 .social-link svg {
@@ -971,7 +893,7 @@ button:active {
         flex-direction: column;
         padding: 2rem;
         gap: 1rem;
-        box-shadow: 0 10px 30px -5px rgba(0, 40, 87, 0.1);
+        box-shadow: var(--shadow-lg);
         transform: translateY(-150%);
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -1025,10 +947,6 @@ button:active {
         padding: 6rem 0;
     }
 
-    .contact-item {
-        padding: 2rem;
-    }
-
     .client-logo {
         height: 80px;
     }
@@ -1036,17 +954,20 @@ button:active {
     .marquee-content {
         gap: 2rem;
     }
-
-    .marquee-container {
-        margin-left: -2rem;
-        margin-right: -2rem;
-        overflow-x: hidden;
-    }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 0 1.25rem;
+    }
+
+    .marquee-content {
+        gap: 1.5rem;
+    }
+
+    .client-logo {
+        height: 64px;
+        max-width: 44%;
     }
 
     .hero {
@@ -1071,15 +992,7 @@ button:active {
         gap: 1rem;
     }
 
-    .contact-item {
-        padding: 1.5rem;
-    }
-
     .value-icon,
-    .contact-icon {
-        width: 48px;
-        height: 48px;
-    }
 
     .logo-img {
         height: 32px;
@@ -1139,10 +1052,10 @@ button:active {
 
 .highlight-box {
     background: var(--bg-light);
-    border-left: 4px solid var(--secondary-color);
+    border: 1px solid color-mix(in srgb, var(--text-medium) 25%, transparent);
     padding: 1.5rem;
     margin: 2rem 0;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
 }
 
 .highlight-box p {
@@ -1249,355 +1162,7 @@ button:active {
 
 /* ── Jul-IA Chatbot Section (legacy, kept for chat demo on jul-ia.html) ──── */
 
-.julia-section {
-    padding: 8rem 0;
-    background: var(--white);
-    position: relative;
-    overflow: hidden;
-}
 
-.julia-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(0,40,87,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-}
-
-.julia-header {
-    text-align: center;
-    margin-bottom: 4rem;
-    position: relative;
-    z-index: 1;
-}
-
-.julia-badge {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-
-    letter-spacing: 0.03em;
-    color: var(--secondary-color);
-    background: var(--secondary-10);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    margin-bottom: 1rem;
-}
-
-.julia-showcase {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-/* ── Chat Mockup ────────────────────────────── */
-
-.julia-chat-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.chat-mockup {
-    width: 100%;
-    max-width: 380px;
-    background: var(--chat-bg);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px -10px rgba(0, 40, 87, 0.2),
-                0 8px 24px -4px rgba(0, 40, 87, 0.08);
-    position: relative;
-}
-
-.chat-header-bar {
-    background: var(--primary-color);
-    color: var(--text-inverse);
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.chat-avatar {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-secondary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.chat-avatar svg {
-    color: var(--text-inverse);
-}
-
-.chat-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.chat-name {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
-.chat-status {
-    font-size: 0.75rem;
-    color: var(--accent-color);
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-}
-
-.chat-status::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.chat-body {
-    padding: 1rem 1rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-height: 360px;
-}
-
-.chat-time {
-    text-align: center;
-    font-size: 0.7rem;
-    color: rgba(0, 40, 87, 0.6);
-    background: rgba(255, 255, 255, 0.5);
-    align-self: center;
-    padding: 0.2rem 0.75rem;
-    border-radius: 100px;
-    margin-bottom: 0.25rem;
-}
-
-.chat-bubble {
-    max-width: 88%;
-    padding: 0.6rem 0.85rem;
-    border-radius: 10px;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    position: relative;
-}
-
-.chat-bubble.incoming {
-    background: var(--white);
-    align-self: flex-start;
-    border-bottom-left-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.06);
-}
-
-.chat-bubble.outgoing {
-    background: var(--chat-outgoing);
-    align-self: flex-end;
-    border-bottom-right-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.06);
-}
-
-.bubble-intro {
-    margin-bottom: 0.5rem;
-}
-
-.property-result {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    background: rgba(0, 40, 87, 0.04);
-    border-radius: 8px;
-    padding: 0.5rem 0.65rem;
-    margin-top: 0.35rem;
-}
-
-.property-result + .property-result {
-    margin-top: 0.3rem;
-}
-
-.property-roi {
-    background: var(--gradient-secondary);
-    color: var(--text-inverse);
-    padding: 0.2rem 0.5rem;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.8rem;
-    font-family: var(--font-mono);
-    flex-shrink: 0;
-}
-
-.property-details {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.8rem;
-    line-height: 1.35;
-}
-
-.property-details strong {
-    font-size: 0.82rem;
-    color: var(--text-dark);
-}
-
-.property-details span {
-    color: var(--text-light);
-    font-size: 0.75rem;
-}
-
-.chat-input-bar {
-    padding: 0.6rem 1rem 0.75rem;
-    background: #f0f0f0;
-}
-
-.chat-input-placeholder {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--white);
-    border-radius: 100px;
-    padding: 0.55rem 1rem;
-    color: var(--text-lighter);
-    font-size: 0.82rem;
-}
-
-.chat-input-placeholder svg {
-    color: var(--text-lighter);
-    flex-shrink: 0;
-}
-
-/* ── Julia Features ─────────────────────────── */
-
-.julia-features {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.julia-feature {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-}
-
-.julia-feature-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--gradient-primary-medium);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.julia-feature-icon svg {
-    width: 24px;
-    height: 24px;
-    color: var(--text-inverse);
-}
-
-.julia-feature:hover .julia-feature-icon {
-    transform: scale(1.1);
-}
-
-.julia-feature-text h4 {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.35rem;
-}
-
-.julia-feature-text p {
-    font-size: 0.95rem;
-    color: var(--text-medium);
-    line-height: 1.6;
-}
-
-/* ── Julia CTA ──────────────────────────────── */
-
-.julia-cta {
-    text-align: center;
-    margin-top: 3.5rem;
-    position: relative;
-    z-index: 1;
-}
-
-.btn-julia {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    border-radius: 100px;
-    background: var(--whatsapp-green);
-    color: var(--text-inverse);
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
-    box-shadow: 0 4px 12px -3px rgba(37, 211, 102, 0.3);
-    min-height: 44px;
-}
-
-.btn-julia svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-}
-
-.btn-julia:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 20px -5px rgba(37, 211, 102, 0.4);
-}
-
-.btn-julia:active {
-    transform: translateY(0) scale(0.96);
-}
-
-/* ── Contact WhatsApp Icon ──────────────────── */
-
-.contact-icon--whatsapp {
-    background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
-}
-
-.contact-text a {
-    color: var(--text-medium);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.contact-text a:hover {
-    color: var(--secondary-ink);
-}
-
-.contact-action {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--secondary-ink);
-    margin-top: 0.5rem;
-    transition: transform 0.3s ease;
-}
-
-.contact-item:hover .contact-action {
-    transform: translateX(4px);
-}
 
 /* ── Footer Navigation ──────────────────────── */
 
@@ -1608,7 +1173,7 @@ button:active {
 
 .footer-nav-title {
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 1.25rem;
     color: var(--text-inverse);
@@ -1635,16 +1200,6 @@ button:active {
 
 /* ── Responsive: New Sections ───────────────── */
 
-@media (max-width: 1024px) {
-    .julia-showcase {
-        gap: 3rem;
-    }
-
-    .chat-mockup {
-        max-width: 340px;
-    }
-}
-
 @media (max-width: 768px) {
     .hero-stats {
         gap: 0;
@@ -1666,38 +1221,6 @@ button:active {
     .stat-label {
         font-size: 0.8rem;
     }
-
-    .julia-showcase {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-
-    .julia-chat-wrapper {
-        order: 1;
-    }
-
-    .julia-features {
-        order: 2;
-    }
-
-    .chat-mockup {
-        max-width: 360px;
-        margin: 0 auto;
-    }
-
-    .julia-section {
-        padding: 6rem 0;
-    }
-
-    .julia-cta {
-        margin-top: 2.5rem;
-    }
-
-    .btn-julia {
-        width: 100%;
-        max-width: 340px;
-        justify-content: center;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1709,36 +1232,6 @@ button:active {
         min-width: 85px;
         padding: 0 1rem;
     }
-
-    .chat-body {
-        min-height: 300px;
-    }
-
-    .chat-mockup {
-        max-width: 100%;
-    }
-
-    .property-result {
-        padding: 0.4rem 0.5rem;
-    }
-
-    .property-roi {
-        font-size: 0.72rem;
-        padding: 0.15rem 0.4rem;
-    }
-}
-
-/* ── Jul-IA Landing Page ────────────────────── */
-
-/* Hero override for jul-ia page */
-.julia-hero {
-    min-height: 90vh;
-    min-height: 90dvh;
-}
-
-.julia-hero .julia-badge {
-    display: inline-block;
-    margin-bottom: 1.25rem;
 }
 
 /* Nav active state */
@@ -1748,15 +1241,6 @@ button:active {
 
 .nav-menu a.nav-active::after {
     width: 100%;
-}
-
-/* Julia section variant — bg-light for alternation */
-.julia-section--alt {
-    background: var(--bg-light);
-}
-
-.julia-section--alt::before {
-    background-image: radial-gradient(circle, rgba(0,40,87,0.04) 1px, transparent 1px);
 }
 
 /* ── Use Cases Section ──────────────────────── */
@@ -1780,10 +1264,6 @@ button:active {
     pointer-events: none;
 }
 
-.use-cases--alt {
-    background: var(--white);
-}
-
 .use-cases-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1796,56 +1276,15 @@ button:active {
     background: var(--white);
     padding: 2.5rem;
     border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 40, 87, 0.08);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
 }
 
-.use-case-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-secondary);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 .use-case-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px -10px rgba(0, 40, 87, 0.15);
-}
-
-.use-case-card:hover::before {
-    transform: scaleX(1);
-}
-
-.use-case-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--gradient-primary-medium);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    color: var(--text-inverse);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.use-case-card:hover .use-case-icon {
-    transform: scale(1.1);
-}
-
-.use-case-icon svg {
-    width: 30px;
-    height: 30px;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
 }
 
 .use-case-title {
@@ -1863,515 +1302,6 @@ button:active {
     flex: 1;
 }
 
-.use-case-types {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.use-case-type {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-
-    letter-spacing: 0.02em;
-    color: var(--primary-color);
-    background: var(--primary-10);
-    padding: 0.3rem 0.75rem;
-    border-radius: 100px;
-}
-
-.use-case-cta {
-    margin-top: auto;
-}
-
-.use-case-badge {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-
-    letter-spacing: 0.02em;
-    color: var(--text-medium);
-    background: var(--bg-lighter);
-    padding: 0.5rem 1.25rem;
-    border-radius: 100px;
-    margin-top: auto;
-}
-
-/* ── Use Case Card Disabled State ───────────── */
-
-.use-case-card--disabled {
-    opacity: 0.65;
-    background: var(--bg-lighter);
-    cursor: not-allowed;
-}
-
-.use-case-card--disabled::before {
-    background: var(--text-lighter);
-}
-
-.use-case-card--disabled:hover {
-    transform: none;
-    box-shadow: 0 4px 6px -1px rgba(0, 40, 87, 0.08);
-}
-
-.use-case-card--disabled:hover::before {
-    transform: scaleX(0);
-}
-
-.use-case-card--disabled .use-case-icon {
-    background: linear-gradient(135deg, var(--text-light), var(--text-lighter));
-}
-
-.use-case-card--disabled .use-case-title {
-    color: var(--text-light);
-}
-
-.use-case-card--disabled .use-case-description {
-    color: var(--text-light);
-}
-
-/* ── How It Works Section ───────────────────── */
-
-.how-it-works {
-    padding: 8rem 0;
-    background: var(--white);
-    position: relative;
-    overflow: hidden;
-}
-
-.how-it-works::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(0,40,87,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-}
-
-.how-it-works-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-/* Connector lines between steps */
-.how-it-works-grid::before {
-    content: '';
-    position: absolute;
-    top: 40px;
-    left: calc(16.666% + 2rem);
-    right: calc(16.666% + 2rem);
-    height: 2px;
-    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
-    z-index: 0;
-}
-
-.how-step {
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    padding: 2rem 1.5rem;
-}
-
-.how-step-number {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--gradient-secondary);
-    color: var(--text-inverse);
-    font-family: var(--font-display);
-    font-size: 1.4rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    box-shadow: 0 4px 12px -3px rgba(238, 121, 0, 0.3);
-}
-
-.how-step-icon {
-    width: 64px;
-    height: 64px;
-    background: var(--primary-10);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.25rem;
-    color: var(--primary-color);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.how-step:hover .how-step-icon {
-    transform: scale(1.1);
-}
-
-.how-step-icon svg {
-    width: 32px;
-    height: 32px;
-}
-
-.how-step-title {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-}
-
-.how-step-text {
-    color: var(--text-medium);
-    line-height: 1.7;
-    font-size: 0.95rem;
-}
-
-/* ── Jul-IA Tech Section ────────────────────── */
-
-.julia-tech {
-    padding: 8rem 0;
-    background: var(--primary-color);
-    color: var(--text-inverse);
-    position: relative;
-    overflow: hidden;
-}
-
-.julia-tech::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-}
-
-.julia-tech-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    position: relative;
-    z-index: 1;
-}
-
-.julia-tech-item {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2.5rem;
-    border-radius: 16px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.julia-tech-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.julia-tech-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.25rem;
-    transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.julia-tech-item:hover .julia-tech-icon {
-    background: var(--secondary-color);
-}
-
-.julia-tech-icon svg {
-    width: 24px;
-    height: 24px;
-    color: var(--secondary-color);
-    transition: color 0.4s ease;
-}
-
-.julia-tech-item:hover .julia-tech-icon svg {
-    color: var(--text-inverse);
-}
-
-.julia-tech-item h3 {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-}
-
-.julia-tech-item p {
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.7;
-    font-size: 0.95rem;
-}
-
-/* ── Jul-IA Final CTA Section ───────────────── */
-
-.julia-final-cta {
-    padding: 8rem 0;
-    background: linear-gradient(135deg, var(--primary-color-darker) 0%, var(--primary-color) 50%, var(--primary-color-deep) 100%);
-    color: var(--text-inverse);
-    position: relative;
-    overflow: hidden;
-}
-
-.julia-final-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-        radial-gradient(circle at 20% 50%, rgba(238, 121, 0, 0.08) 0%, transparent 50%),
-        radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: auto, 24px 24px;
-    pointer-events: none;
-}
-
-.julia-final-cta-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.julia-final-cta-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
-}
-
-.julia-final-cta-subtitle {
-    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
-    opacity: 0.85;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-}
-
-/* ── Jul-IA Metrics Section ──────────────────── */
-
-.jl-metrics {
-    padding: 8rem 0;
-    background: var(--white);
-    position: relative;
-    overflow: hidden;
-}
-
-.jl-metrics::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(0,40,87,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-}
-
-.jl-metrics-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    position: relative;
-    z-index: 1;
-}
-
-.jl-metric-card {
-    background: var(--bg-light);
-    padding: 1.75rem 2rem;
-    border-radius: 12px;
-    text-align: left;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.jl-metric-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-secondary);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.jl-metric-card:hover {
-    transform: translateX(6px);
-    box-shadow: 0 8px 24px -8px rgba(0, 40, 87, 0.12);
-}
-
-.jl-metric-card:hover::before {
-    transform: scaleY(1);
-}
-
-.jl-metric-icon {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    background: var(--gradient-primary-medium);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    color: var(--text-inverse);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.jl-metric-card:hover .jl-metric-icon {
-    transform: scale(1.1);
-}
-
-.jl-metric-icon svg {
-    width: 26px;
-    height: 26px;
-}
-
-.jl-metric-value {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    min-width: 100px;
-}
-
-.jl-metric-label {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    flex: 1;
-}
-
-.jl-metric-desc {
-    color: var(--text-medium);
-    font-size: 0.9rem;
-    line-height: 1.7;
-}
-
-/* ── Jul-IA Metrics CTA Teaser ───────────────── */
-
-.jl-metrics-cta {
-    margin-top: 2.5rem;
-    position: relative;
-    z-index: 1;
-}
-
-.jl-metrics-cta-card {
-    background: var(--gradient-primary);
-    border-radius: 16px;
-    padding: 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.jl-metrics-cta-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-}
-
-.jl-metrics-cta-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px -6px rgba(0, 40, 87, 0.3);
-}
-
-.jl-metrics-cta-icon {
-    flex-shrink: 0;
-    width: 64px;
-    height: 64px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--secondary-color);
-}
-
-.jl-metrics-cta-text {
-    flex: 1;
-}
-
-.jl-metrics-cta-text h3 {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-inverse);
-    margin-bottom: 0.35rem;
-}
-
-.jl-metrics-cta-text p {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.jl-metrics-cta-card .btn {
-    flex-shrink: 0;
-}
-
-/* Link inside tech items */
-.julia-tech-item a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 500;
-    display: inline-block;
-    margin-top: 0.35rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.julia-tech-item a:hover {
-    color: var(--secondary-hover);
-    transform: translateX(3px);
-}
-
-/* Final CTA buttons container */
-.julia-final-cta-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 /* ── Jul-IA Landing Responsive ──────────────── */
 
 @media (max-width: 1024px) {
@@ -2379,46 +1309,11 @@ button:active {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
-    .julia-tech-grid {
-        gap: 1.5rem;
-    }
 
-    .julia-tech-item {
-        padding: 2rem;
-    }
 
-    .how-it-works-grid::before {
-        left: calc(16.666% + 1rem);
-        right: calc(16.666% + 1rem);
-    }
-
-    .jl-metrics-grid {
-        gap: 1rem;
-    }
-
-    .jl-metric-card {
-        padding: 1.5rem;
-        gap: 1.5rem;
-    }
-
-    .jl-metrics-cta-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 1.25rem;
-        padding: 2rem;
-    }
-
-    .jl-metrics-cta-card .btn {
-        width: 100%;
-        max-width: 280px;
-    }
 }
 
 @media (max-width: 768px) {
-    .julia-hero {
-        min-height: auto;
-        padding: 7rem 1.5rem 4rem;
-    }
 
     .use-cases {
         padding: 6rem 0;
@@ -2432,133 +1327,11 @@ button:active {
     .use-case-card {
         padding: 2rem;
     }
-
-    .how-it-works {
-        padding: 6rem 0;
-    }
-
-    .how-it-works-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .how-it-works-grid::before {
-        display: none;
-    }
-
-    .how-step {
-        padding: 1.5rem;
-    }
-
-    .julia-tech {
-        padding: 6rem 0;
-    }
-
-    .julia-tech-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .julia-tech-item {
-        padding: 1.75rem;
-    }
-
-    .julia-final-cta {
-        padding: 6rem 0;
-    }
-
-    .jl-metrics {
-        padding: 6rem 0;
-    }
-
-    .jl-metrics-grid {
-        gap: 1rem;
-    }
-
-    .jl-metric-card {
-        flex-wrap: wrap;
-        padding: 1.25rem;
-        gap: 1rem;
-    }
-
-    .jl-metric-value {
-        font-size: 1.6rem;
-        min-width: 80px;
-    }
-
-    .jl-metrics-cta-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-        padding: 1.75rem;
-    }
-
-    .jl-metrics-cta-card .btn {
-        width: 100%;
-        max-width: 280px;
-    }
-
-    .julia-final-cta-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-    }
-
-    .julia-final-cta-buttons .btn {
-        width: 100%;
-        max-width: 340px;
-        text-align: center;
-    }
 }
 
 @media (max-width: 480px) {
     .use-case-card {
         padding: 1.5rem;
-    }
-
-    .use-case-types {
-        gap: 0.35rem;
-    }
-
-    .use-case-type {
-        font-size: 0.65rem;
-        padding: 0.25rem 0.6rem;
-    }
-
-    .how-step-number {
-        width: 48px;
-        height: 48px;
-        font-size: 1.2rem;
-    }
-
-    .how-step-icon {
-        width: 56px;
-        height: 56px;
-    }
-
-    .julia-tech-item {
-        padding: 1.5rem;
-    }
-
-    .julia-final-cta-title {
-        font-size: clamp(1.75rem, 8vw, 2.5rem);
-    }
-
-    .jl-metric-card {
-        padding: 1.5rem;
-    }
-
-    .jl-metric-value {
-        font-size: 2rem;
-    }
-
-    .jl-metrics-cta-icon {
-        width: 52px;
-        height: 52px;
-    }
-
-    .jl-metrics-cta-text h3 {
-        font-size: 1.1rem;
     }
 }
 
@@ -2609,7 +1382,6 @@ button:active {
     margin-bottom: 1rem;
 }
 
-.julia-header .julia-badge,
 .db-map-header .db-badge {
     color: var(--secondary-ink);
 }
@@ -2681,11 +1453,11 @@ button:active {
 .db-filter-group,
 .db-toggle-group {
     display: flex;
-    gap: 0.5rem;
-    background: var(--white);
+    gap: 0.35rem;
     padding: 0.35rem;
+    background: var(--white);
+    border: 1px solid color-mix(in srgb, var(--text-medium) 25%, transparent);
     border-radius: 10px;
-    box-shadow: var(--shadow-sm);
 }
 
 .db-filter-btn,
@@ -2713,7 +1485,7 @@ button:active {
 .db-toggle-btn.active {
     background: var(--primary-color);
     color: var(--text-inverse);
-    box-shadow: 0 2px 6px rgba(0, 40, 87, 0.25);
+    box-shadow: var(--shadow-sm);
 }
 
 .db-map-wrapper {
@@ -2721,9 +1493,6 @@ button:active {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
 }
 
 .db-map-container {
@@ -2890,31 +1659,13 @@ button:active {
     border-radius: 16px;
     box-shadow: var(--shadow-md);
     text-align: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
-}
-
-.db-metric-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-secondary);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .db-metric-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-}
-
-.db-metric-card:hover::before {
-    transform: scaleX(1);
 }
 
 .db-metric-icon {
@@ -3016,7 +1767,7 @@ button:active {
 
 .db-chart-card h3 {
     font-family: var(--font-display);
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--primary-color);
     margin-bottom: 1.25rem;
@@ -3304,62 +2055,7 @@ button:active {
     letter-spacing: -0.02em;
 }
 
-/* Pricing-specific extensions to the use-case pattern */
-
-/* Two-column variant for pricing */
-.use-cases-grid--two {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 720px;
-    margin: 0 auto;
-}
-
-/* Featured card with subtle green accent for the annual tier */
-.use-case-card--featured {
-    border: 2px solid rgba(16, 185, 129, 0.3);
-}
-
-/* Discount badge anchored to the top-right of the featured card */
-.use-case-discount-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--accent-color);
-    color: var(--text-inverse);
-    padding: 0.4rem 1rem;
-    border-radius: 999px;
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
-    z-index: 1;
-}
-
 /* Pricing layout: reference price, amount, period */
-.use-case-pricing-amount-ref {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--text-lighter);
-    text-decoration: line-through;
-    text-decoration-thickness: 2px;
-    margin-bottom: 0.25rem;
-    min-height: 1.5em;
-}
-
-.use-case-pricing-amount {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--text-dark);
-    line-height: 1;
-    letter-spacing: -0.02em;
-}
-
-.use-case-pricing-period {
-    color: var(--text-medium);
-    font-size: 0.95rem;
-    margin-top: 0.5rem;
-}
 
 /* When a use-case card is rendered as an anchor (e.g. city links),
    keep the whole card clickable without inheriting link styling. */
@@ -3371,10 +2067,6 @@ a.use-case-card:hover {
 
 /* ── II Responsive ── */
 @media (max-width: 768px) {
-    .use-cases-grid--two {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-    }
 
     .ii-final-cta {
         padding: 6rem 0;
@@ -3382,12 +2074,6 @@ a.use-case-card:hover {
 
     .ii-final-cta-title {
         font-size: clamp(1.5rem, 6vw, 2rem);
-    }
-}
-
-@media (max-width: 480px) {
-    .use-case-pricing-amount {
-        font-size: 2.5rem;
     }
 }
 
@@ -3406,7 +2092,7 @@ a.use-case-card:hover {
 
 .hero-alliance-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -3432,8 +2118,8 @@ a.use-case-card:hover {
     }
 
     .hero-alliance-label {
-        font-size: 0.6rem;
-        max-width: 80px;
+        font-size: 0.7rem;
+        max-width: 90px;
     }
 
     .hero-alliance-logo {
@@ -3450,27 +2136,6 @@ a.use-case-card:hover {
     color: var(--secondary-color);
     margin: 0 auto 1.5rem;
     display: block;
-}
-
-.btn-xl {
-    height: 60px;
-    padding: 0 2.25rem;
-    font-size: 1.05rem;
-    border-radius: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.85rem;
-    box-shadow: 0 8px 24px -6px rgba(238, 121, 0, 0.5);
-}
-
-@media (max-width: 480px) {
-    .btn-xl {
-        width: 100%;
-        max-width: 320px;
-        justify-content: center;
-        height: 56px;
-        font-size: 1rem;
-    }
 }
 
 /* Respect user motion preferences */
@@ -3503,7 +2168,7 @@ a.use-case-card:hover {
     :root {
         --text-dark: #e5e7eb;
         --text-medium: #9ca3af;
-        --text-light: #6b7280;
+        --text-light: #9ca3af;
 
         --white: #111827;
         --bg-light: #0f1724;
@@ -3515,6 +2180,20 @@ a.use-case-card:hover {
         --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 
         --secondary-ink: var(--secondary-color);
+
+        /* data colors readable on night surfaces */
+        --chart-bar: rgba(122, 162, 214, 0.85);
+        --chart-bar-alt: rgba(93, 133, 189, 0.85);
+        --chart-bar-accent: rgba(238, 121, 0, 0.9);
+        --chart-bar-return: rgba(16, 185, 129, 0.9);
+        --chart-text: #9ca3af;
+        --chart-grid: rgba(255, 255, 255, 0.12);
+        --focus-ring: rgba(229, 231, 235, 0.2);
+    }
+
+    .db-filter-btn.active,
+    .db-toggle-btn.active {
+        background: var(--primary-color-light);
     }
 
     body {
@@ -3561,9 +2240,6 @@ a.use-case-card:hover {
 
     .privacy-section h2,
     .back-link,
-    .use-case-type,
-    .use-case-icon,
-    .jl-metric-value,
     .db-metric-value,
     .db-chart-card h3 {
         color: var(--text-dark);
@@ -3574,53 +2250,20 @@ a.use-case-card:hover {
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     }
 
-    .jl-metric-card,
     .db-metric-card {
         background: #111827;
-    }
-
-    .contact-item {
-        background: #111827;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     }
 
     .highlight-box {
         background: #111827;
     }
 
-    .chat-mockup {
-        background: #1a2235;
-    }
-
-    .chat-bubble.incoming {
-        background: #1a2235;
-        color: #e5e7eb;
-    }
-
-    .chat-bubble.outgoing {
-        background: #0f2847;
-    }
-
-    .chat-input-bar {
-        background: #0f1724;
-    }
-
-    .chat-input-placeholder {
-        background: #1a2235;
-    }
-
-    .julia-tech {
-        background: #0a1628;
-    }
 
     .footer {
         background-color: #060a12;
     }
 
     .db-metrics,
-    .jl-metrics {
-        background-color: #0a0f1a;
-    }
 
     .db-charts {
         background-color: #0f1724;
@@ -3670,7 +2313,7 @@ a.use-case-card:hover {
     background: var(--white);
     border-radius: 16px;
     padding: clamp(1.5rem, 4vw, 2.75rem);
-    box-shadow: 0 4px 6px -1px rgba(0, 40, 87, 0.08);
+    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -3769,11 +2412,6 @@ a.use-case-card:hover {
     color: var(--text-dark);
 }
 
-.lead-optional {
-    font-weight: 400;
-    color: var(--text-medium);
-}
-
 .lead-field input[type="text"],
 .lead-field input[type="email"],
 .lead-field input[type="tel"],
@@ -3801,7 +2439,7 @@ a.use-case-card:hover {
 .lead-field textarea:focus-visible {
     outline: none;
     border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px var(--secondary-20);
+    box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .lead-field--consent {

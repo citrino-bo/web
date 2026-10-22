@@ -562,6 +562,11 @@
 
         // ── Chart initialization ────────────────────
 
+        function cssVar(name, fallback) {
+            var v = getComputedStyle(document.documentElement).getPropertyValue(name);
+            return (v || '').trim() || fallback;
+        }
+
         function initCharts() {
             if (typeof Chart === 'undefined') {
                 var fallback = document.getElementById('db-charts-fallback');
@@ -571,7 +576,7 @@
             }
 
             Chart.defaults.font.family = "'DM Sans', sans-serif";
-            Chart.defaults.color = '#4b5563';
+            Chart.defaults.color = cssVar('--chart-text', '#4b5563');
 
             initTipoChart();
             initPrecioChart();
@@ -599,16 +604,11 @@
                         label: 'Propiedades',
                         data: tipoData,
                         backgroundColor: [
-                            'rgba(0, 40, 87, 0.8)',
-                            'rgba(0, 64, 128, 0.8)',
-                            'rgba(238, 121, 0, 0.8)'
+                            cssVar('--chart-bar', 'rgba(0, 40, 87, 0.8)'),
+                            cssVar('--chart-bar-alt', 'rgba(0, 64, 128, 0.8)'),
+                            cssVar('--chart-bar-accent', 'rgba(238, 121, 0, 0.8)')
                         ],
-                        borderColor: [
-                            'rgba(0, 40, 87, 1)',
-                            'rgba(0, 64, 128, 1)',
-                            'rgba(238, 121, 0, 1)'
-                        ],
-                        borderWidth: 1,
+                        borderWidth: 0,
                         borderRadius: 6
                     }]
                 },
@@ -622,7 +622,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: { precision: 0 },
-                            grid: { color: 'rgba(0, 40, 87, 0.06)' }
+                            grid: { color: cssVar('--chart-grid', 'rgba(0, 40, 87, 0.06)') }
                         },
                         x: {
                             grid: { display: false }
@@ -651,11 +651,10 @@
                     datasets: [{
                         label: 'Propiedades',
                         data: opData,
-                        backgroundColor: 'rgba(0, 40, 87, 0.75)',
-                        borderColor: 'rgba(0, 40, 87, 1)',
-                        borderWidth: 1,
+                        backgroundColor: cssVar('--chart-bar', 'rgba(0, 40, 87, 0.75)'),
+                        borderWidth: 0,
                         borderRadius: 6,
-                        hoverBackgroundColor: 'rgba(238, 121, 0, 0.85)'
+                        hoverBackgroundColor: cssVar('--chart-bar-accent', 'rgba(238, 121, 0, 0.85)')
                     }]
                 },
                 options: {
@@ -668,7 +667,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: { precision: 0 },
-                            grid: { color: 'rgba(0, 40, 87, 0.06)' }
+                            grid: { color: cssVar('--chart-grid', 'rgba(0, 40, 87, 0.06)') }
                         },
                         x: {
                             grid: { display: false }
@@ -685,18 +684,13 @@
             var zonas = webData.top_zonas || [];
             var zonaLabels = zonas.map(function(z) { return z.zona; });
             var zonaData = zonas.map(function(z) { return z.count; });
-            var palette = [
-                'rgba(0, 40, 87, 0.85)',
-                'rgba(0, 64, 128, 0.85)',
-                'rgba(238, 121, 0, 0.85)',
-                'rgba(16, 185, 129, 0.85)',
-                'rgba(0, 40, 87, 0.6)',
-                'rgba(0, 64, 128, 0.6)',
-                'rgba(238, 121, 0, 0.6)',
-                'rgba(16, 185, 129, 0.6)',
-                'rgba(0, 40, 87, 0.4)',
-                'rgba(238, 121, 0, 0.4)'
+            var basePalette = [
+                cssVar('--chart-bar', 'rgba(0, 40, 87, 0.85)'),
+                cssVar('--chart-bar-alt', 'rgba(0, 64, 128, 0.85)'),
+                cssVar('--chart-bar-accent', 'rgba(238, 121, 0, 0.85)'),
+                cssVar('--chart-bar-return', 'rgba(16, 185, 129, 0.85)')
             ];
+            var palette = zonaLabels.map(function (_, i) { return basePalette[i % basePalette.length]; });
 
             charts.push(new Chart(ctx, {
                 type: 'bar',
@@ -722,7 +716,7 @@
                         x: {
                             beginAtZero: true,
                             ticks: { precision: 0 },
-                            grid: { color: 'rgba(0, 40, 87, 0.06)' }
+                            grid: { color: cssVar('--chart-grid', 'rgba(0, 40, 87, 0.06)') }
                         },
                         y: {
                             grid: { display: false }

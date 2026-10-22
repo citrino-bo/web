@@ -40,7 +40,7 @@ typography:
     letterSpacing: "-0.02em"
   title:
     fontFamily: "Outfit, sans-serif"
-    fontSize: "1.2rem"
+    fontSize: "1.25rem"
     fontWeight: 600
     lineHeight: 1.3
     letterSpacing: "normal"
@@ -137,7 +137,7 @@ It ships in two themes — light and dark — driven entirely by `prefers-color-
 
 ## Colors
 
-Three brand roles plus a neutral ladder, duplicated into a dark ladder that swaps by media query. Depth comes from tonal bands, not from tinted shadows.
+Three brand roles plus a neutral ladder, duplicated into a dark ladder that swaps by media query. Depth comes from tonal bands; shadows are neutral black, never tinted.
 
 ### Primary
 - **Deep Authority** (`{colors.primary}`): hero and interior-page backgrounds, `.value-prop` full-bleed band, heading text on light, icon-tile gradients, chart bars, footer logo plate. The most-used surface color after white.
@@ -163,7 +163,7 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 ### Neutral (dark)
 - **Page / Surface / Raised / Deep** (`{colors.dark-page}`, `{colors.dark-surface}`, `{colors.dark-raised}`, `{colors.dark-deep}`): body background is `dark-page`; cards, header and form move between `dark-surface` and `dark-raised`; the deepest band is `dark-deep`.
 - **Dark Ink / Dark Link** (`{colors.dark-ink}`, `{colors.dark-link}`): dark-mode body text, nav labels and hamburger (`#e5e7eb`) and the light-blue in-text links used by the privacy and consent links (`#93c5fd`).
-- In dark mode `--text-dark`, `--text-medium`, `--white`, `--bg-light`, `--bg-lighter` and `--bg-dark` are re-pointed to this ladder, and `--secondary-ink` collapses back to the base `Signal`. Dark-mode shadows switch from navy-tinted to pure black at higher opacity. `--text-light` is deliberately left at `Ink Muted`; do not put it on a dark surface (see Do's and Don'ts).
+- In dark mode `--text-dark`, `--text-medium`, `--text-light`, `--white`, `--bg-light`, `--bg-lighter` and `--bg-dark` are re-pointed to this ladder, `--secondary-ink` collapses back to the base `Signal`, and the chart tokens `--chart-bar`, `--chart-bar-alt`, `--chart-bar-accent`, `--chart-bar-return`, `--chart-text` and `--chart-grid` switch to values that read on night surfaces. Shadows become pure black at higher opacity.
 
 ### Named Rules
 **The Signal Rule.** Orange is intelligence and action, never decoration. A number worth reading, a link worth following, a button worth pressing — nothing else.
@@ -186,11 +186,11 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 - **Title** (`{typography.title}`): `.service-title`, `.use-case-title` (1.3rem), card and step headings at 600.
 - **Stat** (Outfit 800, `clamp(2rem, 4vw, 2.8rem)`, `1`–`1.2` line-height, orange): `.stat-number` and `.db-metric-value`, always paired with a small label underneath.
 - **Body** (`{typography.body}`): DM Sans 400 at 1rem, 1.6–1.7 line-height; `.hero-subtitle` scales to `clamp(1.1rem, 2.5vw, 1.5rem)` and caps at a 700px measure; `.section-subtitle` sits at 1.1rem, muted, centered.
-- **Label** (`{typography.label}`): JetBrains Mono 500 at 0.75–0.8rem with `0.03`–`0.06em` tracking. Uppercase only where it marks machine metadata: `.hero-updated` and `.hero-alliance-label` (0.65rem, 0.1em); `.db-badge` stays sentence case.
+- **Label** (`{typography.label}`): JetBrains Mono 500 at 0.75–0.8rem with `0.03`–`0.06em` tracking. Uppercase only where it marks machine metadata: `.hero-updated` and `.hero-alliance-label` (0.7rem, 0.1em); `.db-badge` stays sentence case.
 - **Small** (`{typography.small}`): DM Sans 0.9rem for helper copy, consent rows, the reassurance line, footer bottom and card eyebrows.
 
 ### Named Rules
-**The One Bar Rule.** Section titles get the orange underline exactly once, from the shared `.section-title::after` / `.value-prop-title::after` rule: 60×4px, `--gradient-secondary`, 2px radius, `margin: 1rem auto 0`. Never redraw it locally.
+**The One Bar Rule.** Section titles get the orange underline exactly once, from the shared `.section-title::after` / `.value-prop-title::after` rule: 60×4px, `--gradient-secondary`, 2px radius, `margin: 1rem auto 0`. Document pages (`/privacidad/`) are the one sanctioned variant: their `h2` uses a full-width 2px orange bottom border instead. Never redraw either locally.
 
 **The Mono Means Data Rule.** JetBrains Mono only marks machine output — badges, vintages, counts, chart annotations. Never body copy, never headlines.
 
@@ -209,36 +209,36 @@ A single centered container of `1200px` with `2rem` side padding, sitting inside
 
 ## Elevation & Depth
 
-Hybrid: tonal banding for structure, and a small navy-tinted shadow vocabulary for interaction. Surfaces are visible at rest — cards sit on `--shadow-sm`/`--shadow-md` rather than appearing flat and then shadowing on hover — and they lift with a `translateY` plus `--shadow-lg` on hover.
+Hybrid: tonal banding for structure, and one neutral shadow vocabulary for interaction. Surfaces are visible at rest — cards sit on `--shadow-sm`/`--shadow-md` rather than appearing flat and then shadowing on hover — and they lift with a `translateY` plus `--shadow-lg` on hover. No shadow is tinted with a brand color.
 
 ### Shadow Vocabulary
-- **sm** (`0 1px 2px 0 rgba(0, 40, 87, 0.05)`): chart cards, toggle groups, resting hairlines under the header.
-- **md** (`0 4px 6px -1px rgba(0, 40, 87, 0.08), 0 2px 4px -1px rgba(0, 40, 87, 0.04)`): metric cards, use-case cards, the lead form, the service list container.
-- **lg** (`0 10px 15px -3px rgba(0, 40, 87, 0.1), 0 4px 6px -2px rgba(0, 40, 87, 0.05)`): hover state of a lifted card.
-- **header-scrolled** (`0 4px 12px 0 rgba(0, 40, 87, 0.12)`): the fixed header after scroll.
-- **action** (`0 4px 12px -3px rgba(238, 121, 0, 0.3)` at rest, `0 8px 20px -5px rgba(238, 121, 0, 0.4)` on hover): orange buttons, the only colored shadow in the system.
+- **sm** (`0 1px 2px 0 rgba(0, 0, 0, 0.05)`): chart cards, header hairline.
+- **md** (`0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)`): metric cards, use-case cards, lead form, buttons at rest.
+- **lg** (`0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05)`): hover state of a lifted card, the fixed header after scroll, the mobile nav drop.
+- **header** (same token in dark: `0 1px 3px 0 rgba(0, 0, 0, 0.3)` at rest, `0 4px 12px 0 rgba(0, 0, 0, 0.4)` on scroll): dark-mode substitution of `sm`/`md`.
+- There is no colored shadow in the system; an orange halo under a button is slop, not brand.
 
 Dark mode redefines the same names with black at 0.2–0.5 opacity.
 
 ### Named Rules
-**The Soft-Lift Rule.** A card rests on level 1–2 and rises one level on hover, moving `-6px` to `-8px`. No ambient glow, no shadow larger than `--shadow-lg`.
+**The Soft-Lift Rule.** A card rests on level 1–2 and rises one level on hover, moving `-4px`. No ambient glow, no shadow larger than `--shadow-lg`, no colored shadow.
 
 ## Shapes
 
 Rounded but never soft: `8px` for small controls, `10px` for buttons and inputs, `12px` for option rows and nav pills, `14px` for icon tiles, `16px` for cards and the lead form, `100px` only for the metadata pill (`.db-badge`). No card exceeds `16px`.
 
-Borders are near-absent: cards rely on fill and shadow, sections on hairlines (`1px solid var(--bg-lighter)`) or on the color band itself. Form fields and unselected `.lead-option` rows are the exception, with a `1px` mixed-alpha border that turns orange on focus or selection.
+Borders are mostly absent: cards rely on fill and a neutral shadow, sections on hairlines (`1px solid var(--bg-lighter)`) or on the color band itself. Form fields, unselected `.lead-option` rows, the `.db-toggle-group` pill and the `.highlight-box` callout are the exception, with a `1px` mixed-alpha border that turns orange on focus or selection for the interactive ones. No card carries a thick side or top accent strip; the only saturated line in the system is the 60×4px bar under section titles.
 
 Two recurring gestures: a **4px orange bar** that slides across the top edge of a card on hover (`scaleX(0 → 1)`), used by `.use-case-card` and `.db-metric-card`; and the **centered 60×4px bar** under section titles.
 
 ### Named Rules
-**The Accent Bar Rule.** The top-edge hover bar is a 4px `--gradient-secondary` strip spanning the full card width. It appears on hover only, and only on cards that are clickable destinations.
+**The One Accent Rule.** There is exactly one decorative accent in the system: the 60×4px orange bar under section titles. No top-edge bars, side tabs, gradient stripes or icon chips added to cards to make them feel designed.
 
 ## Components
 
 ### Buttons
 - **Shape:** 10px radius, `2px solid transparent` so variants do not shift layout, `1rem 2.5rem` padding, 600 weight.
-- **Primary:** `--gradient-secondary` fill with white text and the orange `action` shadow. Hover: `translateY(-3px) scale(1.02)` and a stronger orange shadow. Active: `translateY(0) scale(0.96)`.
+- **Primary:** `--gradient-secondary` fill with white text and a neutral `--shadow-md`. Hover: `translateY(-3px) scale(1.02)` and `--shadow-lg`. Active: `translateY(0) scale(0.96)`.
 - **Secondary:** transparent with a 2px white border; on hover it fills white and the label turns navy. It only works on navy surfaces — never place it on a light band.
 - **Focus:** the global `:focus-visible` is a 2px navy outline at 2px offset; never remove it. `.lead-submit` stretches to the form width.
 
@@ -246,10 +246,10 @@ Two recurring gestures: a **4px orange bar** that slides across the top edge of 
 Orange Outfit 800 figure with a `+` suffix as a sibling span, and a 0.9rem label at 80% opacity below. Counters animate from 0 to `data-target` when the hero enters the viewport; the value in the markup is the final one, so no-JS and reduced-motion readers see the real number.
 
 ### Service List
-Not cards. Five rows inside `.services-grid`: 48px icon tile (`--primary-10` fill, navy stroke, 12px radius) beside a 1.2rem Outfit title and a muted description of 2–3 lines, separated by hairlines. No shadows, no borders around the group.
+Not cards. Five rows inside `.services-grid`: 48px icon tile (`--primary-10` fill, navy stroke, 12px radius) beside a 1.25rem Outfit title and a muted description of 2–3 lines, separated by hairlines. No shadows, no borders around the group.
 
-### Client Marquee
-A single row of `.client-logo` images at 120px height, grayscale at 50% opacity, duplicated once in the DOM and translated continuously by a marquee animation; hover restores color. The strip bleeds the full container width and is clipped by `overflow: hidden`.
+### Client Logo Row
+`.client-logo` images at 120px height (80px under 768px), grayscale at 50% opacity, in a single flex row that wraps and centers: 4 + 3 on desktop and 2 per row on mobile, where the logos drop to 64px and are capped at 44% width. All seven logos are always visible; there is no auto-scrolling marquee. Hover restores a logo to color. The row sits inside the `Surface` band, so no clipping, negative margins or motion is involved.
 
 ### Value-Prop Band
 Full-bleed `Primary` section, one centered title with the orange bar, then a single-column list of three items: 44–48px icon tile with white stroke on navy, heading at 600, muted-inverse description. This is the darkest moment of the home page and the only one that uses navy as a text surface for body copy.
@@ -264,14 +264,14 @@ The conversion component, used on the home page and on `/contacto/`, identical i
 - **Anti-spam:** a hidden honeypot checkbox and a Web3Forms `access_key` + `redirect` to `/gracias.html`.
 
 ### Data Platform (`/base-de-datos/`)
-- **Map:** Leaflet with `markercluster`, 500px tall, inside a 16px-radius `Surface` frame, on a `Paper` band. Cluster markers are navy-to-orange circles by count; the section carries a mono "Mapa interactivo" badge, a title, one explanatory line, and two toggle groups.
-- **Toggle groups:** pill container at 10px radius with `--shadow-sm`, buttons at 8px radius and 0.85rem; resting transparent/muted, hover `--primary-10`, active navy fill with white text.
-- **Metric cards:** three-up `Surface` cards, 2.5rem padding, 56px navy-gradient icon tile, orange-free navy figure at `clamp(2rem, 4vw, 2.8rem)` with a 0.75rem mono label above and a muted description below. Hover lifts `-6px` and reveals the top accent bar.
-- **Chart cards:** `Surface` with `--shadow-sm`, 2rem padding, 16px radius, a 300px canvas (350px when full-width), title at 0.95rem 600, plus a muted footnote explaining the metric. Chart.js bar charts in navy with orange for the highlighted series, 6px bar radius.
+- **Map:** Leaflet with `markercluster`, 500px tall, flushing to the container edges with a 16px-radius clip and no shadow of its own, on a `Paper` band. Cluster markers are navy-to-orange circles by count; the section carries a mono "Mapa interactivo" badge, a title, one explanatory line, and two toggle groups.
+- **Toggle groups:** 10px-radius container holding 8px-radius buttons at 0.85rem, separated from the band by a 1px mixed-alpha border rather than a shadow. Resting buttons are transparent/muted, hover `--primary-10`, active navy fill with white text (lighter navy `--primary-color-light` in dark mode).
+- **Metric cards:** three-up `Surface` cards, 2.5rem padding, 56px navy-gradient icon tile, navy figure at `clamp(2rem, 4vw, 2.8rem)` with a 0.75rem mono label above and a muted description below. Hover lifts `-4px` on `--shadow-lg`; nothing else changes.
+- **Chart cards:** `Surface` with `--shadow-sm`, 2rem padding, 16px radius, a 300px canvas (350px when full-width), title at 1.25rem 600, plus a muted footnote explaining the metric. Chart.js colors come from the `--chart-*` tokens, so the same charts stay legible in both themes: navy bars with the orange series highlighted in light, light-blue bars with the same orange highlight in dark.
 - **Fallbacks:** if Leaflet or Chart.js fail to load, a `[hidden]` fallback block with an icon and explanatory copy is revealed in place.
 
 ### Use-Case Cards (`/inteligencia-inmobiliaria/`)
-The whole card is an `<a>` to an external Looker Studio report — one per city (Santa Cruz, Cochabamba, La Paz). White 16px-radius card with 2.5rem padding, a 1.3rem title, 2–3 muted lines, and an orange "Acceder →" line pinned to the bottom with `margin-top: auto`. Hover: `-8px`, `--shadow-lg`, and the top accent bar. The link line is currently an inline `style` attribute rather than a class; treat that as a defect, not a pattern.
+The whole card is an `<a>` to an external Looker Studio report — one per city (Santa Cruz, Cochabamba, La Paz). White 16px-radius card with 2.5rem padding, a 1.3rem title, 2–3 muted lines, and an orange "Acceder →" line pinned to the bottom with `margin-top: auto`. Hover: `-4px` and `--shadow-lg`. The link line is currently an inline `style` attribute rather than a class; treat that as a defect, not a pattern.
 
 ### Header & Navigation
 Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left, four text links right (`Inicio`, `Datos`, `Inteligencia`, `Contacto`). Active page is marked with an orange underline that animates in from the left; hover turns the label `Signal Ink`. Below 768px the links collapse into a hamburger-triggered dropdown. In dark mode the header goes `rgba(10, 15, 26, 0.95)` and the logo swaps to the dark-background asset via CSS `content`.
@@ -286,12 +286,13 @@ Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left,
 
 ### Do:
 - **Do** keep the two-theme contract: check every surface in light and dark before calling it done.
+- **Do** run the mechanical detector over touched pages before shipping UI: it should come back with zero findings.
 - **Do** let numbers carry the section — orange figures, mono labels, real counts from `data/propiedades.json`.
 - **Do** alternate `Paper` and `Surface` bands, and use one full-bleed navy band per page for emphasis.
 - **Do** use `--gradient-secondary` for every orange fill and keep orange text at `Signal Ink` or lighter stops.
 - **Do** reuse `.section-title`, `.btn`, `.use-case-card`, `.db-*` before inventing a parallel pattern.
 - **Do** keep one entrance animation (`fadeInUp`) and one hover lift language across components.
-- **Do** honor `prefers-reduced-motion`: the reduction block disables reveals, counters and marquee.
+- **Do** honor `prefers-reduced-motion`: the reduction block disables reveals and counters.
 
 ### Don't:
 - **Don't** introduce a light/dark toggle UI; the theme follows the OS preference only.
@@ -300,7 +301,10 @@ Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left,
 - **Don't** use gradient text (`background-clip: text`), cream/beige backgrounds, or generic SaaS card grids.
 - **Don't** put an all-caps tracked eyebrow above every section heading — the mono badge is for data screens only.
 - **Don't** use `border-radius` above 16px on cards or combine a 1px border with a ≥16px blur shadow on the same element.
+- **Don't** add a colored glow shadow (orange under a button, navy under a card): elevation is neutral black.
 - **Don't** set muted text (`{colors.ink-muted}`) on a dark surface: it lands at 3.7:1. Use `{colors.dark-ink}` or a white alpha instead.
+- **Don't** auto-scroll, auto-rotate or marquee anything; a logo wall is a static row.
+- **Don't** nest a card inside a card. The map frame, the toggle group and the fallback overlay all flatten into the band.
 - **Don't** place the white-bordered secondary button on a light surface.
 - **Don't** use stock imagery of handshakes or families; the proof is logos, counts and charts.
 - **Don't** revive the Jul-IA chat mockup or `.btn-julia` styles: that landing no longer exists.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-22T15:40:00.000Z",
+  "generatedAt": "2026-10-22T16:05:00.000Z",
   "title": "Design System: Citrino Capitales Inmobiliarios",
   "extensions": {
     "colorMeta": {
@@ -201,30 +201,78 @@
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero headlines only, one per page, centered. Outfit 800." },
-      "headline": { "displayName": "Headline", "purpose": "Section titles, always with the 60x4px orange bar beneath." },
-      "title": { "displayName": "Title", "purpose": "Card, service and step headings." },
-      "body": { "displayName": "Body", "purpose": "Prose in DM Sans; tabular numerals globally." },
-      "label": { "displayName": "Data Label", "purpose": "JetBrains Mono for data vintage, badges and chart notes." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headlines only, one per page, centered. Outfit 800."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles, always with the 60x4px orange bar beneath."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card, service and step headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose in DM Sans; tabular numerals globally."
+      },
+      "label": {
+        "displayName": "Data Label",
+        "purpose": "JetBrains Mono for data vintage, badges and chart notes."
+      }
     },
     "shadows": [
-      { "name": "sm", "value": "0 1px 2px 0 rgba(0, 40, 87, 0.05)", "purpose": "Chart cards, toggle groups, header hairline." },
-      { "name": "md", "value": "0 4px 6px -1px rgba(0, 40, 87, 0.08), 0 2px 4px -1px rgba(0, 40, 87, 0.04)", "purpose": "Metric cards, use-case cards, lead form." },
-      { "name": "lg", "value": "0 10px 15px -3px rgba(0, 40, 87, 0.1), 0 4px 6px -2px rgba(0, 40, 87, 0.05)", "purpose": "Hover state of a lifted card." },
-      { "name": "header-scrolled", "value": "0 4px 12px 0 rgba(0, 40, 87, 0.12)", "purpose": "Fixed header after scroll." },
-      { "name": "action", "value": "0 4px 12px -3px rgba(238, 121, 0, 0.3)", "purpose": "Orange button at rest; hover rises to 0 8px 20px -5px rgba(238, 121, 0, 0.4)." }
+      {
+        "name": "sm",
+        "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        "purpose": "Chart cards, header hairline."
+      },
+      {
+        "name": "md",
+        "value": "0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)",
+        "purpose": "Metric cards, use-case cards, lead form, buttons at rest."
+      },
+      {
+        "name": "lg",
+        "value": "0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+        "purpose": "Card hover, fixed header after scroll, mobile nav drop."
+      }
     ],
     "motion": [
-      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for layout and color state transitions." },
-      { "name": "ease-spring", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Button hover press (transform 0.15s)." },
-      { "name": "fade-up", "value": "fadeInUp 0.8s ease forwards", "purpose": "Hero entrance, staggered by .animate-delay-1..5 (0.1s steps). Scroll reveals travel translateY(30px) with opacity 0 to 1." },
-      { "name": "marquee", "value": "translateX loop over duplicated logo track", "purpose": "Client logo strip. Paused under prefers-reduced-motion." }
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default easing for layout and color state transitions."
+      },
+      {
+        "name": "ease-spring",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Button hover press (transform 0.15s)."
+      },
+      {
+        "name": "fade-up",
+        "value": "fadeInUp 0.8s ease forwards",
+        "purpose": "Hero entrance, staggered by .animate-delay-1..5 (0.1s steps). Scroll reveals travel translateY(30px) with opacity 0 to 1."
+      }
     ],
     "breakpoints": [
-      { "name": "xl", "value": "1200px" },
-      { "name": "lg", "value": "1024px" },
-      { "name": "md", "value": "768px" },
-      { "name": "sm", "value": "480px" }
+      {
+        "name": "xl",
+        "value": "1200px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "sm",
+        "value": "480px"
+      }
     ]
   },
   "components": [
@@ -234,7 +282,7 @@
       "refersTo": "button-primary",
       "description": "Orange gradient CTA. The only element allowed the colored action shadow.",
       "html": "<button class=\"ds-btn-primary\">Solicitar asesoría</button>",
-      "css": ".ds-btn-primary { background: linear-gradient(135deg, var(--secondary-color) 0%, #cc6a00 100%); color: #ffffff; padding: 1rem 2.5rem; border-radius: 10px; border: 2px solid transparent; font-family: var(--font-body); font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 12px -3px rgba(238, 121, 0, 0.3); transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 20px -5px rgba(238, 121, 0, 0.4); } .ds-btn-primary:active { transform: translateY(0) scale(0.96); } .ds-btn-primary:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }"
+      "css": ".ds-btn-primary { background: linear-gradient(135deg, var(--secondary-color) 0%, #cc6a00 100%); color: #ffffff; padding: 1rem 2.5rem; border-radius: 10px; border: 2px solid transparent; font-family: var(--font-body); font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07); transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08); } .ds-btn-primary:active { transform: translateY(0) scale(0.96); } .ds-btn-primary:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }"
     },
     {
       "name": "Secondary Button",
@@ -264,9 +312,9 @@
       "name": "Metric Card",
       "kind": "card",
       "refersTo": "card-metric",
-      "description": "Data metric tile from /base-de-datos. Navy figure, navy gradient icon, orange top bar revealed on hover.",
+      "description": "Data metric tile from /base-de-datos. Navy figure, navy gradient icon, neutral lift on hover.",
       "html": "<div class=\"ds-metric\"><div class=\"ds-metric-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" width=\"24\" height=\"24\"><path d=\"M3 21h18M5 21V9l7-5 7 5v12\"></path></svg></div><span class=\"ds-metric-label\">Propiedades en la base</span><span class=\"ds-metric-value\">23.222</span><p class=\"ds-metric-desc\">Casas, departamentos, terrenos, locales, oficinas y más.</p></div>",
-      "css": ".ds-metric { position: relative; overflow: hidden; background: #ffffff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 40, 87, 0.08); text-align: center; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease; font-family: var(--font-body); } .ds-metric::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(135deg, #ee7900 0%, #cc6a00 100%); transform: scaleX(0); transition: transform 0.3s ease; } .ds-metric:hover { transform: translateY(-6px); box-shadow: 0 10px 15px -3px rgba(0, 40, 87, 0.1); } .ds-metric:hover::before { transform: scaleX(1); } .ds-metric-icon { width: 56px; height: 56px; margin: 0 auto 1.25rem; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #ffffff; background: linear-gradient(135deg, #004080 0%, #002857 100%); } .ds-metric-label { display: block; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.03em; color: var(--text-light); margin-bottom: 0.25rem; } .ds-metric-value { display: block; font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--primary-color); line-height: 1.2; } .ds-metric-desc { color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem; }"
+      "css": ".ds-metric { position: relative; overflow: hidden; background: #ffffff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07); text-align: center; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease; font-family: var(--font-body); } .ds-metric:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08); } .ds-metric-icon { width: 56px; height: 56px; margin: 0 auto 1.25rem; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #ffffff; background: linear-gradient(135deg, #004080 0%, #002857 100%); } .ds-metric-label { display: block; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.03em; color: var(--text-light); margin-bottom: 0.25rem; } .ds-metric-value { display: block; font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--primary-color); line-height: 1.2; } .ds-metric-desc { color: var(--text-medium); font-size: 0.9rem; line-height: 1.6; margin-top: 0.5rem; }"
     },
     {
       "name": "Use-Case Card",
@@ -274,7 +322,7 @@
       "refersTo": "card-use-case",
       "description": "Whole-card link to an external report; orange 'Acceder' pinned to the bottom.",
       "html": "<a class=\"ds-use-case\" href=\"#\"><h3>Inteligencia inmobiliaria Santa Cruz</h3><p>Panel de indicadores del mercado inmobiliario de Santa Cruz — ciclo, oferta, ventas, financiamiento y precios.</p><span>Acceder →</span></a>",
-      "css": ".ds-use-case { display: flex; flex-direction: column; position: relative; overflow: hidden; background: #ffffff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 40, 87, 0.08); text-decoration: none; font-family: var(--font-body); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease; } .ds-use-case::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(135deg, #ee7900 0%, #cc6a00 100%); transform: scaleX(0); transition: transform 0.3s ease; } .ds-use-case:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0, 40, 87, 0.15); } .ds-use-case:hover::before { transform: scaleX(1); } .ds-use-case h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--text-dark); margin: 0 0 0.75rem; } .ds-use-case p { color: var(--text-medium); line-height: 1.7; margin: 0 0 1.5rem; flex: 1; } .ds-use-case span { color: #a14c00; font-weight: 500; margin-top: auto; } .ds-use-case:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }"
+      "css": ".ds-use-case { display: flex; flex-direction: column; position: relative; overflow: hidden; background: #ffffff; padding: 2.5rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07); text-decoration: none; font-family: var(--font-body); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease; } .ds-use-case:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08); } .ds-use-case h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--text-dark); margin: 0 0 0.75rem; } .ds-use-case p { color: var(--text-medium); line-height: 1.7; margin: 0 0 1.5rem; flex: 1; } .ds-use-case span { color: #a14c00; font-weight: 500; margin-top: auto; } .ds-use-case:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }"
     },
     {
       "name": "Data Toggle Group",
@@ -282,7 +330,7 @@
       "refersTo": "lead-option-selected",
       "description": "Pill container of filter buttons on /base-de-datos; active state is a navy fill.",
       "html": "<div class=\"ds-toggle-group\"><button class=\"ds-toggle is-active\">Todas</button><button class=\"ds-toggle\">Casas</button><button class=\"ds-toggle\">Departamentos</button><button class=\"ds-toggle\">Terrenos</button></div>",
-      "css": ".ds-toggle-group { display: inline-flex; gap: 0.5rem; background: #ffffff; padding: 0.35rem; border-radius: 10px; box-shadow: 0 1px 2px 0 rgba(0, 40, 87, 0.05); font-family: var(--font-body); } .ds-toggle { font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; padding: 0.45rem 1rem; border-radius: 8px; border: none; background: transparent; color: var(--text-medium); cursor: pointer; white-space: nowrap; transition: all 0.25s ease; } .ds-toggle:hover { color: var(--primary-color); background: rgba(0, 40, 87, 0.1); } .ds-toggle.is-active { background: var(--primary-color); color: #ffffff; box-shadow: 0 2px 6px rgba(0, 40, 87, 0.25); } .ds-toggle:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }"
+      "css": ".ds-toggle-group { display: inline-flex; gap: 0.35rem; background: #ffffff; padding: 0.35rem; border: 1px solid rgba(75, 85, 99, 0.25); border-radius: 10px; font-family: var(--font-body); } .ds-toggle { font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; padding: 0.45rem 1rem; border-radius: 8px; border: none; background: transparent; color: var(--text-medium); cursor: pointer; white-space: nowrap; transition: all 0.25s ease; } .ds-toggle:hover { color: var(--primary-color); background: rgba(0, 40, 87, 0.1); } .ds-toggle.is-active { background: var(--primary-color); color: #ffffff; } .ds-toggle:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }"
     }
   ],
   "narrative": {
@@ -326,14 +374,14 @@
         "section": "elevation"
       },
       {
-        "name": "The Soft-Lift Rule",
-        "body": "A card rests on level 1-2 and rises one level on hover, moving -6px to -8px. No ambient glow, no shadow larger than --shadow-lg.",
-        "section": "elevation"
+        "name": "The One Accent Rule",
+        "body": "There is exactly one decorative accent in the system: the 60x4px orange bar under section titles. No top-edge bars, side tabs, gradient stripes or icon chips added to cards to make them feel designed.",
+        "section": "shapes"
       },
       {
-        "name": "The Accent Bar Rule",
-        "body": "The top-edge hover bar is a 4px gradient strip spanning the full card width. It appears on hover only, and only on cards that are clickable destinations.",
-        "section": "shapes"
+        "name": "The Soft-Lift Rule",
+        "body": "A card rests on level 1-2 and rises one level on hover, moving -4px. No ambient glow, no shadow larger than --shadow-lg, no colored shadow.",
+        "section": "elevation"
       }
     ],
     "dos": [
@@ -342,8 +390,9 @@
       "Do alternate Paper and Surface bands, and use one full-bleed navy band per page for emphasis.",
       "Do use --gradient-secondary for every orange fill and keep orange text at Signal Ink or lighter stops.",
       "Do reuse .section-title, .btn, .use-case-card and the .db-* patterns before inventing a parallel one.",
+      "Do honor prefers-reduced-motion: the reduction block disables reveals, counters and marquee.",
       "Do keep one entrance animation (fadeInUp) and one hover lift language across components.",
-      "Do honor prefers-reduced-motion: the reduction block disables reveals, counters and marquee."
+      "Do run the mechanical detector over touched pages before shipping UI: it should come back with zero findings."
     ],
     "donts": [
       "Don't introduce a light/dark toggle UI; the theme follows the OS preference only.",
@@ -353,7 +402,10 @@
       "Don't put an all-caps tracked eyebrow above every section heading — the mono badge is for data screens only.",
       "Don't use a border radius above 16px on cards, or combine a 1px border with a 16px+ blur shadow on the same element.",
       "Don't place the white-bordered secondary button on a light surface.",
-      "Don't revive the Jul-IA chat mockup or .btn-julia styles: that landing no longer exists."
+      "Don't revive the Jul-IA chat mockup or .btn-julia styles: that landing no longer exists.",
+      "Don't add a colored glow shadow (orange under a button, navy under a card): elevation is neutral black.",
+      "Don't auto-scroll, auto-rotate or marquee anything; a logo wall is a static row.",
+      "Don't nest a card inside a card; flatten the map frame, the toggle group and the fallback overlay into the band."
     ]
   }
 }
