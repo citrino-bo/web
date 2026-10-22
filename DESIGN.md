@@ -7,10 +7,9 @@ colors:
   primary-dark: "#001a38"
   primary-deep: "#0a1f3d"
   signal: "#ee7900"
-  signal-gradient-end: "#cc6a00"
+  signal-deep: "#b35400"
   signal-hover: "#ff9f30"
   signal-ink: "#a14c00"
-  on-signal: "#0a0a0a"
   hairline: "rgba(0, 40, 87, 0.14)"
   density-1: "#dbe7f2"
   density-2: "#a8c4de"
@@ -48,10 +47,22 @@ typography:
     letterSpacing: "-0.02em"
   stat:
     fontFamily: "Outfit, sans-serif"
-    fontSize: "clamp(2rem, 3.6vw, 2.75rem)"
+    fontSize: "clamp(2.5rem, 5vw, 4rem)"
     fontWeight: 800
     lineHeight: 1
     letterSpacing: "-0.02em"
+  stat-total:
+    fontFamily: "Outfit, sans-serif"
+    fontSize: "clamp(3rem, 6vw, 4.5rem)"
+    fontWeight: 800
+    lineHeight: 1
+    letterSpacing: "-0.03em"
+  stat-row:
+    fontFamily: "Outfit, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "normal"
   subtitle:
     fontFamily: "DM Sans, sans-serif"
     fontSize: "clamp(1.125rem, 2.2vw, 1.375rem)"
@@ -186,10 +197,10 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 - **Authority Dark / Deep** (`{colors.primary-dark}`, `{colors.primary-deep}`): the two dark stops of the hero and closing CTA gradients.
 
 ### Secondary
-- **Signal** (`{colors.signal}`): primary buttons, statistic figures, the 60×4px bar under section titles, the densest map cells, list markers, LinkedIn links.
-- **Signal Gradient End** (`{colors.signal-gradient-end}`): second stop of `--gradient-secondary`, so orange fills are gradients, never flat.
+- **Signal** (`{colors.signal}`): statistic figures, the 60×4px bar under section titles, the densest map cells, list markers, LinkedIn links. Never a button fill: see Signal Deep.
+- **Signal Deep** (`{colors.signal-deep}`): first stop of `--gradient-secondary`, which runs `#b35400 → #a14c00` (the second stop is `{colors.signal-ink}`). The deeper pair is what lets a primary button carry white text at 5.02:1 and 5.92:1; `{colors.signal}` itself gives white 2.85:1 and fails AA. The same gradient fills the title bar, the nav underline and the census bars, so those read a touch deeper too.
 - **Signal Hover** (`{colors.signal-hover}`): defined for the orange hover state.
-- **Signal Ink** (`{colors.signal-ink}`): the darker orange for text on light surfaces (links, table totals, `.persona-linkedin`) where the base orange would fail contrast.
+- **Signal Ink** (`{colors.signal-ink}`): the darker orange for text on light surfaces (links, table totals, `.persona-linkedin`) where the base orange would fail contrast, and the deep end of `--gradient-secondary`.
 
 ### Tertiary
 - **Return** (`{colors.return}`): positive-state only. Defined, not currently used on a page.
@@ -223,18 +234,20 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 **Character:** Outfit gives the numbers their architectural quality; DM Sans keeps long explanatory copy readable; the mono is reserved for machine-truth metadata (table headers, update dates, the map legend, the CBDI alliance line). All three load from Google Fonts in a single request, and `body` sets `font-variant-numeric: tabular-nums` so statistics align.
 
 ### Hierarchy
-The ramp has seven fixed steps and three fluid ones. Nothing else is allowed; a size that is not on this list is drift.
+The ramp has eight fixed steps and six fluid ones. Nothing else is allowed; a size that is not on this list is drift.
 
 - **Display** (`{typography.display}`): `.hero-title`, Outfit 800 at `clamp(2.2rem, 5.6vw, 3.75rem)`, centered, one per page.
 - **Headline** (`{typography.headline}`): `.section-title`, `.banda-titulo`, `.cta-final-title` and the interior hero title (`.hero--interior .hero-title`), Outfit 700 at `clamp(2.125rem, 1.3rem + 2.4vw, 3rem)`, with the orange bar beneath. `.section-title` is left-aligned to the container edge and capped at 26ch (32ch with `.section-title--wide`); `.banda-titulo` and `.cta-final-title` stay centered because they sit on full-bleed navy bands.
-- **Stat** (`{typography.stat}`): `.cifra-valor`, Outfit 800 orange at `clamp(2rem, 3.6vw, 2.75rem)`, always paired with a label underneath. Static values, no counter.
+- **Stat** (`{typography.stat}`): `.cifra-valor`, Outfit 800 orange at `clamp(2.5rem, 5vw, 4rem)`, always paired with a label underneath. Static values, no counter.
+- **Stat total** (`{typography.stat-total}`): `.censo-total-cifra`, the one figure that carries the census band, Outfit 800 white at `clamp(3rem, 6vw, 4.5rem)`.
+- **Stat row** (`{typography.stat-row}`): `.censo-inmuebles`, the per-city count in the census ledger, Outfit 700 orange at `1.5rem`, right-aligned over tabular figures.
 - **Heading** (`{typography.heading}`): `1.625rem` for `.censo-article h3` and `.mapa-header h2/h3`. `.unidad h2` uses `{typography.rail-heading}` at 700 inside its rail.
 - **Title** (`{typography.title}`): `1.25rem` for `.chart-card h3`, `.acceso h3`, `.lead-question`, `.documento h2`.
 - **Lead** (`{typography.lead}`): `1.125rem` at 1.75 for `.censo-article p`, `.unidad-descripcion`, `.cta-final-text`; capped at 72ch.
 - **Subtitle** (`{typography.subtitle}`): `.hero-subtitle` at `clamp(1.125rem, 2.2vw, 1.375rem)` and `.section-subtitle` at `1.25rem`, left-aligned with the section title unless `.section-subtitle--center` is set.
 - **Body** (`{typography.body}`): `1rem` for nav labels, buttons, list items and form fields.
 - **Small** (`{typography.small}`): `0.875rem` for helper copy, consent rows, reassurance, chart notes, company rubros, roles and footer bottom.
-- **Label** (`{typography.label}`): JetBrains Mono 500 at `0.75rem` with `0.06em` tracking, uppercase, for `.tabla-censo thead th`, `.mapa-leyenda`, `.alianza-label` and `.footer-nav-title`.
+- **Label** (`{typography.label}`): JetBrains Mono 500 at `0.75rem` with `0.06em` tracking, uppercase, for `.tabla-censo thead th`, `.mapa-leyenda`, `.alianza-label`, `.footer-nav-title`, `.censo-total-label` and `.cifra-label`; `.censo-proyectos` uses the same step in sentence case.
 - **Display compact** (`{typography.display-compact}`): `2rem`, only for `.persona-iniciales`, the monogram that replaces a missing team photo.
 
 ### Named Rules
@@ -244,7 +257,7 @@ The ramp has seven fixed steps and three fluid ones. Nothing else is allowed; a 
 
 ## Layout
 
-A single centered container of `1320px` with fluid side padding (`clamp(1.25rem, 3.5vw, 3rem)`, so 1200px of content at 1440) and `820px` for `.container--narrow`, sitting inside full-bleed color bands. Inner blocks never re-cap the width: `.censo`, `.mapa-header`, `.logros` and `.empresas` start at the container edge and cap the measure in `ch`, not the box. Sections alternate `Paper` → `Surface` → `Primary` → `Surface` → `Footer` down the home page, so the eye moves between evidence (light) and authority (navy) without a hard edge.
+A single centered container of `1320px` with fluid side padding (`clamp(1.25rem, 3.5vw, 3rem)`, so 1200px of content at 1440) and `820px` for `.container--narrow`, sitting inside full-bleed color bands. Inner blocks never re-cap the width: `.censo`, `.mapa-header`, `.logros` and `.empresas` start at the container edge and cap the measure in `ch`, not the box. Sections alternate `Paper` → `Surface` → `Primary` → `Surface` → `Footer` down the home page, with the census band right under the hero so the page opens on one navy field before it turns to evidence: the eye moves between evidence (light) and authority (navy) without a hard edge.
 
 - **Section rhythm:** `7rem` for standard sections and the footer, `4rem` for `.mapa` and `.visualizaciones` (each with a `--hairline` top border), `4rem` for `.censo-article`, `7rem` for the closing CTA band, `4rem` on mobile.
 - **Grids:** two-up for `.charts-grid` and `.empresas` (one column under 900px), three-up for `.accesos`, four-up for `.equipo` (three under 1024px, two under 768px, one under 480px), with a consistent `2rem` gap.
@@ -276,16 +289,16 @@ Hybrid: tonal banding for structure, and one neutral shadow vocabulary for inter
 
 - **Hero (`enfocar`):** the title enters from `blur(10px)` plus `translateY(18px)` over 0.85s on `cubic-bezier(0.16, 1, 0.3, 1)`; the subtitle, cifras and CTA follow on `aparecer` with a 0.1–0.4s stagger. This is the only entrance sequence on the page.
 - **Title bar:** the 60×4px rule draws from `scaleX(0)` to `1` when the heading reaches 60% visibility, origin left on `.section-title` and centre on `.banda-titulo`.
-- **Census table:** rows arrive at `translateY(8px)` → `0` with an 80ms stagger, once.
+- **Census rows:** the table rows arrive at `translateY(8px)` → `0` with an 80ms stagger, once; in the census band the proportional bars draw from `scaleX(0)` to `1` with `transform-origin: left` when the ledger reaches 35% visibility, once.
 - **Density map:** on the first paint only, each cell grows from radius 0 to its bucket radius with a delay proportional to its distance from the map centre (capped at 320ms), in 24 steps on `requestAnimationFrame`. Filters re-paint without animating.
 - **Feedback:** buttons and cards lift `-3/-4px` on hover, `scale(0.97)` on press. The client marquee loops and has a manual pause.
 - **Budget:** no property that drives layout. Blur is one element, once. The map animation is bounded to the canvas overlay and runs once per page.
-- **Reduced motion:** every one of the four moments is disabled and content sits in its final state; the bar is drawn, the rows and cells are visible. Feedback transitions survive.
+- **Reduced motion:** every moment is disabled and content sits in its final state; the bar is drawn, the census bars are full, the rows and cells are visible. Feedback transitions survive.
 - Leaflet and Chart.js load with `defer`: they used to block parsing, which meant the hero entrance finished before the first paint and nobody saw it.
 
 ## Shapes
 
-Rounded but never soft: `1px` for hairline list markers, `2px` for the title bar, `3px` for the map legend swatches, `6px` for chart bar caps, `8px` for small controls and the alliance logo, `10px` for buttons, inputs and filter groups, `12px` for option rows, icon tiles and avisos, `16px` for cards, the form and the map frame. `100px` is reserved for a metadata pill, currently unused.
+Rounded but never soft: `1px` for hairline list markers, `2px` for the title bar, `3px` for the map legend swatches, `6px` for chart bar caps, `8px` for small controls and the alliance logo, `10px` for buttons, inputs and filter groups, `12px` for option rows, icon tiles and avisos, `16px` for cards, the form and the map frame. `100px` for the census bar track and fill, and for a metadata pill that is still unused.
 
 Borders are mostly absent: cards rely on fill and a neutral shadow, sections on hairlines (`1px solid var(--bg-lighter)`) or on the color band itself. Form fields, unselected `.lead-option` rows and the `.filtro-grupo` pill are the exception, with a `1px` mixed-alpha border that turns orange on focus or selection. No card carries a thick side or top accent strip; the only saturated line in the system is the 60×4px bar under section titles.
 
@@ -293,15 +306,17 @@ Borders are mostly absent: cards rely on fill and a neutral shadow, sections on 
 
 ### Buttons
 - **Shape:** 10px radius, `2px solid transparent` so variants do not shift layout, `1rem 2.5rem` padding, 600 weight, 44px minimum height.
-- **Primary:** `--gradient-secondary` fill with `--on-signal` (`#0a0a0a`) text and `--shadow-md`. White on the orange gradient measures 2.85:1 and fails AA on every CTA; near-black clears 5:1 across the whole gradient. Hover: `translateY(-3px)` and `--shadow-lg`. Active: `translateY(0) scale(0.97)`.
+- **Primary:** `--gradient-secondary` (`#b35400 → #a14c00`) fill with white text and `--shadow-md`. The gradient is deeper than the base signal so white clears AA across the whole fill: 5.02:1 at the light stop, 5.92:1 at the dark one. Hover: `translateY(-3px)` and `--shadow-lg`. Active: `translateY(0) scale(0.97)`.
 - **Secondary:** transparent with a 2px white border; on hover it fills white and the label turns navy (`#002857` literal, so dark mode keeps the contrast). It only works on navy surfaces — never place it on a light band.
 - **Focus:** the global `:focus-visible` is a 2px navy outline at 2px offset, and orange on `.hero`, `.cta-final`, `.banda-oscura` and `.footer`, where navy measures 1.3:1. Never remove it. `.lead-submit` stretches to the form width.
 
 ### Cifras
-`.cifras` is a single ruled row, not three cards: three `.cifra` columns inside a `1px` top and bottom rule, divided by `1px` vertical rules. Orange Outfit 800 figure, `0.9rem` label at 70% white below, `22ch` cap. Under 768px the columns stack and the vertical rules become horizontal ones. Values are static text (no counter animation), because two of the three carry a currency suffix.
+`.cifras` is a single ruled row, not three cards: three `.cifra` columns inside a `1px` top and bottom rule, divided by `1px` vertical rules. Orange Outfit 800 figure, a `0.75rem` mono uppercase label at 50% white below. Under 768px the columns stack and the vertical rules become horizontal ones. Values are static text (no counter animation), because two of the three carry a currency suffix.
 
 ### Censo Articles
-`.censo-article` is a divided row inside `.censo` (900px): `3rem` vertical padding, a `1px` bottom hairline, an `h3` in `--heading-ink`, and copy capped at 72ch. The census table lives inside `.tabla-scroll` for horizontal overflow.
+`.censo-article` is a divided row inside `.censo`: `4rem` vertical padding, a `1px` bottom hairline, an `h3` in `--heading-ink`, and copy capped at 38rem. The census table lives inside `.tabla-scroll` for horizontal overflow. Above 1024px the row is the `280px` rail plus the content column; `.censo-datos` belongs to the content column, never the rail.
+
+Inside `.banda-censo` the same row runs on navy: `.section-title--inverso` turns the heading white, the `h3` turns white, the copy drops to `--white-70`, and the hairline above `.censo-datos` is a `1px` `--white-20` rule. The band carries a `1px` `--white-20` top seam for the same reason `.banda-oscura` does: the hero gradient above it ends on a different stop, so the two navy fields need a deliberate division. That block is the ledger: a `.censo-total` line (the total figure at `{typography.stat-total}` with its mono label on the baseline), then `.censo-ciudades`, one `.censo-ciudad` row per city on `140px 1fr 110px 120px` — name, proportional bar, count, project count. The bar is a `10px` `--white-12` track with a `--gradient-secondary` fill at `var(--pct)` of the row's largest value, so the three cities read as one scale instead of three separate numbers. Under 768px each row becomes two lines: name, count and project count on top, the bar across the full width below.
 
 ### Table
 `.tabla-censo`: full width, `border-collapse`, right-aligned numerics with tabular figures, left-aligned first column at zero side padding, `0.75rem` uppercase mono headers over a `2px` navy hairline, `1px` row hairlines, and the inmuebles column in `--secondary-ink` at 600. A `.tabla-censo caption` in `0.9rem` muted sits above. The row header is a `<th scope="row">`.
@@ -375,7 +390,7 @@ The viewport meta carries `viewport-fit=cover` and the hero, the container and t
 - **Do** alternate `Paper` and `Surface` bands, and use one full-bleed navy band per page for emphasis.
 - **Do** use `--gradient-secondary` for every orange fill and keep orange text at `Signal Ink` or lighter stops.
 - **Do** reuse `.section-title`, `.btn`, `.cifra`, `.unidad`, `.empresa` before inventing a parallel pattern.
-- **Do** keep the four motion moments as the only ones: `enfocar` on the hero title, the title bar drawing, the census rows arriving and the map cells landing. Hover lift stays the interaction language.
+- **Do** keep the motion moments as the only ones: `enfocar` on the hero title, the title bar drawing, the census rows (and the census bars) arriving and the map cells landing. Hover lift stays the interaction language.
 - **Do** honor `prefers-reduced-motion`: the reduction block disables reveals and stops the marquee.
 - **Do** publish aggregates. Individual properties never leave the private base.
 

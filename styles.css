@@ -18,7 +18,7 @@
     --accent-color: #10b981;
 
     --gradient-primary: linear-gradient(135deg, #002857 0%, var(--primary-color-darker) 100%);
-    --gradient-secondary: linear-gradient(135deg, #ee7900 0%, #cc6a00 100%);
+    --gradient-secondary: linear-gradient(135deg, #b35400 0%, #a14c00 100%);
 
     --primary-10: rgba(0, 40, 87, 0.1);
     --primary-20: rgba(0, 40, 87, 0.2);
@@ -28,6 +28,7 @@
     --white-70: rgba(255, 255, 255, 0.7);
     --white-50: rgba(255, 255, 255, 0.5);
     --white-20: rgba(255, 255, 255, 0.2);
+    --white-12: rgba(255, 255, 255, 0.12);
     --white-10: rgba(255, 255, 255, 0.1);
 
     --text-dark: #1f2937;
@@ -50,8 +51,6 @@
     --secondary-hover: #ff9f30;
 
     /* Colores de datos: mapa y gráficos. Se redefinen en modo oscuro. */
-    /* Tinta sobre naranja: blanco da 2,85:1 y falla AA en todos los CTA. */
-    --on-signal: #0a0a0a;
     /* Hairline visible: --bg-lighter da 1,05:1 sobre la banda de papel. */
     --hairline: rgba(0, 40, 87, 0.14);
     /* Rampa secuencial del mapa: un solo tono, luminancia monotónica. */
@@ -459,7 +458,7 @@ img {
     justify-content: center;
     gap: 0;
     margin: 3.25rem auto 0;
-    max-width: 900px;
+    max-width: 1100px;
     border-top: 1px solid var(--white-20);
     border-bottom: 1px solid var(--white-20);
 }
@@ -477,19 +476,24 @@ img {
 .cifra-valor {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 3.6vw, 2.75rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
-    line-height: 1.3;
+    line-height: 1;
+    letter-spacing: -0.02em;
     color: var(--secondary-color);
 }
 
 .cifra-label {
     display: block;
-    margin-top: 0.6rem;
-    font-size: 0.875rem;
+    margin-top: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
     line-height: 1.4;
-    color: var(--white-70);
-    max-width: 22ch;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white-50);
+    max-width: none;
     margin-inline: auto;
 }
 
@@ -514,7 +518,7 @@ img {
 
 .btn-primary {
     background: var(--gradient-secondary);
-    color: var(--on-signal);
+    color: #fff;
     box-shadow: var(--shadow-md);
 }
 
@@ -622,6 +626,7 @@ img {
     }
 
     .censo-article > p,
+    .censo-article > .censo-datos,
     .censo-article > .tabla-scroll {
         grid-column: 2;
     }
@@ -644,7 +649,7 @@ img {
     margin-bottom: 1rem;
 }
 
-.censo-article p {
+.censo-article > p {
     font-size: 1.125rem;
     line-height: 1.75;
     color: var(--text-medium);
@@ -735,6 +740,146 @@ img {
 .tabla-censo tbody td:last-child {
     color: var(--secondary-ink);
     font-weight: 600;
+}
+
+/* ── Banda de censo: la evidencia sobre navy ── */
+
+.banda-censo {
+    background: var(--primary-color-darker);
+    /* Un escalón tonal sobre el hero, no el mismo degradado otra vez. */
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.banda-censo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
+    pointer-events: none;
+}
+
+.banda-censo .container {
+    position: relative;
+    z-index: 1;
+}
+
+.section-title--inverso {
+    color: #fff;
+}
+
+.banda-censo .censo-article h3 {
+    color: #fff;
+}
+
+.banda-censo .censo-article > p {
+    color: var(--white-70);
+}
+
+/* Libro de ciudades: una fila por ciudad, barra proporcional al total. */
+
+.censo-datos {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--white-20);
+}
+
+.censo-total {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.censo-total-cifra {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #fff;
+}
+
+.censo-total-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white-50);
+}
+
+.censo-ciudades {
+    list-style: none;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.censo-ciudad {
+    display: grid;
+    grid-template-columns: 140px 1fr 110px 120px;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.censo-nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.censo-barra {
+    display: block;
+    height: 10px;
+    background: var(--white-12);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.censo-barra i {
+    display: block;
+    height: 100%;
+    width: var(--pct);
+    border-radius: 100px;
+    background: var(--gradient-secondary);
+}
+
+.js .censo-barra i {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js .censo-visible .censo-barra i {
+    transform: scaleX(1);
+}
+
+.censo-inmuebles {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--secondary-color);
+    text-align: right;
+}
+
+.censo-proyectos {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    color: var(--white-50);
+    text-align: right;
 }
 
 /* ── Mapa ───────────────────────────────────── */
@@ -1224,10 +1369,17 @@ img {
     padding: 4.5rem 0;
 }
 
-/* Cada unidad trae su color oficial: teal, oro y verde de los logos. */
-.unidad--inteligencia { --acento: #00748a; }
-.unidad--inversiones { --acento: #a8801f; }
-.unidad--desarrollo { --acento: #2f6b4f; }
+/* Cada banda lleva el color oficial de su unidad, teñido al 5% sobre el papel. */
+.section--inteligencia { --acento: #00748a; }
+.section--inversiones { --acento: #a8801f; }
+.section--desarrollo { --acento: #2f6b4f; }
+
+.section--inteligencia,
+.section--inversiones,
+.section--desarrollo {
+    background: var(--bg-light);
+    background: color-mix(in srgb, var(--acento) 5%, var(--white));
+}
 
 .unidad {
     max-width: 1040px;
@@ -1237,8 +1389,14 @@ img {
 @media (min-width: 1024px) {
     .unidad {
         display: grid;
-        grid-template-columns: 288px minmax(0, 1fr);
+        grid-template-columns: 320px minmax(0, 1fr);
         column-gap: clamp(2rem, 4vw, 4rem);
+        align-items: start;
+    }
+
+    .unidad-cabeza {
+        position: sticky;
+        top: 6.5rem;
     }
 
     .unidad-cabeza,
@@ -1257,7 +1415,7 @@ img {
 }
 
 .unidad-logo {
-    height: 64px;
+    height: 140px;
     max-width: 100%;
     object-fit: contain;
     width: auto;
@@ -1386,29 +1544,85 @@ a.empresa:hover .empresa-nombre {
     color: var(--secondary-color);
 }
 
+.banda-logros {
+    background: var(--gradient-primary);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    padding: 7rem 0;
+}
+
+.banda-logros::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
+    pointer-events: none;
+}
+
+.banda-logros .container {
+    position: relative;
+    z-index: 1;
+}
+
 .logros {
-    max-width: 900px;
-    margin: 2.5rem 0 0;
+    max-width: none;
+    margin: 3rem 0 0;
     list-style: none;
-    display: grid;
-    gap: 1.5rem;
 }
 
 .logro {
-    padding: 0 0 1.5rem;
-    border-bottom: 1px solid var(--hairline);
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--text-medium);
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: start;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.logro:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .logro:last-child {
-    padding-bottom: 0;
     border-bottom: 0;
+    padding-bottom: 0;
 }
 
-.logro strong {
-    color: var(--heading-ink);
+.logro-entidad {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.logro-cifra {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.6vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--secondary-color);
+}
+
+.logro-texto {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--white-70);
+    max-width: 40rem;
+}
+
+@media (max-width: 900px) {
+    .logro {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 0.5rem;
+    }
 }
 
 /* ── Equipo ─────────────────────────────────── */
@@ -1762,8 +1976,8 @@ a.empresa:hover .empresa-nombre {
 }
 
 .social-link:hover {
-    background: var(--secondary-color);
-    color: var(--on-signal);
+    background: var(--gradient-secondary);
+    color: #fff;
 }
 
 .social-link svg {
@@ -1955,6 +2169,31 @@ a.empresa:hover .empresa-nombre {
         border-top: 1px solid var(--white-20);
     }
 
+    /* El libro de ciudades pasa a dos filas: datos arriba, barra a lo ancho. */
+    .censo-ciudad {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas:
+            'nombre inmuebles proyectos'
+            'barra barra barra';
+        gap: 0.75rem 1rem;
+    }
+
+    .censo-nombre {
+        grid-area: nombre;
+    }
+
+    .censo-barra {
+        grid-area: barra;
+    }
+
+    .censo-inmuebles {
+        grid-area: inmuebles;
+    }
+
+    .censo-proyectos {
+        grid-area: proyectos;
+    }
+
     .section,
     .clientes,
     .contacto {
@@ -2080,6 +2319,11 @@ a.empresa:hover .empresa-nombre {
 
     .section-title::after,
     .banda-titulo::after {
+        transform: scaleX(1);
+        transition: none;
+    }
+
+    .js .censo-barra i {
         transform: scaleX(1);
         transition: none;
     }
