@@ -56,6 +56,38 @@ document.addEventListener('DOMContentLoaded', function() {
         reveals.forEach(function(el) { el.classList.add('visible'); });
     }
 
+    // ── La barra naranja se traza cuando el título entra ──
+    const titulos = document.querySelectorAll('.section-title, .banda-titulo, .cta-final-title');
+    if ('IntersectionObserver' in window) {
+        const observadorTitulo = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('titulo-visible');
+                    observadorTitulo.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 });
+        titulos.forEach(function(t) { observadorTitulo.observe(t); });
+    } else {
+        titulos.forEach(function(t) { t.classList.add('titulo-visible'); });
+    }
+
+    // ── La tabla del censo entra fila por fila ──
+    const tablas = document.querySelectorAll('.tabla-censo');
+    if ('IntersectionObserver' in window) {
+        const observadorTabla = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('tabla-visible');
+                    observadorTabla.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.35 });
+        tablas.forEach(function(t) { observadorTabla.observe(t); });
+    } else {
+        tablas.forEach(function(t) { t.classList.add('tabla-visible'); });
+    }
+
     // ── Analítica ────────────────────────────────
     function track(evento, datos) {
         if (window.umami && typeof window.umami.track === 'function') {
@@ -214,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let mapa = null;
         let capa = null;
         let lienzo = null;
+        let celdasAnimadas = false;
         let tipo = 'todos';
         let operacion = 'todas';
 
@@ -222,6 +255,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (n < CORTES[i]) return i;
             }
             return CORTES.length;
+        }
+
+        // Aterrizaje de las celdas: 24 pasos como máximo, no un rAF por marcador.
+        function animarCeldas(puntos) {
+            const DURACION = 480;
+            const inicio = performance.now();
+            let ultimo = 0;
+            function paso(ahora) {
+                const t = ahora - inicio;
+                if (t - ultimo < 33 && t < 900) {
+                    requestAnimationFrame(paso);
+                    return;
+                }
+                ultimo = t;
+                let vivo = false;
+                puntos.forEach(function(p) {
+                    const k = Math.min(1, Math.max(0, (t - p.retraso) / DURACION));
+                    if (k < 1) vivo = true;
+                    const suave = 1 - Math.pow(1 - k, 3);
+                    p.marcador.setRadius(p.radio * suave);
+                });
+                if (vivo) requestAnimationFrame(paso);
+            }
+            requestAnimationFrame(paso);
         }
 
         function leyenda() {
@@ -262,13 +319,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (capa) mapa.removeLayer(capa);
             capa = L.layerGroup().addTo(mapa);
 
+            const animar = !celdasAnimadas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const centro = mapa.getCenter();
+            const puntos = [];
             let visibles = 0;
             panel.grilla.forEach(function(celda) {
                 const n = contar(celda);
                 if (n < panel.k) return;
                 visibles++;
                 const punto = L.circleMarker([celda.lat, celda.lng], {
-                    radius: radio(n),
+                    radius: animar ? 0 : radio(n),
                     stroke: true,
                     color: '#ffffff',
                     weight: 1,
@@ -281,7 +341,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     track('mapa', { page: pagina, accion: 'celda' });
                 });
                 capa.addLayer(punto);
+                if (animar) {
+                    const d = Math.hypot(celda.lat - centro.lat, (celda.lng - centro.lng) * Math.cos(centro.lat * Math.PI / 180));
+                    puntos.push({ marcador: punto, radio: radio(n), retraso: Math.min(d * 90, 320) });
+                }
             });
+
+            if (animar) {
+                celdasAnimadas = true;
+                animarCeldas(puntos);
+            }
 
             const leyenda = document.getElementById('mapa-leyenda');
             if (leyenda) leyenda.hidden = visibles === 0;

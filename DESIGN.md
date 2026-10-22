@@ -174,7 +174,7 @@ It ships in two themes — light and dark — driven entirely by `prefers-color-
 - Data-forward: statistics are typographic elements, not captions
 - Two-theme system: light default, dark automatic, same identity in both
 - Documentary density: divided lists, tables of numbers, a real density map, real charts
-- Restraint in motion: one entrance animation, one hover lift, nothing ambient
+- Motion as a readout coming online: the hero title focuses out of a blur, the orange bar draws itself, the census rows arrive in order and the map cells land from the centre. One language, four moments, nothing ambient
 
 ## Colors
 
@@ -270,6 +270,19 @@ Hybrid: tonal banding for structure, and one neutral shadow vocabulary for inter
 ### Named Rules
 **The Soft-Lift Rule.** A card rests on level 1–2 and rises one level on hover, moving `-4px`. No ambient glow, no shadow larger than `--shadow-lg`, no colored shadow.
 
+## Motion
+
+**Thesis: the instrument switching on.** The site is a data desk, so motion explains that data is arriving, not that the page is pretty.
+
+- **Hero (`enfocar`):** the title enters from `blur(10px)` plus `translateY(18px)` over 0.85s on `cubic-bezier(0.16, 1, 0.3, 1)`; the subtitle, cifras and CTA follow on `aparecer` with a 0.1–0.4s stagger. This is the only entrance sequence on the page.
+- **Title bar:** the 60×4px rule draws from `scaleX(0)` to `1` when the heading reaches 60% visibility, origin left on `.section-title` and centre on `.banda-titulo`.
+- **Census table:** rows arrive at `translateY(8px)` → `0` with an 80ms stagger, once.
+- **Density map:** on the first paint only, each cell grows from radius 0 to its bucket radius with a delay proportional to its distance from the map centre (capped at 320ms), in 24 steps on `requestAnimationFrame`. Filters re-paint without animating.
+- **Feedback:** buttons and cards lift `-3/-4px` on hover, `scale(0.97)` on press. The client marquee loops and has a manual pause.
+- **Budget:** no property that drives layout. Blur is one element, once. The map animation is bounded to the canvas overlay and runs once per page.
+- **Reduced motion:** every one of the four moments is disabled and content sits in its final state; the bar is drawn, the rows and cells are visible. Feedback transitions survive.
+- Leaflet and Chart.js load with `defer`: they used to block parsing, which meant the hero entrance finished before the first paint and nobody saw it.
+
 ## Shapes
 
 Rounded but never soft: `1px` for hairline list markers, `2px` for the title bar, `3px` for the map legend swatches, `6px` for chart bar caps, `8px` for small controls and the alliance logo, `10px` for buttons, inputs and filter groups, `12px` for option rows, icon tiles and avisos, `16px` for cards, the form and the map frame. `100px` is reserved for a metadata pill, currently unused.
@@ -362,7 +375,7 @@ The viewport meta carries `viewport-fit=cover` and the hero, the container and t
 - **Do** alternate `Paper` and `Surface` bands, and use one full-bleed navy band per page for emphasis.
 - **Do** use `--gradient-secondary` for every orange fill and keep orange text at `Signal Ink` or lighter stops.
 - **Do** reuse `.section-title`, `.btn`, `.cifra`, `.unidad`, `.empresa` before inventing a parallel pattern.
-- **Do** keep one entrance animation (`fadeInUp`) and one hover lift language across components.
+- **Do** keep the four motion moments as the only ones: `enfocar` on the hero title, the title bar drawing, the census rows arriving and the map cells landing. Hover lift stays the interaction language.
 - **Do** honor `prefers-reduced-motion`: the reduction block disables reveals and stops the marquee.
 - **Do** publish aggregates. Individual properties never leave the private base.
 

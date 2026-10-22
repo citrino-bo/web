@@ -192,20 +192,39 @@ img {
 
 /* ── Movimiento: una sola entrada ───────────── */
 
-@keyframes fadeInUp {
+/* El instrumento se enciende: el titular entra desenfocado y se enfoca. */
+@keyframes enfocar {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(18px);
+        filter: blur(10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
+        filter: blur(0);
+    }
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
     }
 }
 
 .animate-staggered {
     opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
+    animation: aparecer 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-title.animate-staggered {
+    animation-name: enfocar;
+    animation-duration: 0.85s;
 }
 
 .animate-delay-1 { animation-delay: 0.1s; }
@@ -548,7 +567,8 @@ img {
     margin: 0;
 }
 
-.section-title::after {
+.section-title::after,
+.banda-titulo::after {
     content: '';
     display: block;
     width: 60px;
@@ -556,6 +576,13 @@ img {
     margin: 1rem 0 0;
     border-radius: 2px;
     background: var(--gradient-secondary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.titulo-visible::after {
+    transform: scaleX(1);
 }
 
 .section-subtitle.section-subtitle--center {
@@ -686,6 +713,20 @@ img {
 .tabla-censo tbody tr:last-child td {
     border-bottom: 0;
 }
+
+.js .tabla-censo tbody tr {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.js .tabla-censo.tabla-visible tbody tr {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js .tabla-censo.tabla-visible tbody tr:nth-child(2) { transition-delay: 0.08s; }
+.js .tabla-censo.tabla-visible tbody tr:nth-child(3) { transition-delay: 0.16s; }
 
 .tabla-censo tbody td:not(:first-child) {
     color: var(--text-dark);
@@ -1074,13 +1115,8 @@ img {
 }
 
 .banda-titulo::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
     margin: 1rem auto 0;
-    border-radius: 2px;
-    background: var(--gradient-secondary);
+    transform-origin: center;
 }
 
 .banda-lista {
@@ -1184,13 +1220,18 @@ img {
 
 /* ── Unidades de negocio (servicios.html) ───── */
 
-.unidades {
-    max-width: 1040px;
-    margin: 0 auto;
+.section--tight {
+    padding: 4.5rem 0;
 }
 
-.unidad:first-child {
-    padding-top: 0;
+/* Cada unidad trae su color oficial: teal, oro y verde de los logos. */
+.unidad--inteligencia { --acento: #00748a; }
+.unidad--inversiones { --acento: #a8801f; }
+.unidad--desarrollo { --acento: #2f6b4f; }
+
+.unidad {
+    max-width: 1040px;
+    margin: 0 auto;
 }
 
 @media (min-width: 1024px) {
@@ -1212,12 +1253,7 @@ img {
 }
 
 .unidad {
-    padding: 3.5rem 0;
-    border-bottom: 1px solid var(--bg-lighter);
-}
-
-.unidad:last-child {
-    border-bottom: 0;
+    padding: 0;
 }
 
 .unidad-logo {
@@ -1272,7 +1308,7 @@ img {
     width: 10px;
     height: 2px;
     border-radius: 1px;
-    background: var(--secondary-color);
+    background: var(--acento, var(--secondary-color));
 }
 
 .unidad-lista li strong {
@@ -1939,10 +1975,6 @@ a.empresa:hover .empresa-nombre {
         padding: 2.5rem 0;
     }
 
-    .unidades {
-        margin-top: 0;
-    }
-
     .empresas {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -2038,9 +2070,24 @@ a.empresa:hover .empresa-nombre {
         transition-duration: 0.01ms !important;
     }
 
-    .animate-staggered {
+    .animate-staggered,
+    .hero-title.animate-staggered {
         opacity: 1;
         animation: none;
+        filter: none;
+        transform: none;
+    }
+
+    .section-title::after,
+    .banda-titulo::after {
+        transform: scaleX(1);
+        transition: none;
+    }
+
+    .js .tabla-censo tbody tr {
+        opacity: 1;
+        transform: none;
+        transition: none;
     }
 
     .js .scroll-reveal {
