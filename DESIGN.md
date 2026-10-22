@@ -318,7 +318,7 @@ The conversion component, used on `/contacto.html`. `.lead-form` is a `Surface` 
 - **Step 3, consent:** two required checkboxes (`accent-color` orange), one linking to the privacy policy.
 - **Step 4, submit:** full-width primary button, then a `0.875rem` reassurance line. Below the card, a text fallback link to `info@citrino.com.bo`.
 - **Anti-spam:** a hidden honeypot checkbox and a Web3Forms `access_key` + `redirect` to `/gracias.html`.
-- **Routing:** the interest value maps to a subject (`[Inversión]`, `[Asesoría]`, `[Datos]`, `[Socio pasivo]`, `[Desarrollo]`, `[Vender]`) and a Umami event slug in `script.js`. See `docs/conversion-y-formularios.md`.
+- **Routing:** the interest value maps to a subject (`[Inversión]`, `[Asesoría]`, `[Datos]`, `[Socio pasivo]`, `[Desarrollo]`, `[Vender]`) and to the `interes` property of the Umami `form` event. See `docs/conversion-y-formularios.md`.
 
 ### Header & Navigation
 Fixed, 95% white with a 20px `backdrop-filter` blur, hairline shadow, logo left, five text links right (`Inicio`, `Inteligencia Inmobiliaria`, `Nuestros Servicios`, `Quiénes Somos`, `Contacto`). Active page is marked with `aria-current="page"` and an orange underline that animates in from the left; hover turns the label `Signal Ink`. Below 768px the links collapse into a hamburger-triggered dropdown. In dark mode the header goes `rgba(10, 15, 26, 0.95)` and the logo swaps to the dark-background asset via JS and CSS `content`.

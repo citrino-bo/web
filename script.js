@@ -72,18 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
     })();
     track('page-view', { page: pagina });
 
-    // Un solo listener para todo lo que lleva data-evento. El nombre del evento es único por elemento (nav-inicio, cta-hero-servicios, social-linkedin...) porque Umami no segmenta custom events por propiedades: la única dimensión disponible es el nombre.
-    document.addEventListener('click', function(e) {
-        const el = e.target.closest && e.target.closest('[data-evento]');
-        if (!el) return;
-        track(el.getAttribute('data-evento'), { page: pagina });
-    });
 
     document.querySelectorAll('section[id]').forEach(function(seccion) {
         const observadorSeccion = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
-                    track('section-view', { page: pagina, id: seccion.id });
+                    track('seccion', { page: pagina, id: seccion.id });
                     observadorSeccion.unobserve(seccion);
                 }
             });
@@ -102,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             umbrales.forEach(function(t) {
                 if (!disparado[t] && pct >= t) {
                     disparado[t] = true;
-                    track('scroll-depth', { page: pagina, percent: t });
+                    track('scroll', { page: pagina, percent: t });
                 }
             });
         }
@@ -156,18 +150,18 @@ document.addEventListener('DOMContentLoaded', function() {
         leadForm.addEventListener('focusin', function() {
             if (formularioIniciado) return;
             formularioIniciado = true;
-            track('form-inicio', { page: pagina });
+            track('form', { page: pagina, accion: 'inicio' });
         });
 
         leadForm.querySelectorAll('input[name="interes"]').forEach(function(radio) {
             radio.addEventListener('change', function() {
                 const destino = ruteo[radio.value];
-                if (destino) track('interes-' + destino.slug, { page: pagina });
+                if (destino) track('form', { page: pagina, accion: 'interes', interes: destino.slug });
             });
         });
 
         leadForm.addEventListener('invalid', function() {
-            track('form-invalido', { page: pagina });
+            track('form', { page: pagina, accion: 'invalido' });
         }, true);
 
         leadForm.addEventListener('submit', function() {
@@ -175,8 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!elegido) return;
             const destino = ruteo[elegido.value];
             if (destino && leadSubject) leadSubject.value = destino.asunto;
-            track('lead-submit', { page: pagina });
-            if (destino) track('lead-' + destino.slug, { page: pagina });
+            track('form', { page: pagina, accion: 'envio', interes: destino ? destino.slug : '' });
         });
 
         // Email o WhatsApp: al menos uno.
@@ -261,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 punto.bindPopup('<strong>' + n.toLocaleString('es-BO') + '</strong> propiedades');
                 punto.on('click', function() {
-                    track('mapa-celda-click', { page: pagina });
+                    track('mapa', { page: pagina, accion: 'celda' });
                 });
                 capa.addLayer(punto);
             });
@@ -341,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const fallback = document.getElementById('mapa-fallback');
             if (cargando) cargando.hidden = true;
             if (fallback) fallback.hidden = false;
-            track('mapa-error', { page: pagina });
+            track('mapa', { page: pagina, accion: 'error' });
         }
 
         function arrancar() {
@@ -367,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     mapa.on('zoomend', function() {
                         const z = mapa.getZoom();
-                        track('mapa-zoom-' + (z < 8 ? 'pais' : z < 11 ? 'departamento' : z < 13 ? 'ciudad' : 'detalle'), { page: pagina });
+                        track('mapa', { page: pagina, accion: 'zoom', nivel: z < 8 ? 'pais' : z < 11 ? 'departamento' : z < 13 ? 'ciudad' : 'detalle' });
                     });
 
                     lienzo = L.canvas({ padding: 0.6 });
@@ -381,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     pintar();
                     graficos(panel);
-                    track('mapa-cargado', { page: pagina, celdas: panel.celdas });
+                    track('mapa', { page: pagina, accion: 'carga', celdas: panel.celdas });
                 })
                 .catch(function() {
                     mostrarError();
@@ -397,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (esTipo) tipo = btn.getAttribute('data-tipo');
                     else operacion = btn.getAttribute('data-operacion');
                     pintar();
-                    track(esTipo ? 'mapa-filtro-tipo-' + tipo : 'mapa-filtro-op-' + operacion, { page: pagina });
+                    track('mapa', { page: pagina, accion: 'filtro', tipo: tipo, operacion: operacion });
                 });
             });
         }

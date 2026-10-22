@@ -54,7 +54,7 @@ Reglas:
 - Reassurance junto al botón: qué se hace con los datos.
 - Anti-spam con el honeypot del servicio (`botcheck`); sin captcha.
 - Consentimiento explícito con enlace a la privacidad (se maneja PII).
-- Instrumentar el envío con Umami: `lead-submit` más un evento por interés (`lead-inversion`, `lead-asesoria`, `lead-datos`, `lead-socio-pasivo`, `lead-desarrollo`, `lead-vender`), porque Umami no segmenta custom events por propiedades.
+- Instrumentar con Umami el evento `form` y las propiedades `accion` (`inicio`, `interes`, `invalido`, `envio`) e `interes` (`inversion`, `asesoria`, `datos`, `socio-pasivo`, `desarrollo`, `vender`). Las propiedades se ven en la pestaña Properties y se filtran desde el panel de filtros; ver la documentación oficial en `https://umami.is/docs/event-data`.
 
 Envío: Web3Forms (sin backend), con `POST` nativo y `redirect` a `gracias.html`.
 
