@@ -58,7 +58,7 @@ Reglas:
 
 Envío: Web3Forms (sin backend), con `POST` nativo y `redirect` a `gracias.html`.
 
-Meta Pixel (ID `4669919089998524`): el código base está en el `<head>` de todas las páginas y dispara el estándar `PageView`; el estándar `Lead` se dispara en `gracias.html`, la página a la que Web3Forms redirige solo cuando acepta el envío. No se dispara en el `submit` de `contacto.html` porque el `POST` nativo navega fuera de la página y el evento se pierde. El pixel setea la cookie `_fbp` y envía datos a Meta; la política de privacidad tiene que declararlo.
+Meta Pixel (ID `4669919089998524`): el código base está en el `<head>` de todas las páginas y dispara el estándar `PageView`; el estándar `Lead` se dispara en `gracias.html`, la página a la que Web3Forms redirige solo cuando acepta el envío. No se dispara en el `submit` de `contacto.html` porque el `POST` nativo navega fuera de la página y el evento se pierde. El `Lead` viaja sin parámetros: la referencia de eventos estándar de Meta solo admite `currency` y `value` para ese evento, y una propiedad propia no habilita ningún reporte en Ads Manager, así que el interés no se envía a Meta. Cada visita a `gracias.html` cuenta un `Lead`, incluido un refresh: Meta no deduplica eventos que llegan solo del navegador. El pixel setea la cookie `_fbp` y envía datos a Meta; la política de privacidad tiene que declararlo.
 
 Fuentes (independientes): Antforms, 2026; Capconvert, 2026; Verlua, 2026; PromptlyForms, 2026.
 
