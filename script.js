@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const abierto = hamburger.getAttribute('aria-expanded') === 'true';
             hamburger.setAttribute('aria-expanded', String(!abierto));
             hamburger.setAttribute('aria-label', abierto ? 'Abrir menú de navegación' : 'Cerrar menú de navegación');
+            track('menu', { page: pagina, accion: abierto ? 'cierra' : 'abre' });
         });
 
         document.querySelectorAll('.nav-menu a').forEach(function(link) {
@@ -112,8 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (ultimo === 'index' && partes.length > 1) return partes[partes.length - 2];
         return ultimo || 'index';
     })();
-    track('page-view', { page: pagina });
-
 
     document.querySelectorAll('section[id]').forEach(function(seccion) {
         const observadorSeccion = new IntersectionObserver(function(entries) {
@@ -211,7 +210,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        // Un envío con varios campos vacíos emite un `invalid` por campo; se registra uno por intento.
+        let ultimoInvalido = 0;
         leadForm.addEventListener('invalid', function() {
+            const ahora = Date.now();
+            if (ahora - ultimoInvalido < 800) return;
+            ultimoInvalido = ahora;
             track('form', { page: pagina, accion: 'invalido' });
         }, true);
 
