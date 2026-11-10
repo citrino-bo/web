@@ -19,8 +19,6 @@ Los eventos declarativos salen de atributos: `data-umami-event` nombra el evento
 
 Los eventos de `script.js` suman `page` con el nombre de la página. El pageview lo registra el script de Umami, sin evento propio.
 
-Umami no filtra propiedades en los goals: un goal apunta a un nombre de evento. Para segmentar por propiedad se usan funnels, que aceptan filtros por paso.
-
 ## Valores
 
 - `ubicacion`: `logo`, `header`, `footer`, `logo-pie`, `legal`, `formulario`, `hero`, `cierre`, `404`, `gracias`
