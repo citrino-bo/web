@@ -182,19 +182,19 @@ The page MUST include: a skip-link targeting `#main-content`, `alt` attributes o
 
 ### Requirement: Privacy-Friendly Analytics (Umami Self-Hosted)
 
-The page MUST load the self-hosted Umami analytics script from `https://estadisticas.srv1406344.hstgr.cloud/script.js` with the `defer` attribute and a `data-website-id` attribute set to the production site ID. The page MUST include a `<link rel="preconnect" href="https://estadisticas.srv1406344.hstgr.cloud">` in the `<head>` to establish an early connection. No cookie banner is required because Umami is cookieless.
+The page MUST load the self-hosted Umami analytics script from `https://trafico.citrino.com.bo/script.js` with the `defer` attribute and a `data-website-id` attribute set to the production site ID. The page MUST include a `<link rel="preconnect" href="https://trafico.citrino.com.bo">` in the `<head>` to establish an early connection. No cookie banner is required because Umami is cookieless.
 
 #### Scenario: Umami script loads with defer and correct site ID
 
 - GIVEN a browser loads the page
-- WHEN inspecting scripts with `src` pointing to `estadisticas.srv1406344.hstgr.cloud`
+- WHEN inspecting scripts with `src` pointing to `trafico.citrino.com.bo`
 - THEN the script tag has the `defer` attribute and a `data-website-id` attribute matching the production site ID assigned to the landing page
 
 #### Scenario: Preconnect to Umami host is declared in head
 
 - GIVEN the page `<head>` is inspected
 - WHEN searching for `<link rel="preconnect">` tags
-- THEN one of them targets `https://estadisticas.srv1406344.hstgr.cloud`
+- THEN one of them targets `https://trafico.citrino.com.bo`
 
 ---
 
