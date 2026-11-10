@@ -6,7 +6,7 @@ Reglas operativas para agentes y humanos en este repo. Quirúrgicas. Si no está
 
 - HTML, CSS y JS estático, sin build tools ni bundler. Deploy en GitHub Pages, dominio `citrino.com.bo`.
 - CSS con variables `:root`, fuentes Outfit + DM Sans + JetBrains Mono, colores `#002857` / `#ee7900` / `#10b981`.
-- Analítica: Umami — detalle operativo en `citrino-gestion/AGENTS.d/infra.md`.
+- Analítica: Umami — detalle operativo en `citrino-gestion/docs/operacion/infra.md`.
 - Conversión, CTAs y formularios: criterios en `docs/conversion-y-formularios.md`.
 - Fuente de datos: `citrino-gestion` genera la base completa de propiedades (privada); `scripts/agregar_panel.py` la agrega a `data/panel.json`, que es lo único que el sitio sirve.
 
