@@ -8,58 +8,76 @@ web
 
 ## Users
 
-Inversores que asignan capital a inmuebles en Santa Cruz y el eje troncal (Santa Cruz, La Paz, Cochabamba), con dos perfiles: el comprador-inversor que busca rentabilidad por alquiler y plusvalía, y el socio pasivo que aporta capital o terreno a un desarrollo. Desarrolladores y propietarios de terrenos que necesitan decidir si conviene desarrollar y a qué precio, y empresas o instituciones del sector (bancos, aseguradoras, constructoras, proveedores, cámaras) que necesitan datos de mercado.
-Segmentos confirmados: grupo familiar con inmueble a vender, desarrollador inmobiliario, vendedor de inmueble familiar, cámara de desarrolladores, inversor independiente local, agente inmobiliario independiente, banco y negocio de hotelería.
-Los asociados a la Cámara Boliviana de Desarrolladores Inmobiliarios (CBDI) son un usuario distinto: acceden a la plataforma de indicadores sin pasar por el formulario de leads.
+Inversores que asignan capital a inmuebles en Santa Cruz y el eje troncal (Santa Cruz, La Paz, Cochabamba), en dos perfiles: el comprador-inversor que busca rentabilidad por alquiler y plusvalía, y el socio pasivo que aporta capital o terreno a un desarrollo.
+
+Otros usuarios confirmados: grupo familiar con un inmueble a vender, desarrollador inmobiliario, agente inmobiliario independiente, cámara de desarrolladores, banco, negocio de hotelería y proveedores del sector que necesitan datos de mercado.
+
+Los asociados a la CBDI son un usuario distinto: entran a la plataforma de indicadores sin pasar por el formulario de leads.
 
 ## Product Purpose
 
-Citrino Capitales Inmobiliarios es una empresa asesora y gestora de inversiones inmobiliarias cuyo objetivo es detectar, viabilizar y gestionar oportunidades que respondan a las necesidades y circunstancias del mercado. La investigación y los datos son el núcleo del negocio: el censo propio y la base geoespacial alimentan la consultoría, la asesoría de inversión y el desarrollo de proyectos. El sitio existe para que un visitante entienda esa capacidad analítica, la vea respaldada con cifras y datos reales, y deje su requerimiento en el formulario de contacto con el interés correcto.
+Citrino es una empresa asesora y gestora de inversiones inmobiliarias: detecta, viabiliza y gestiona oportunidades que responden al mercado. La investigación y los datos son el núcleo del negocio —censo propio y base geoespacial— y alimentan la consultoría, la asesoría de inversión y el desarrollo de proyectos.
+
+El sitio existe para que un visitante entienda esa capacidad analítica, la vea respaldada con cifras propias y deje su requerimiento en el formulario con el interés correcto.
 
 ## Positioning
 
-Citrino es parte del Grupo Empresarial Valenzuela Roca, el único grupo inmobiliario boliviano con una visión integral más allá de la construcción: investigación de mercado, gestión de inversiones, desarrollo, arquitectura, construcción, educación y eventos en un mismo grupo. Se distingue de un bróker o de una agencia tradicional porque decide con datos propios: censo de nuevos proyectos desde 2013, base de oferta pública geolocalizada y motor de retorno por alquiler. La asesoría se ejerce del lado del comprador-inversor, no del vendedor.
+Citrino forma parte del Grupo Empresarial Valenzuela Roca, el único grupo inmobiliario boliviano con una visión integral más allá de la construcción: investigación de mercado, gestión de inversiones, desarrollo, arquitectura, construcción, educación y eventos.
+
+Se distingue de un bróker porque decide con datos propios —censo de nuevos proyectos desde 2013, base de oferta pública geolocalizada y motor de retorno por alquiler— y porque asesora del lado del comprador-inversor, no del vendedor.
 
 ## Operating Context
 
-El mercado de referencia es Santa Cruz de la Sierra y el eje troncal del país; la plataforma de indicadores cubre Santa Cruz, Cochabamba y La Paz. El sitio es estático (HTML, CSS y JS sin build), se publica en GitHub Pages bajo `citrino.com.bo` y no tiene backend propio: los formularios se envían a Web3Forms y el contenido de datos se sirve desde `data/panel.json`, un agregado por celdas de ~550 m con piso de k-anonimato. La navegación es Inicio, Inteligencia Inmobiliaria, Nuestros Servicios, Quiénes Somos y Contacto, en páginas planas de la raíz (`index.html`, `inteligencia-inmobiliaria.html`, `servicios.html`, `quienes-somos.html`, `contacto.html`), según `docs/refactorizacion_octubre_26/input_julio`. El mapa de densidad y las visualizaciones viven en Inicio. El ruteo de leads por interés está documentado en `docs/conversion-y-formularios.md` y es normativo para cualquier cambio en CTAs o formularios.
+El mercado de referencia es Santa Cruz de la Sierra y el eje troncal; la plataforma de indicadores cubre las tres ciudades.
+
+El sitio es estático y no tiene backend: los formularios se envían a Web3Forms y los datos se sirven desde `data/panel.json`. Estructura de archivos y comandos en `AGENTS.md`.
+
+El formulario de contacto es la acción primaria; el interés es su primer campo y define el ruteo interno. El criterio vive en `docs/conversion-y-formularios.md` y es normativo para cualquier cambio en CTAs o formularios.
 
 ## Capabilities and Constraints
 
-Unidades de negocio confirmadas: Citrino Inteligencia Inmobiliaria (estudios de mercado, plataforma de inteligencia, modelos financieros de proyecto, valoración por rentabilidad, análisis y reestructuración de portafolios), Citrino Inversiones Inmobiliarias (perfil de inversión, prospección, visitas y negociación, revisión de títulos y contratos) y Citrino Desarrollos Inmobiliarios (capitales pasivos vía SPV por proyecto, gestión inmobiliaria integral 360º y desarrollo en aportación de terreno).
-Base de datos propia: 23.222 propiedades geolocalizadas y 4.080 alquileres de referencia (fuente `citrino-central vw_inmuebles_inversor`, corte 2026-09-11); alquiler 4.080, venta 18.808, anticrético 334.
-El sitio publica de esa base solo un agregado: `data/panel.json`, 885 celdas con conteo por tipo y operación y un piso de 5 propiedades por celda; los 241 registros con coordenadas inválidas quedan fuera. El campo `zona` es texto libre, no un catálogo: 948 cadenas distintas, 614 usadas una sola vez y 67 descripciones de subzona ('Zona norte entre 3er y 4to anillo Radial 26'). No se publica una cantidad de zonas porque ese número no existe todavía; el catálogo con identificador y geometría es una deuda de `citrino-central`.
-Censo de nuevos proyectos: 1.813 proyectos y 74.905 inmuebles desde 2013 — Santa Cruz 902 proyectos / 41.555 inmuebles, La Paz 85 / 28.749, Cochabamba 56 / 4.601 — con datos comerciales y técnicos por proyecto.
-Censo de oferta pública online: la data cruda se transforma con inteligencia artificial en campos geolocalizados y estructurados de inmuebles residenciales, comerciales, industriales y terrenos.
-Cifras de negocio declaradas: más de 1,5 millones de dólares gestionados en proyectos, más de 8,5 millones intermediados en inversiones y más de 50 asesoramientos personalizados.
-Plataforma de Inteligencia Inmobiliaria: paneles de indicadores por ciudad (ciclo y censo, financiamiento al sector, análisis evolutivo) en Looker Studio, con acceso para asociados CBDI y un camino alternativo de contacto para no asociados. El formulario de contacto es la acción primaria del sitio; un solo formulario, con el interés como primer campo, rutea el lead al responsable correspondiente.
-Restricción de datos: la base individual (lat/lng, precio, superficies) nunca se publica ni se versiona; el repo es público. `data/panel.json` se regenera con `scripts/agregar_panel.py` desde la base privada de `citrino-gestion`.
+Tres unidades de negocio: Inteligencia Inmobiliaria (estudios de mercado, plataforma de indicadores, modelos financieros, valoración por rentabilidad, análisis de portafolios), Inversiones Inmobiliarias (perfil de inversión, prospección, visitas y negociación, revisión de títulos y contratos) y Desarrollos Inmobiliarios (capitales pasivos vía SPV por proyecto, gestión integral 360º y desarrollo en aportación de terreno).
+
+Base de datos propia: propiedades geolocalizadas y alquileres de referencia de `citrino-central`. El sitio publica sólo un agregado por celdas de ~550 m con piso de k-anonimato, en `data/panel.json`, regenerado con `scripts/agregar_panel.py` desde la base privada de `citrino-gestion`.
+
+El campo `zona` es texto libre, no un catálogo: no se publica una cantidad de zonas porque ese número no existe todavía, y el catálogo con identificador y geometría es una deuda de `citrino-central`.
+
+Censo de nuevos proyectos desde 2013 con datos comerciales y técnicos por proyecto, y censo de oferta pública online donde la data cruda se estructura con inteligencia artificial.
+
+Plataforma de Inteligencia Inmobiliaria: paneles de indicadores por ciudad en Looker Studio, con acceso para asociados CBDI y un camino alternativo de contacto para no asociados.
+
+Restricción de datos: la base individual —coordenadas, precios, superficies— nunca se publica ni se versiona, porque el repo es público.
 
 ## Brand Commitments
 
 Nombre completo: Citrino Capitales Inmobiliarios. Tagline: "Inteligencia de Datos para Capitales Inmobiliarios".
-Tono: autoridad serena, precisa e institucional; la inteligencia es el producto y el sector inmobiliario es la vertical.
-Personalidad: premium, sofisticada y orientada a datos; la sensación de una firma de inteligencia exclusiva, no la de un bróker inmobiliario.
-Identidad visual obligatoria: logos de Citrino en versión clara y oscura, logos de las unidades de negocio y logos de las empresas del grupo, todos en `docs/refactorizacion_octubre_26/input_julio/Logos/`.
-Grupo y afiliaciones públicas: Atrio (arquitectura y construcción), Urbanova (desarrollo), MegaObras (construcción), Ancora (administración de propiedades), Expo Real Estate Bolivia (congreso y salón inmobiliario) y EN Real Estate (escuela de negocios en bienes raíces).
-La alianza con la CBDI es pública y se comunica con sus logos.
+
+Tono: autoridad serena, precisa e institucional. Personalidad premium y orientada a datos, con la sensación de una firma de inteligencia, no la de un bróker.
+
+Identidad visual obligatoria: los logos de Citrino en versión clara y oscura, los de las unidades de negocio y los de las empresas del grupo, en `docs/refactorizacion_octubre_26/input_julio/Logos/`.
+
+Grupo y afiliaciones públicas: Atrio, Urbanova, MegaObras, Ancora, Expo Real Estate Bolivia y EN Real Estate. La alianza con la CBDI es pública y se comunica con sus logos.
 
 ## Evidence on Hand
 
-Cifras del negocio y del censo (1,5M$ gestionados, 8,5M$ intermediados, 50+ asesoramientos, 1.813 proyectos, 74.905 inmuebles) tomadas del brief de refactor. Logros de las empresas del grupo: más de 40 años de experiencia en desarrollos inmobiliarios; Urbanova con más de 2.300 viviendas entregadas y más de 100 millones de dólares en ventas de proyectos concluidos; MegaObras socia de Graña y Montero, con el primer sistema de construcción industrializado de Bolivia; Expo Real Estate Bolivia como versión local del evento de real estate más importante de Sudamérica. Logos de clientes en `assets/logos prueba social/Logos Clientes/`: Niemeyer, Synergy, Comversa, Grupo Nacional Vida, Banco Económico, Banco Mercantil Santa Cruz y CBDI. Fotos y roles del equipo en `docs/refactorizacion_octubre_26/input_julio/Fotos Equipo/`: Julio César Valenzuela Roca (Gerente General), Rolando Valenzuela Roca (Gerente Inversiones Inmobiliarias), Luis Adolfo Valenzuela Roca (Gerente Desarrollos Inmobiliarios), Franz Chiri G. (Analista de datos), Roger Miranda T. (Economista urbano), Alejandro Moscoso R. (Asesor de Inversiones Inmobiliarias) y Guillermo Orias G. (Producción audiovisual). Nicolás Vincenti W. (Gerente Inteligencia Inmobiliaria) figura en el brief sin foto en esa carpeta. Paneles públicos de la plataforma: reportes de Looker Studio de Santa Cruz, Cochabamba y La Paz enlazados desde `/inteligencia-inmobiliaria/`. No hay testimonios escritos, casos de estudio ni precios publicados; ese material no debe inventarse.
+Cifras que el sitio declara: más de 1,5 millones de dólares gestionados en proyectos, más de 8,5 millones intermediados en inversiones y más de 50 asesoramientos personalizados. Del censo: 1.813 proyectos y 74.905 inmuebles desde 2013.
+
+Logros del grupo: más de 40 años en desarrollos inmobiliarios; Urbanova con más de 2.300 viviendas entregadas y más de 100 millones de dólares en ventas de proyectos concluidos; MegaObras, socia de Graña y Montero, con el primer sistema de construcción industrializado de Bolivia; Expo Real Estate Bolivia como versión local del evento de real estate más importante de Sudamérica.
+
+Logos de clientes y fotos del equipo en `assets/` y en `docs/refactorizacion_octubre_26/input_julio/`; nombres y roles publicados en `quienes-somos.html`.
+
+No hay testimonios escritos, casos de estudio ni precios publicados: ese material no se inventa.
 
 ## Product Principles
 
-1. **Los datos son el producto.** Toda afirmación del sitio se apoya en una cifra, un censo o un mapa propio; lo que no se puede medir no se declara.
-
-2. **Del lado del inversor.** La asesoría se ejerce como representante del comprador-inversor: el interés del cliente manda sobre la comisión.
-
-3. **Integralidad del grupo.** Citrino no opera solo: forma parte de una cadena inmobiliaria completa y la comunica como ventaja de ejecución.
-
-4. **Una sola puerta de entrada.** Cada visitante elige qué necesita una vez, y ese interés define el ruteo interno y la propuesta que recibe.
-
+1. **Los datos son el producto.** Toda afirmación se apoya en una cifra, un censo o un mapa propio; lo que no se puede medir no se declara.
+2. **Del lado del inversor.** La asesoría se ejerce como representante del comprador: el interés del cliente manda sobre la comisión.
+3. **Integralidad del grupo.** Citrino no opera solo: la cadena inmobiliaria completa se comunica como ventaja de ejecución.
+4. **Una sola puerta de entrada.** El visitante elige qué necesita una vez y ese interés define el ruteo y la propuesta.
 5. **Autoridad sin ruido.** Menos elementos, mejor ejecución; sin urgencia artificial ni lenguaje grandilocuente.
 
 ## Accessibility & Inclusion
 
-WCAG 2.2 AA como estándar objetivo. La audiencia incluye inversores mayores: legibilidad, contraste y tamaños de texto mandan sobre la estética. Soporte de `prefers-reduced-motion` para las animaciones de entrada, contadores y marquesina.
+WCAG 2.2 AA como estándar. La audiencia incluye inversores mayores: legibilidad, contraste y tamaño de texto mandan sobre la estética.
+
+Soporte de `prefers-reduced-motion` para la entrada del hero, los contadores, la marquesina y el mapa.
