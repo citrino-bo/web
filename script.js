@@ -4,22 +4,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
 
     if (hamburger && navMenu) {
+        function fijarMenu(abierto) {
+            navMenu.classList.toggle('active', abierto);
+            hamburger.classList.toggle('active', abierto);
+            hamburger.setAttribute('aria-expanded', String(abierto));
+            hamburger.setAttribute('aria-label', abierto ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+        }
+
         hamburger.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            const abierto = hamburger.getAttribute('aria-expanded') === 'true';
-            hamburger.setAttribute('aria-expanded', String(!abierto));
-            hamburger.setAttribute('aria-label', abierto ? 'Abrir menú de navegación' : 'Cerrar menú de navegación');
-            track('menu', { page: pagina, accion: abierto ? 'cierra' : 'abre' });
+            const abierto = hamburger.getAttribute('aria-expanded') !== 'true';
+            fijarMenu(abierto);
+            track('menu', { page: pagina, accion: abierto ? 'abre' : 'cierra' });
         });
 
-        document.querySelectorAll('.nav-menu a').forEach(function(link) {
+        navMenu.querySelectorAll('a').forEach(function(link) {
             link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
-                hamburger.setAttribute('aria-label', 'Abrir menú de navegación');
+                fijarMenu(false);
             });
+        });
+
+        // El menú desplegado tapa la página: Escape lo cierra y devuelve el foco al botón.
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Escape' || hamburger.getAttribute('aria-expanded') !== 'true') return;
+            fijarMenu(false);
+            hamburger.focus();
+            track('menu', { page: pagina, accion: 'cierra' });
         });
     }
 
@@ -254,7 +263,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const ESCALA = [1, 2, 3, 4, 5].map(function(i) {
             return estiloRaiz.getPropertyValue('--dens-' + i).trim();
         });
-        const CENTRO = [-17.55, -63.75];
+        // Centro del área metropolitana de Santa Cruz: con el encuadre angosto de móvil un centro desplazado deja la nube de densidad contra un borde.
+        const CENTRO = [-17.7833, -63.1812];
         const ZOOM = window.innerWidth < 768 ? 8 : 9;
         let panel = null;
         let mapa = null;

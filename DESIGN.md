@@ -4,6 +4,7 @@ description: Data and real-estate intelligence for Santa Cruz, Bolivia
 colors:
   primary: "#002857"
   primary-light: "#004080"
+  primary-mid: "#00325e"
   primary-dark: "#001a38"
   primary-deep: "#0a1f3d"
   signal: "#ee7900"
@@ -193,7 +194,8 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 
 ### Primary
 - **Deep Authority** (`{colors.primary}`): hero and interior-page backgrounds, `.banda-oscura`, `.cta-final`, heading text on light surfaces via `--heading-ink`.
-- **Authority Light** (`{colors.primary-light}`): fourth step of the map density ramp.
+- **Authority Light** (`{colors.primary-light}`): first stop of the interior-page hero gradient, and fourth step of the map density ramp.
+- **Authority Mid** (`{colors.primary-mid}`): second stop of the interior-page hero gradient, between Authority Light and Deep Authority.
 - **Authority Dark / Deep** (`{colors.primary-dark}`, `{colors.primary-deep}`): the two dark stops of the hero and closing CTA gradients.
 
 ### Secondary
@@ -215,7 +217,7 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 ### Neutral (dark)
 - **Page / Surface / Raised / Deep**: body background is `dark-page`; cards, header and form move between `dark-surface` and `dark-raised`.
 - **Dark Ink / Dark Ink Medium / Dark Link**: dark-mode body text (`#e5e7eb`), supporting copy (`#b6bdc9`) and in-text links (`#93c5fd`).
-- In dark mode `--text-dark`, `--text-medium`, `--text-light`, `--white`, `--bg-light`, `--bg-lighter` and `--bg-dark` are re-pointed to this ladder, `--secondary-ink` collapses back to the base `Signal`, and the `--chart-*` tokens switch to values that read on night surfaces. Shadows become pure black at higher opacity.
+- In dark mode `--text-dark`, `--text-medium`, `--text-light`, `--white`, `--bg-light`, `--bg-lighter` and `--bg-dark` are re-pointed to this ladder, `--secondary-ink` collapses back to the base `Signal`, the `--chart-*` tokens switch to values that read on night surfaces and the `--dens-*` ramp reverses so its densest step is the lightest. Shadows become pure black at higher opacity.
 - `--heading-ink` is the one token that carries heading color: navy in light, `dark-ink` in dark. Headings never use `--primary-color` directly, so the navy can stay navy for gradients and fills.
 
 ### Named Rules
@@ -325,7 +327,7 @@ Inside `.banda-censo` the same row runs on navy: `.section-title--inverso` turns
 `.mapa` sits on a `Paper` band: a `h3` heading, a mono meta line (total · corte de la base), two `.filtro-grupo` pill groups (type, operation), the map frame and a legend.
 
 - **Frame:** `.mapa-wrapper` is a 16px-radius clipped box with a `1px` hairline, `520px` tall (`420px` under 768px). Leaflet tiles inside; the container carries `role="application"` and an `aria-label`.
-- **Rendering:** one `L.circleMarker` per aggregated cell on a shared `L.canvas` renderer, a 1px white halo, `fillOpacity: 1`, radius 4/6/8/11/14px and colour by count bucket read from the `--dens-1..5` tokens: one blue family with monotonic luminance, never orange, which belongs to action. Radius is in pixels on purpose: at country scale a 550 m cell would be sub-pixel, so density is drawn as a cloud of constant-size dots that separates as you zoom in. Scroll-wheel zoom is off so the page keeps scrolling; the zoom control, drag and popups carry interaction.
+- **Rendering:** one `L.circleMarker` per aggregated cell on a shared `L.canvas` renderer, a 1px white halo, `fillOpacity: 1`, radius 4/6/8/11/14px and colour by count bucket read from the `--dens-1..5` tokens: one blue family with monotonic luminance, never orange, which belongs to action. In dark mode the tile pane is inverted so the map is not a white slab, and the ramp reverses (sparse dark → dense light): the filter sits on `.leaflet-tile-pane`, so the markers keep their meaning and the densest cells stay the brightest thing on the map. Radius is in pixels on purpose: at country scale a 550 m cell would be sub-pixel, so density is drawn as a cloud of constant-size dots that separates as you zoom in. Scroll-wheel zoom is off so the page keeps scrolling; the zoom control, drag and popups carry interaction.
 - **Initial view:** the Santa Cruz metropolitan area, zoom 9 on desktop and 8 under 768px, so density reads on the first look; `minZoom: 4` still allows the country view. No fly-to on load.
 - **Legend:** `Densidad de propiedades` plus five swatches with their ranges as visible text, generated in JS from `CORTES` and `k` so a filter that hides the top bucket cannot leave the legend lying. Revealed once the layer paints.
 - **States:** `.mapa-loading` with a spinner while the JSON is in flight, `.mapa-fallback` with an explanatory block on failure. Both use `[hidden]`, never `display` juggling.
@@ -336,7 +338,7 @@ Inside `.banda-censo` the same row runs on navy: `.section-title--inverso` turns
 `.charts-grid` is two-up (`1fr` under 900px). A `Surface` card, `--shadow-sm`, `2rem` padding, a `1.15rem` heading, a `300px` (340px full-width) canvas wrapper and an optional muted note. Chart.js colors come from the `--chart-*` tokens, so the same charts stay legible in both themes. Labels use short forms (`Depto`) and never rotate. If Chart.js fails, `.charts-fallback` is revealed.
 
 ### Client Marquee
-A continuously scrolling proof wall: `.client-logo` images at 64px height (48px under 768px), grayscale at 60% opacity, in a track that holds the seven logos twice and translates `-50%` on a 34s linear loop for a seamless wrap. The strip is clipped by `overflow: hidden` with an 8% edge mask. Hover pauses the loop and restores color, and a visible `.marquesina-pausa` button toggles `.pausada` for keyboard and switch users (WCAG 2.2.2). Under `prefers-reduced-motion` it does not animate.
+A continuously scrolling proof wall: `.client-logo` images at 64px height (48px under 768px), grayscale at 60% opacity, in a track that holds the seven logos twice and translates `-50%` on a 34s linear loop for a seamless wrap. In dark mode the marks are knocked out to white (`grayscale(1) invert(1)`) so a logo with dark ink keeps reading on the night surface. The strip is clipped by `overflow: hidden` with an 8% edge mask. Hover pauses the loop and restores color, and a visible `.marquesina-pausa` button toggles `.pausada` for keyboard and switch users (WCAG 2.2.2). Under `prefers-reduced-motion` it does not animate.
 
 The movement is deliberate: the client wall is social proof that has to read as alive, not a static grid. The mechanical detector flags auto-scrolling marquees as slop, so this project carries a documented `ignore-rule marquee` exception in `.impeccable/config.json`. Do not "fix" it into a static row, and do not remove the duplication: without the second copy the loop shows a gap.
 

@@ -46,6 +46,7 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
     --primary-color-light: #004080;
+    --primary-color-mid: #00325e;
     --primary-color-darker: #001a38;
     --primary-color-deep: #0a1f3d;
     --secondary-hover: #ff9f30;
@@ -430,7 +431,7 @@ img {
 .hero--interior {
     min-height: auto;
     padding: 9rem 2rem 5rem;
-    background: linear-gradient(135deg, var(--primary-color-light) 0%, #00325e 100%);
+    background: linear-gradient(135deg, var(--primary-color-light) 0%, var(--primary-color-mid) 100%);
 }
 
 .hero--interior .hero-title {
@@ -560,10 +561,6 @@ img {
 
 .section--paper {
     background: var(--bg-light);
-}
-
-.section--raised {
-    background: var(--bg-lighter);
 }
 
 .section-title {
@@ -951,6 +948,7 @@ img {
 
 .mapa-leyenda {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
     font-family: var(--font-mono);
@@ -1416,17 +1414,12 @@ img {
     }
 
     .unidad-cabeza {
+        grid-column: 1;
         position: sticky;
         top: 6.5rem;
     }
 
-    .unidad-cabeza,
-    .unidad > h2 {
-        grid-column: 1;
-    }
-
-    .unidad-descripcion,
-    .unidad-lista {
+    .unidad-cuerpo {
         grid-column: 2;
     }
 }
@@ -1745,30 +1738,6 @@ a.empresa:hover .empresa-nombre {
     gap: 3rem;
 }
 
-@media (min-width: 1024px) {
-    .contacto-grid {
-        grid-template-columns: 288px minmax(0, 1fr);
-        column-gap: clamp(2rem, 4vw, 4.5rem);
-        align-items: start;
-    }
-
-    .contacto-riel {
-        position: sticky;
-        top: 7rem;
-    }
-
-    .lead-form {
-        max-width: none;
-        margin: 0;
-    }
-
-    .lead-field,
-    .lead-submit,
-    .lead-reassurance {
-        max-width: 34rem;
-    }
-}
-
 .contacto-promesa {
     font-size: 1.25rem;
     line-height: 1.5;
@@ -1968,8 +1937,9 @@ a.empresa:hover .empresa-nombre {
     text-underline-offset: 3px;
 }
 
+/* La tarjeta no tiene padding: el margen lo ponen los hijos, así que un width:100% se sumaba a ese margen y sacaba el botón del borde. */
 .lead-submit {
-    width: 100%;
+    align-self: stretch;
 }
 
 .lead-submit[disabled] {
@@ -1981,6 +1951,25 @@ a.empresa:hover .empresa-nombre {
     font-size: 0.875rem;
     color: var(--text-light);
     text-align: center;
+}
+
+/* La tarjeta comparte el riel: arranca en la misma línea que la promesa. */
+@media (min-width: 1024px) {
+    .contacto-grid {
+        grid-template-columns: 288px minmax(0, 1fr);
+        column-gap: clamp(2rem, 4vw, 4.5rem);
+        align-items: start;
+    }
+
+    .contacto-riel {
+        position: sticky;
+        top: 7rem;
+    }
+
+    .lead-form {
+        max-width: 620px;
+        margin: 0 auto;
+    }
 }
 
 /* ── Footer ─────────────────────────────────── */
@@ -2439,6 +2428,7 @@ a.empresa:hover .empresa-nombre {
         --secondary-ink: #ee7900;
         --text-dark: #e5e7eb;
         --text-medium: #b6bdc9;
+        --dark-link: #93c5fd;
         --text-light: #9ca3af;
         --text-lighter: #6b7280;
         --white: #0a0f1a;
@@ -2461,6 +2451,12 @@ a.empresa:hover .empresa-nombre {
         --chart-text: #b6bdc9;
         --chart-grid: rgba(147, 197, 253, 0.14);
         --focus-ring: rgba(238, 121, 0, 0.3);
+        /* El mapa oscuro invierte el fondo, así que la rampa de densidad corre al revés: sin esto las celdas más densas (navy) desaparecen en el mapa. */
+        --dens-1: #16304d;
+        --dens-2: #24507e;
+        --dens-3: #4a80b4;
+        --dens-4: #8fbde6;
+        --dens-5: #d7e8f7;
     }
 
     body {
@@ -2485,12 +2481,10 @@ a.empresa:hover .empresa-nombre {
         background: linear-gradient(135deg, #0f1724 0%, #12213d 55%, #060a12 100%);
     }
 
-
-
     .lead-form,
     .chart-card,
     .filtro-grupo {
-        background: #0f1724;
+        background: var(--bg-lighter);
     }
 
     .lead-field input[type="text"],
@@ -2520,7 +2514,38 @@ a.empresa:hover .empresa-nombre {
         background: #1a2235;
     }
 
+    /* Los tiles de OSM son claros: se invierten para que el mapa no sea un bloque blanco, y el pane de marcadores queda fuera del filtro para que la rampa conserve su significado. */
+    .leaflet-tile-pane {
+        filter: invert(1) hue-rotate(180deg) brightness(0.86) contrast(0.9) saturate(0.7);
+    }
+
+    /* Los controles de Leaflet traen fondo blanco propio y sobre el mapa oscuro quedaban como islas. */
+    .leaflet-bar a,
+    .leaflet-bar a:hover {
+        background: rgba(15, 23, 36, 0.92);
+        border-bottom-color: var(--primary-20);
+        color: var(--text-dark);
+    }
+
+    .leaflet-container .leaflet-control-attribution {
+        background: rgba(15, 23, 36, 0.92);
+        color: var(--text-medium);
+    }
+
+    .leaflet-control-attribution a {
+        color: var(--dark-link);
+    }
+
+    .client-logo,
+    .marquee-content:hover .client-logo {
+        filter: grayscale(1) invert(1);
+    }
+
     .client-logo {
-        opacity: 0.75;
+        opacity: 0.8;
+    }
+
+    .marquee-content:hover .client-logo {
+        opacity: 1;
     }
 }
