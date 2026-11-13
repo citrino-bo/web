@@ -27,7 +27,7 @@ Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una co
 
 ## Diseño y CSS
 
-- Antes de agregar CSS, buscá un patrón equivalente en `styles.css` (`.use-cases`, `.use-case-card`, `.value-prop`, `.section-title`, `.btn`, `.btn-primary`) y reusalo. No crees prefijos paralelos.
+- Antes de agregar CSS, buscá un patrón equivalente en `styles.css` (`.section-title`, `.btn`, `.btn-primary`, `.cifra`, `.unidad`, `.empresa`, `.acceso`) y reusalo. No crees prefijos paralelos.
 - Cards en grid: cada card `display: flex; flex-direction: column`; el contenido flexible lleva `flex: 1`; el CTA al fondo, `margin-top: auto`. Nunca `align-items: center` en el card container ni altura fija en la descripción.
 - Continuidad entre secciones: cada bloque engancha con el siguiente (dot pattern, gradient sutil, `overflow: hidden`). Sin cortes planos.
 - Componentes nuevos: seguí las convenciones de `styles.css` y `DESIGN.md`.
@@ -36,7 +36,7 @@ Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una co
 
 - El HTML es la fuente de verdad; la spec puede estar stale. Antes de proponer cambios, leé la versión live (`*.html`, `styles.css`, `script.js`) y reflejá el estado real. Si la spec difiere, marcalo y proponé corregirla primero.
 - Antes de declarar "listo", verificá con el navegador en desktop, mobile y modo oscuro, y mostrá evidencia (captura + DOM). Sin verificación, no está listo.
-- El detector de diseño tiene que volver sin hallazgos: `.pi/skills/impeccable/scripts/impeccable detect --json <archivos>`.
+- El detector de diseño tiene que volver sin hallazgos: `.agents/skills/impeccable/scripts/impeccable.cmd detect --json <archivos>`.
 - Un test A/B se aprueba solo con primary metric, baseline rate y duración esperada.
 
 ## No hagas

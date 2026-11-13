@@ -137,7 +137,7 @@ spacing:
   grid-gap: "2rem"
 components:
   button-primary:
-    backgroundColor: "{colors.signal}"
+    backgroundColor: "{colors.signal-deep}"
     textColor: "{colors.surface}"
     rounded: "{rounded.md}"
     padding: "1rem 2.5rem"
@@ -238,7 +238,7 @@ Three brand roles plus a neutral ladder, duplicated into a dark ladder that swap
 ### Hierarchy
 The ramp has eight fixed steps and six fluid ones. Nothing else is allowed; a size that is not on this list is drift.
 
-- **Display** (`{typography.display}`): `.hero-title`, Outfit 800 at `clamp(2.2rem, 5.6vw, 3.75rem)`, centered, one per page.
+- **Display** (`{typography.display}`): `.hero-title`, Outfit 800 at `clamp(2.75rem, 1.9rem + 3.2vw, 4.25rem)`, centered, one per page.
 - **Headline** (`{typography.headline}`): `.section-title`, `.banda-titulo`, `.cta-final-title` and the interior hero title (`.hero--interior .hero-title`), Outfit 700 at `clamp(2.125rem, 1.3rem + 2.4vw, 3rem)`, with the orange bar beneath. `.section-title` is left-aligned to the container edge and capped at 26ch (32ch with `.section-title--wide`); `.banda-titulo` and `.cta-final-title` stay centered because they sit on full-bleed navy bands.
 - **Stat** (`{typography.stat}`): `.cifra-valor`, Outfit 800 orange at `clamp(2.5rem, 5vw, 4rem)`, always paired with a label underneath. Static values, no counter.
 - **Stat total** (`{typography.stat-total}`): `.censo-total-cifra`, the one figure that carries the census band, Outfit 800 white at `clamp(3rem, 6vw, 4.5rem)`.
