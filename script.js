@@ -219,6 +219,37 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        // Los mensajes nativos los pone el idioma del navegador, no el `lang` de la página: se reemplazan por los propios.
+        const avisos = {
+            interes: 'Elegí qué necesitás.',
+            nombre: 'Escribí tu nombre.',
+            mensaje: 'Contanos qué necesitás.',
+            consent_privacidad: 'Necesitamos que aceptes la política de privacidad.',
+            consent_contacto: 'Necesitamos que autorices el contacto.'
+        };
+
+        leadForm.addEventListener('invalid', function(e) {
+            const campo = e.target;
+            // En email y WhatsApp manda la regla "al menos uno", que ya dejó su mensaje.
+            if (campo.name === 'email' || campo.name === 'whatsapp') return;
+            campo.setCustomValidity(avisos[campo.name] || '');
+        }, true);
+
+        // Un mensaje propio no se borra solo: sin esto el campo queda inválido aunque se complete.
+        ['input', 'change'].forEach(function(tipo) {
+            leadForm.addEventListener(tipo, function(e) {
+                const campo = e.target;
+                // El grupo de radios comparte validez: se limpia entero o el resto mantiene el mensaje.
+                if (campo.type === 'radio') {
+                    leadForm.querySelectorAll('input[name="' + campo.name + '"]').forEach(function(radio) {
+                        radio.setCustomValidity('');
+                    });
+                    return;
+                }
+                campo.setCustomValidity('');
+            }, true);
+        });
+
         // Un envío con varios campos vacíos emite un `invalid` por campo; se registra uno por intento.
         let ultimoInvalido = 0;
         leadForm.addEventListener('invalid', function() {
