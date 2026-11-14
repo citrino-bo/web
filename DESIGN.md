@@ -148,7 +148,7 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 
 ## Components
 
-- **Botones:** radio 10px, borde transparente de 2px para que las variantes no muevan el layout, alto mínimo 44px. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco global es un outline navy de 2px y pasa a naranja sobre navy, `.footer` y `.banda-oscura`.
+- **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es navy y pasa a naranja sobre las superficies navy, el pie y `.banda-oscura`.
 - **Tarjetas:** las únicas son `.chart-card` y `.acceso`, y ambas existen porque son un lienzo o un link. Todo lo demás va en listas divididas.
 - **Cifras y libro del censo:** valores estáticos, sin contador, porque dos de los tres llevan sufijo de moneda. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%.
 - **Mapa de densidad:** una celda agregada por `L.circleMarker` sobre un canvas compartido, radio en píxeles (a escala país una celda de 550 m sería sub-píxel), con la rueda de zoom apagada. Los filtros recalculan cada celda desde su desglose. Estados `.mapa-loading` y `.mapa-fallback` con `[hidden]`. En oscuro se invierte el tile pane y la rampa de densidad corre al revés, para que las celdas más densas sigan siendo lo más claro del mapa.

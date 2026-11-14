@@ -32,7 +32,7 @@ El mercado de referencia es Santa Cruz de la Sierra y el eje troncal; la platafo
 
 El sitio es estático y no tiene backend: los formularios se envían a Web3Forms y los datos se sirven desde `data/panel.json`. Estructura de archivos y comandos en `AGENTS.md`.
 
-El formulario de contacto es la acción primaria; el interés es su primer campo y define el ruteo interno. El criterio vive en `docs/conversion-y-formularios.md` y es normativo para cualquier cambio en CTAs o formularios.
+El formulario de contacto es la acción primaria del sitio. El ruteo por interés vive en `docs/conversion-y-formularios.md`, que es normativo para cualquier cambio en CTAs o formularios.
 
 ## Capabilities and Constraints
 
@@ -60,9 +60,7 @@ Grupo y afiliaciones públicas: Atrio, Urbanova, MegaObras, Ancora, Expo Real Es
 
 ## Evidence on Hand
 
-Cifras que el sitio declara: más de 1,5 millones de dólares gestionados en proyectos, más de 8,5 millones intermediados en inversiones y más de 50 asesoramientos personalizados. Del censo: 1.813 proyectos y 74.905 inmuebles desde 2013.
-
-Logros del grupo: más de 40 años en desarrollos inmobiliarios; Urbanova con más de 2.300 viviendas entregadas y más de 100 millones de dólares en ventas de proyectos concluidos; MegaObras, socia de Graña y Montero, con el primer sistema de construcción industrializado de Bolivia; Expo Real Estate Bolivia como versión local del evento de real estate más importante de Sudamérica.
+Cifras y logros: los publicados en el hero y la banda de censo de `index.html`, y los del grupo en `quienes-somos.html`. Se leen de la página, no se copian acá.
 
 Logos de clientes y fotos del equipo en `assets/` y en `docs/refactorizacion_octubre_26/input_julio/`; nombres y roles publicados en `quienes-somos.html`.
 
@@ -79,5 +77,3 @@ No hay testimonios escritos, casos de estudio ni precios publicados: ese materia
 ## Accessibility & Inclusion
 
 WCAG 2.2 AA como estándar. La audiencia incluye inversores mayores: legibilidad, contraste y tamaño de texto mandan sobre la estética.
-
-Soporte de `prefers-reduced-motion` para la entrada del hero, los contadores, la marquesina y el mapa.
