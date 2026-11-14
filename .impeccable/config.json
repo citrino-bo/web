@@ -18,7 +18,10 @@
       {
         "rule": "design-system-color",
         "value": "#000",
-        "createdAt": "2026-11-14T05:20:59.632Z",
+        "files": [
+          "styles.css"
+        ],
+        "createdAt": "2026-11-14T05:50:37.919Z",
         "reason": "Los 14 #000 de styles.css estan todos en mask-image y -webkit-mask-image: son el canal opaco de la mascara, no un color de paleta."
       }
     ]
