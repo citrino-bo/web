@@ -49,4 +49,4 @@ Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una co
 
 - Cambios de UI chicos (sección, copy, estilo): editá el HTML/CSS directo. Sin proposal + spec + design + tasks.
 - Cambios de lógica o multi-archivo: SDD con spec corta, no slop de 2000 palabras.
-- Tickets Leantime: el número es para rastreo. Si la premisa es falsa, pará y avisá.
+- Los tickets viven en GitHub issues. Si la premisa de un ticket es falsa, pará y avisá.
