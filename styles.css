@@ -624,8 +624,7 @@ img {
     }
 
     .censo-article > p,
-    .censo-article > .censo-datos,
-    .censo-article > .tabla-scroll {
+    .censo-article > .censo-datos {
         grid-column: 2;
     }
 }
@@ -656,88 +655,6 @@ img {
 
 .censo-article p + p {
     margin-top: 1rem;
-}
-
-/* Tabla del censo */
-
-.tabla-scroll {
-    margin-top: 1.75rem;
-    overflow-x: auto;
-}
-
-.tabla-censo {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1rem;
-}
-
-.tabla-censo caption {
-    text-align: left;
-    font-size: 0.875rem;
-    color: var(--text-light);
-    padding-bottom: 0.75rem;
-}
-
-.tabla-censo th,
-.tabla-censo td {
-    padding: 0.85rem 1rem;
-    text-align: right;
-    border-bottom: 1px solid var(--bg-lighter);
-    font-variant-numeric: tabular-nums;
-}
-
-.tabla-censo th:first-child,
-.tabla-censo td:first-child {
-    text-align: left;
-    padding-left: 0;
-}
-
-.tabla-censo th:last-child,
-.tabla-censo td:last-child {
-    padding-right: 0;
-}
-
-.tabla-censo thead th {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    border-bottom: 2px solid var(--primary-10);
-}
-
-.tabla-censo tbody td:first-child {
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--heading-ink);
-}
-
-.tabla-censo tbody tr:last-child td {
-    border-bottom: 0;
-}
-
-.js .tabla-censo tbody tr {
-    opacity: 0;
-    transform: translateY(8px);
-}
-
-.js .tabla-censo.tabla-visible tbody tr {
-    opacity: 1;
-    transform: none;
-    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.js .tabla-censo.tabla-visible tbody tr:nth-child(2) { transition-delay: 0.08s; }
-.js .tabla-censo.tabla-visible tbody tr:nth-child(3) { transition-delay: 0.16s; }
-
-.tabla-censo tbody td:not(:first-child) {
-    color: var(--text-dark);
-}
-
-.tabla-censo tbody td:last-child {
-    color: var(--secondary-ink);
-    font-weight: 600;
 }
 
 /* ── Banda de censo: la evidencia sobre navy ── */
@@ -1071,10 +988,6 @@ img {
     box-shadow: var(--shadow-sm);
 }
 
-.chart-card--full {
-    grid-column: 1 / -1;
-}
-
 .chart-card h3 {
     font-size: 1.25rem;
     font-weight: 600;
@@ -1085,16 +998,6 @@ img {
 .chart-canvas-wrapper {
     position: relative;
     height: 300px;
-}
-
-.chart-card--full .chart-canvas-wrapper {
-    height: 340px;
-}
-
-.chart-note {
-    margin-top: 1rem;
-    font-size: 0.875rem;
-    color: var(--text-light);
 }
 
 .charts-fallback {
@@ -1661,20 +1564,6 @@ a.empresa:hover .empresa-nombre {
     height: 100%;
     object-fit: cover;
     display: block;
-}
-
-.persona-iniciales {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-primary);
-    color: var(--secondary-color);
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
 }
 
 .persona-nombre {
@@ -2342,15 +2231,6 @@ a.empresa:hover .empresa-nombre {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .tabla-censo {
-        font-size: 0.875rem;
-    }
-
-    .tabla-censo th,
-    .tabla-censo td {
-        padding: 0.7rem 0.5rem;
-    }
-
     .filtro-grupo {
         width: 100%;
         overflow-x: auto;
@@ -2388,12 +2268,6 @@ a.empresa:hover .empresa-nombre {
 
     .js .censo-barra i {
         transform: scaleX(1);
-        transition: none;
-    }
-
-    .js .tabla-censo tbody tr {
-        opacity: 1;
-        transform: none;
         transition: none;
     }
 

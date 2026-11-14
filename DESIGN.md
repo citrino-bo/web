@@ -36,7 +36,6 @@ colors:
   dark-link: "#93c5fd"
 typography:
   display: { fontFamily: Outfit, fontSize: "clamp(2.75rem, 1.9rem + 3.2vw, 4.25rem)", fontWeight: 800, lineHeight: 1.3, letterSpacing: "-0.03em" }
-  display-compact: { fontFamily: Outfit, fontSize: 2rem, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.03em" }
   headline: { fontFamily: Outfit, fontSize: "clamp(2.125rem, 1.3rem + 2.4vw, 3rem)", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-0.02em" }
   rail-heading: { fontFamily: Outfit, fontSize: "clamp(1.5rem, 2.2vw, 2rem)", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-0.02em" }
   heading: { fontFamily: Outfit, fontSize: 1.625rem, fontWeight: 600, lineHeight: 1.3, letterSpacing: "-0.01em" }
@@ -62,13 +61,13 @@ omitted:
 
 **Creative North Star: "The Data Room"**
 
-Una mesa de inteligencia institucional: un mundo navy profundo interrumpido por bandas blancas de evidencia, con el naranja reservado para la señal. Denso en datos —censos, tablas, un mapa de densidad, gráficos— y liviano en decoración: nada se ilustra si se puede medir.
+Una mesa de inteligencia institucional: un mundo navy profundo interrumpido por bandas blancas de evidencia, con el naranja reservado para la señal. Denso en datos —censos, un mapa de densidad, gráficos— y liviano en decoración: nada se ilustra si se puede medir.
 
 Dos temas, claro y oscuro, decididos por `prefers-color-scheme` y sin interruptor en la página. El oscuro cambia las superficies y el ink; no inventa una segunda paleta.
 
 **Key Characteristics:**
 - Las cifras son tipografía, no epígrafes de una tarjeta.
-- La evidencia se organiza en listas divididas y tablas, no en grillas de tarjetas.
+- La evidencia se organiza en listas divididas, no en grillas de tarjetas.
 - Un solo eje: todo arranca en el borde del contenedor.
 
 ## Colors
@@ -103,8 +102,7 @@ Tres roles de marca y una escalera neutra duplicada en oscuro; la profundidad vi
 - **Title**: `.chart-card h3`, `.acceso h3`, `.lead-question`, `.documento h2`.
 - **Stat** / **Stat total** / **Stat row**: `.cifra-valor`, `.censo-total-cifra`, `.censo-inmuebles`.
 - **Lead** / **Subtitle** / **Body** / **Small**: prosa, subtítulos de sección, navegación y copy auxiliar.
-- **Label**: `.tabla-censo thead th`, `.mapa-leyenda`, `.footer-nav-title`, `.cifra-label`, `.censo-proyectos`.
-- **Display compact**: `.persona-iniciales`, el monograma que reemplaza una foto faltante.
+- **Label**: `.mapa-leyenda`, `.footer-nav-title`, `.cifra-label`, `.censo-proyectos`.
 
 **The One Bar Rule.** El subrayado naranja de 60×4px lo dibuja sólo `.section-title::after` / `.banda-titulo::after`, con `--gradient-secondary`. Las páginas de documento son la única variante: su `h2` lleva borde inferior completo. Nunca se redibuja localmente.
 
@@ -137,7 +135,7 @@ Tesis: el instrumento se enciende. El movimiento explica que los datos llegan, n
 
 - **Hero (`enfocar`):** el titular entra desde `blur(10px)` y `translateY(18px)` en 0.85s con `cubic-bezier(0.16, 1, 0.3, 1)`; el subtítulo, las cifras y el CTA siguen con `aparecer` y un stagger de 0.1 a 0.4s. Es la única secuencia de entrada.
 - **Barra del título:** se traza de `scaleX(0)` a 1 al 60% de visibilidad, con origen a la izquierda y al centro en las bandas.
-- **Filas del censo y barras de ciudades:** entran en orden y se trazan una vez, al 35% de visibilidad.
+- **Barras de ciudades:** se trazan una vez, al 35% de visibilidad.
 - **Mapa:** las celdas crecen desde radio 0 en el primer pintado, con retardo según la distancia al centro y tope de 320ms. Los filtros repintan sin animar.
 - **Feedback:** botones y tarjetas suben -3/-4px en hover y hacen `scale(0.97)` al presionar.
 

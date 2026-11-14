@@ -76,22 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
         titulos.forEach(function(t) { t.classList.add('titulo-visible'); });
     }
 
-    // ── La tabla del censo entra fila por fila ──
-    const tablas = document.querySelectorAll('.tabla-censo');
-    if ('IntersectionObserver' in window) {
-        const observadorTabla = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('tabla-visible');
-                    observadorTabla.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.35 });
-        tablas.forEach(function(t) { observadorTabla.observe(t); });
-    } else {
-        tablas.forEach(function(t) { t.classList.add('tabla-visible'); });
-    }
-
     // ── Las barras del censo se trazan cuando el libro de ciudades entra ──
     const librosCenso = document.querySelectorAll('.censo-ciudades');
     if ('IntersectionObserver' in window) {
