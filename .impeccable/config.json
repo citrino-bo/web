@@ -13,13 +13,13 @@
           "quienes-somos.html"
         ],
         "createdAt": "2026-11-14T05:20:59.558Z",
-        "reason": "Inset del masthead: 44px en desktop y 24px en mobile (clamp(1.5rem, 4vw, 2.75rem), que el analizador estatico no resuelve). Fila de logros: 28px de padding-bottom entre el texto y la divisoria, que el analizador no mide sobre la fila."
+        "reason": "Inset del masthead: 44px en desktop y 24px en mobile (clamp(1.5rem, 4vw, 2.75rem), que el analizador estatico no resuelve). Fila de logros: 28px de padding-bottom entre el texto y la divisoria, que el analizador no mide sobre la fila. El detector no tiene waiver por elemento para esta regla, asi que el waiver es por archivo."
       },
       {
         "rule": "design-system-color",
         "value": "#000",
         "createdAt": "2026-11-14T05:20:59.632Z",
-        "reason": "Canal opaco de los mask-image, no color de paleta."
+        "reason": "Los 14 #000 de styles.css estan todos en mask-image y -webkit-mask-image: son el canal opaco de la mascara, no un color de paleta."
       }
     ]
   }
