@@ -4,6 +4,23 @@
       "marquee"
     ],
     "ignoreFiles": [],
-    "ignoreValues": []
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "contacto.html",
+          "quienes-somos.html"
+        ],
+        "createdAt": "2026-11-14T05:20:59.558Z",
+        "reason": "Inset del masthead: 44px en desktop y 24px en mobile (clamp(1.5rem, 4vw, 2.75rem), que el analizador estatico no resuelve). Fila de logros: 28px de padding-bottom entre el texto y la divisoria, que el analizador no mide sobre la fila."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "createdAt": "2026-11-14T05:20:59.632Z",
+        "reason": "Canal opaco de los mask-image, no color de paleta."
+      }
+    ]
   }
 }

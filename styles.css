@@ -597,6 +597,7 @@ img {
 
 .section-subtitle {
     font-size: 1.25rem;
+    line-height: 1.6;
     color: var(--text-medium);
     text-align: left;
     max-width: 40rem;

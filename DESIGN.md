@@ -29,6 +29,7 @@ colors:
   dark-page: "#0a0f1a"
   dark-surface: "#0f1724"
   dark-raised: "#1a2235"
+  dark-hero-mid: "#12213d"
   dark-deep: "#060a12"
   dark-ink: "#e5e7eb"
   dark-ink-medium: "#b6bdc9"
@@ -154,6 +155,7 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 - **Mapa de densidad:** una celda agregada por `L.circleMarker` sobre un canvas compartido, radio en píxeles (a escala país una celda de 550 m sería sub-píxel), con la rueda de zoom apagada. Los filtros recalculan cada celda desde su desglose. Estados `.mapa-loading` y `.mapa-fallback` con `[hidden]`. En oscuro se invierte el tile pane y la rampa de densidad corre al revés, para que las celdas más densas sigan siendo lo más claro del mapa.
 - **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. La validación es nativa con mensajes propios en español, para no depender del idioma del navegador.
 - **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2.
+- **Avisos del detector:** la marquesina, el masthead del formulario, las filas de logros y los `#000` de los `mask-image` quedan firmados con su razón y su medición en `.impeccable/config.json`. `.section-subtitle` declara el `line-height` que hereda para que el analizador lo lea sobre su propio `font-size`.
 - **Header:** fijo, 95% blanco con blur, `aria-current` en la página activa y hamburguesa debajo de 768px.
 - **Superficies del navegador:** `viewport-fit=cover` con `env(safe-area-inset-*)`, selección navy, caret naranja, scrollbar teñida y `font-variant-numeric: tabular-nums` en `body` para que las columnas de cifras alineen.
 
