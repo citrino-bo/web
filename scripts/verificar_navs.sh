@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verifica que nav y footer sean identicos (labels + rutas) en todas las paginas. Si falla, copia el bloque <ul class="nav-menu"> y <ul class="footer-nav-links"> desde index.html.
+# Verifica que nav y footer sean identicos (labels + rutas) en todas las paginas. Si falla, copia el bloque <ul class="nav-menu"> y <ul class="footer-nav-links"> desde index.html. 404.html se sirve en subpaths arbitrarios, sus hrefs son absolutos: la comparacion ignora la barra inicial, no el nombre del archivo.
 # Upgrade path: cuando el sitio pase ~15 paginas o los edits de nav sean frecuentes, migrar a un include en build (Hugo/Eleventy). Hoy (7 paginas) duplicar es el trade-off correcto; lo unico inaceptable es el drift.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -21,7 +21,7 @@ canon_footer() {
 
 normalizar() {
   grep -o '<a href="[^"]*"[^>]*>[^<]*</a>' \
-    | sed 's#^<a href="\./#<a href="#; s/^<a href="//; s/"[^>]*>/|/; s#</a>$##'
+    | sed 's#^<a href="\./#<a href="#; s/^<a href="//; s#^/##; s/"[^>]*>/|/; s#</a>$##'
 }
 
 extraer() {
