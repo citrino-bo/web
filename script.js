@@ -76,15 +76,50 @@ document.addEventListener('DOMContentLoaded', function() {
         titulos.forEach(function(t) { t.classList.add('titulo-visible'); });
     }
 
-    // ── Las barras del censo se trazan cuando el libro de ciudades entra ──
-    const librosCenso = document.querySelectorAll('.censo-ciudades');
+    // ── El libro del censo entra: las barras se trazan y los enteros se cuentan ──
+    const librosCenso = document.querySelectorAll('.censo-datos');
+    const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Mismo reloj que las barras: los pasos van a 30 fps y el último deja el valor exacto del HTML.
+    function contarCifras(libro) {
+        const DURACION = 900;
+        const cifras = [];
+        libro.querySelectorAll('.censo-total-cifra, .censo-inmuebles').forEach(function(el) {
+            const valor = parseInt(el.textContent.replace(/\D/g, ''), 10);
+            if (!isNaN(valor)) cifras.push({ el: el, valor: valor });
+        });
+        if (cifras.length === 0) return;
+
+        // El rótulo del total arranca a la derecha de la cifra: sin ancho fijo se corre mientras el número cambia de largo.
+        const total = libro.querySelector('.censo-total-cifra');
+        if (total) total.style.minWidth = Math.ceil(total.getBoundingClientRect().width) + 'px';
+
+        const inicio = performance.now();
+        let ultimo = 0;
+        function paso(ahora) {
+            const t = ahora - inicio;
+            if (t - ultimo < 33 && t < DURACION) {
+                requestAnimationFrame(paso);
+                return;
+            }
+            ultimo = t;
+            const k = Math.min(1, t / DURACION);
+            const suave = 1 - Math.pow(1 - k, 3);
+            cifras.forEach(function(c) {
+                c.el.textContent = Math.round(c.valor * suave).toLocaleString('es-BO');
+            });
+            if (k < 1) requestAnimationFrame(paso);
+        }
+        requestAnimationFrame(paso);
+    }
+
     if ('IntersectionObserver' in window) {
         const observadorCenso = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('censo-visible');
-                    observadorCenso.unobserve(entry.target);
-                }
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('censo-visible');
+                if (!reducirMovimiento.matches) contarCifras(entry.target);
+                observadorCenso.unobserve(entry.target);
             });
         }, { threshold: 0.35 });
         librosCenso.forEach(function(l) { observadorCenso.observe(l); });
@@ -286,6 +321,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let capa = null;
         let lienzo = null;
         let celdasAnimadas = false;
+        // Las celdas esperan a que el mapa entre en pantalla: el prefetch llega 600px antes y sin esto el aterrizaje ocurría fuera de cuadro.
+        let celdasPendientes = [];
+        let aterrizajeListo = false;
         let tipo = 'todos';
         let operacion = 'todas';
 
@@ -318,6 +356,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (vivo) requestAnimationFrame(paso);
             }
             requestAnimationFrame(paso);
+        }
+
+        // El aterrizaje corre una sola vez, cuando el mapa ya se ve.
+        function soltarCeldas() {
+            if (celdasAnimadas || celdasPendientes.length === 0) return;
+            celdasAnimadas = true;
+            animarCeldas(celdasPendientes);
         }
 
         function leyenda() {
@@ -358,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (capa) mapa.removeLayer(capa);
             capa = L.layerGroup().addTo(mapa);
 
-            const animar = !celdasAnimadas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const animar = !celdasAnimadas && !reducirMovimiento.matches;
             const centro = mapa.getCenter();
             const puntos = [];
             let visibles = 0;
@@ -386,10 +431,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            if (animar) {
-                celdasAnimadas = true;
-                animarCeldas(puntos);
-            }
+            celdasPendientes = puntos;
+            if (aterrizajeListo) soltarCeldas();
 
             const leyenda = document.getElementById('mapa-leyenda');
             if (leyenda) leyenda.hidden = visibles === 0;
@@ -542,7 +585,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }, { rootMargin: '600px 0px' });
             observadorMapa.observe(contenedor.closest('.mapa'));
+
+            const observadorAterrizaje = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    observadorAterrizaje.disconnect();
+                    aterrizajeListo = true;
+                    soltarCeldas();
+                });
+            }, { threshold: 0 });
+            observadorAterrizaje.observe(contenedor.closest('.mapa-wrapper'));
         } else {
+            aterrizajeListo = true;
             arrancar();
         }
     }

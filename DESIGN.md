@@ -135,12 +135,13 @@ Híbrido: bandas tonales para la estructura y un único vocabulario neutro para 
 Tesis: el instrumento se enciende. El movimiento explica que los datos llegan, no que la página es linda.
 
 - **Hero (`enfocar` + `encender`):** el titular entra desde `blur(10px)` y `translateY(18px)` en 0.85s con `cubic-bezier(0.16, 1, 0.3, 1)`; el subtítulo, las cifras y el CTA siguen con `aparecer` y un stagger de 0.1 a 0.4s. La retícula de fondo se enciende con `encender` (opacidad y escala 1.06 desde el centro, 1.4s). Es la única secuencia de entrada.
-- **Barra del título:** se traza de `scaleX(0)` a 1 al 60% de visibilidad, con origen a la izquierda y al centro en las bandas.
-- **Barras de ciudades:** se trazan una vez, al 35% de visibilidad.
-- **Mapa:** las celdas crecen desde radio 0 en el primer pintado, con retardo según la distancia al centro y tope de 320ms. Los filtros repintan sin animar.
-- **Feedback:** botones y tarjetas suben -3/-4px en hover y hacen `scale(0.97)` al presionar.
+- **Barras del título:** se traza de `scaleX(0)` a 1 al 60% de visibilidad, con origen a la izquierda y al centro en las bandas.
+- **Libro del censo:** al 35% de visibilidad las barras de ciudad se trazan y los enteros —total y ciudades— se cuentan en los mismos 900ms, a 30 fps. Las cifras del hero no se cuentan: dos llevan sufijo de moneda.
+- **Mapa:** las celdas crecen desde radio 0 cuando el mapa entra en pantalla, con retardo según la distancia al centro y tope de 320ms. El JSON se prefetchea 600px antes, así que el aterrizaje ocurre a la vista y no fuera de cuadro. Los filtros repintan sin animar.
+- **Navegación:** `@view-transition` cruza el documento en 0.3s y el header, con `view-transition-name: masthead`, no se mueve entre páginas. Sin soporte del navegador la navegación corta como siempre.
+- **Feedback:** botones y tarjetas suben -3/-4px en hover y hacen `scale(0.97)` al presionar; los filtros del mapa y la pausa de la marquesina hacen lo mismo al presionar.
 
-Presupuesto: ninguna propiedad que dispare layout, el blur es un elemento y una vez. Con `prefers-reduced-motion` los cuatro momentos se desactivan y el contenido queda en su estado final; el feedback sobrevive.
+Presupuesto: ninguna propiedad que dispare layout, el blur es un elemento y una vez, y la navegación no carga JavaScript. Con `prefers-reduced-motion` los cuatro momentos se desactivan y el contenido queda en su estado final; el feedback sobrevive.
 
 ## Shapes
 
@@ -150,7 +151,7 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 
 - **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es navy y pasa a naranja sobre las superficies navy, el pie y `.banda-oscura`.
 - **Tarjetas:** las únicas son `.chart-card` y `.acceso`, y ambas existen porque son un lienzo o un link. Todo lo demás va en listas divididas.
-- **Cifras y libro del censo:** valores estáticos, sin contador, porque dos de los tres llevan sufijo de moneda. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%. Las tres cifras del hero son una grilla de tres columnas sobre dos hairlines, con los rótulos arrancando en la misma línea; debajo de 768px cada cifra pasa a renglón, con el dato a la izquierda y el rótulo a la derecha. La divisoria entre celdas es un trazo de 1px —vertical en desktop, horizontal en móvil— y no un borde de celda, para que el dato arranque en el eje del titular sin una caja que lo separe.
+- **Cifras y libro del censo:** las tres cifras del hero son estáticas porque dos llevan sufijo de moneda; los enteros del censo se cuentan al entrar, en el mismo reloj que sus barras. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%. Las tres cifras del hero son una grilla de tres columnas sobre dos hairlines, con los rótulos arrancando en la misma línea; debajo de 768px cada cifra pasa a renglón, con el dato a la izquierda y el rótulo a la derecha. La divisoria entre celdas es un trazo de 1px —vertical en desktop, horizontal en móvil— y no un borde de celda, para que el dato arranque en el eje del titular sin una caja que lo separe.
 - **Mapa de densidad:** una celda agregada por `L.circleMarker` sobre un canvas compartido, radio en píxeles (a escala país una celda de 550 m sería sub-píxel), con la rueda de zoom apagada. Los filtros recalculan cada celda desde su desglose. Estados `.mapa-loading` y `.mapa-fallback` con `[hidden]`. En oscuro se invierte el tile pane y la rampa de densidad corre al revés, para que las celdas más densas sigan siendo lo más claro del mapa.
 - **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. La validación es nativa con mensajes propios en español, para no depender del idioma del navegador.
 - **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2.
@@ -170,3 +171,4 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 - **Don't** poner texto muted (`ink-muted`) sobre una superficie oscura: va `dark-ink-medium` o un blanco con alfa.
 - **Don't** recolorear, desaturar o contornear los logos de las unidades o del grupo.
 - **Don't** publicar la base individual de propiedades: coordenadas, precios y superficies no salen del repo privado.
+- **Don't** contar una cifra con sufijo de moneda: el conteo es sólo para los enteros del censo.

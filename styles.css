@@ -252,6 +252,46 @@ img {
     transform: none;
 }
 
+/* ── Continuidad entre páginas ──────────────── */
+
+/* El masthead no se apaga al navegar: el documento se cruza y el header queda quieto. Sin soporte, la navegación corta como siempre. */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+
+    .header {
+        view-transition-name: masthead;
+    }
+
+    /* El header es idéntico en todas las páginas: la copia nueva reemplaza a la vieja sin cruce, así no se ven dos subrayados de navegación a la vez. */
+    ::view-transition-group(masthead) {
+        animation: none;
+    }
+
+    ::view-transition-old(masthead),
+    ::view-transition-new(masthead) {
+        animation: none;
+        opacity: 1;
+    }
+
+    ::view-transition-old(root) {
+        animation: 0.16s ease-in both cruzar-fuera;
+    }
+
+    ::view-transition-new(root) {
+        animation: 0.3s cubic-bezier(0.16, 1, 0.3, 1) both cruzar-dentro;
+    }
+}
+
+@keyframes cruzar-fuera {
+    to { opacity: 0; }
+}
+
+@keyframes cruzar-dentro {
+    from { opacity: 0; }
+}
+
 /* ── Header ─────────────────────────────────── */
 
 .header {
@@ -911,12 +951,16 @@ img {
     font-weight: 500;
     color: var(--text-medium);
     cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
     min-height: 44px;
 }
 
 .filtro-btn:hover {
     background: var(--primary-10);
+}
+
+.filtro-btn:active {
+    transform: scale(0.97);
 }
 
 .filtro-btn[aria-pressed="true"] {
@@ -1100,11 +1144,16 @@ img {
     font-weight: 500;
     color: var(--text-medium);
     cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
 .marquesina-pausa:hover {
     border-color: var(--secondary-color);
     color: var(--heading-ink);
+}
+
+.marquesina-pausa:active {
+    transform: scale(0.97);
 }
 
 .marquee-content.pausada {
