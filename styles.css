@@ -73,6 +73,11 @@
     --z-nav-menu: 900;
     --z-map-fallback: 10;
     --z-map-loading: 5;
+
+    /* El header es fijo: su alto es el padding del nav-container por dos más el logo o la hamburguesa (44px). */
+    --header-h: calc(2rem + 44px);
+    /* Aire entre el header y el titular del hero: el piso que no se recorta cuando falta alto. 8rem = 76px de header + 52px de aire. */
+    --hero-pad-top: 8rem;
 }
 
 /* ── Base ───────────────────────────────────── */
@@ -91,7 +96,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: calc(var(--header-h) + 4px);
     scrollbar-color: var(--primary-20) transparent;
     caret-color: var(--secondary-color);
 }
@@ -376,11 +381,32 @@ img {
     overflow: hidden;
 }
 
+/* Portada: el titular es una plancha y el aire bajo el header tiene un piso propio. */
+.hero--portada {
+    padding: var(--hero-pad-top) max(2rem, env(safe-area-inset-right)) 5rem max(2rem, env(safe-area-inset-left));
+}
+
+.hero--portada .hero-title {
+    font-size: clamp(2.5rem, 1.4rem + 5vw, 5.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.25rem;
+}
+
+.hero--portada .hero-subtitle {
+    line-height: 1.6;
+    max-width: 46rem;
+}
+
+.hero--portada .hero-cta {
+    margin-top: 2.5rem;
+}
+
 .hero-content {
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     text-align: center;
 }
@@ -406,17 +432,38 @@ img {
     inset: 0;
     z-index: 1;
     pointer-events: none;
+    animation: encender 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-background::before {
+/* Retícula del censo: una sola malla de 24px que se espesa hacia el centro. */
+.hero-background::before,
+.hero-background::after {
     content: '';
     position: absolute;
     inset: 0;
     background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
     background-size: 24px 24px;
-    opacity: 0.5;
-    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
-    -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
+}
+
+.hero-background::before {
+    mask-image: radial-gradient(ellipse 78% 70% at 50% 46%, #000 0%, transparent 84%);
+    -webkit-mask-image: radial-gradient(ellipse 78% 70% at 50% 46%, #000 0%, transparent 84%);
+}
+
+.hero-background::after {
+    mask-image: radial-gradient(ellipse 42% 38% at 50% 44%, #000 0%, transparent 88%);
+    -webkit-mask-image: radial-gradient(ellipse 42% 38% at 50% 44%, #000 0%, transparent 88%);
+}
+
+@keyframes encender {
+    from {
+        opacity: 0;
+        transform: scale(1.06);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .hero-cta {
@@ -425,6 +472,13 @@ img {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 2.75rem;
+}
+
+/* Pantallas bajas: se aprieta el ritmo del libro, nunca el aire bajo el header. */
+@media (min-width: 769px) and (max-height: 820px) {
+    .cifras {
+        margin-top: 2rem;
+    }
 }
 
 /* Portada de página interior: misma banda navy, menos altura. */
@@ -459,38 +513,44 @@ img {
 /* ── Cifras: renglón contable, no tres tarjetas ── */
 
 .cifras {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0;
-    margin: 3.25rem auto 0;
-    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 3rem 0 0;
     border-top: 1px solid var(--white-20);
     border-bottom: 1px solid var(--white-20);
 }
 
 .cifra {
-    flex: 1 1 200px;
-    padding: 1.75rem 1.25rem;
+    padding: 1.5rem;
     text-align: center;
 }
 
+/* La divisoria entre columnas es un trazo, no un borde: la celda no tiene caja. */
 .cifra + .cifra {
-    border-left: 1px solid var(--white-20);
+    position: relative;
+}
+
+.cifra + .cifra::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 1px;
+    background: var(--white-20);
 }
 
 .cifra-valor {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 1rem + 3.6vw, 4.25rem);
     font-weight: 800;
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     color: var(--secondary-color);
 }
 
 .cifra-label {
     display: block;
+    min-height: 2.8em;
     margin-top: 0.9rem;
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -498,8 +558,8 @@ img {
     line-height: 1.4;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--white-50);
-    max-width: none;
+    color: var(--white-70);
+    max-width: 16rem;
     margin-inline: auto;
 }
 
@@ -2107,18 +2167,57 @@ a.empresa:hover .empresa-nombre {
         padding: 7rem 1.5rem 4rem;
     }
 
+    /* Portada: mismo piso de aire que en desktop, sin tocar el resto de los heroes. */
+    .hero--portada {
+        padding: var(--hero-pad-top) 1.5rem 3rem;
+    }
+
+    .hero--portada .hero-title {
+        margin-bottom: 1rem;
+    }
+
+    .hero--portada .hero-subtitle {
+        line-height: 1.55;
+    }
+
+    /* En móvil el libro de cifras pasa a renglón: dato a la izquierda, rótulo a la derecha. */
     .cifras {
-        gap: 0;
+        grid-template-columns: minmax(0, 1fr);
+        margin-top: 1.5rem;
     }
 
     .cifra {
-        flex: 1 1 100%;
-        padding: 1.5rem 0.75rem;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1.25rem;
+        padding: 0.85rem 0;
+        text-align: left;
     }
 
-    .cifra + .cifra {
-        border-left: 0;
-        border-top: 1px solid var(--white-20);
+    /* En móvil la misma divisoria pasa de vertical a horizontal. */
+    .cifra + .cifra::before {
+        inset: 0 0 auto 0;
+        width: auto;
+        height: 1px;
+    }
+
+    .cifra-valor {
+        font-size: clamp(1.75rem, 1.1rem + 2.4vw, 2.25rem);
+    }
+
+    /* El rótulo toma el ancho que sobra: así no quiebra en tres líneas. */
+    .cifra-label {
+        min-height: 0;
+        margin-top: 0;
+        font-size: 0.6875rem;
+        max-width: none;
+        flex: 1;
+        text-align: right;
+    }
+
+    .hero--portada .hero-cta {
+        margin-top: 1.5rem;
     }
 
     /* El libro de ciudades pasa a dos filas: datos arriba, barra a lo ancho. */
@@ -2215,10 +2314,6 @@ a.empresa:hover .empresa-nombre {
 }
 
 @media (max-width: 480px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-
     .hero-cta .btn {
         width: 100%;
     }
@@ -2412,3 +2507,7 @@ a.empresa:hover .empresa-nombre {
         opacity: 1;
     }
 }
+
+
+
+

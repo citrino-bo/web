@@ -35,15 +35,15 @@ colors:
   dark-ink-medium: "#b6bdc9"
   dark-link: "#93c5fd"
 typography:
-  display: { fontFamily: Outfit, fontSize: "clamp(2.75rem, 1.9rem + 3.2vw, 4.25rem)", fontWeight: 800, lineHeight: 1.3, letterSpacing: "-0.03em" }
+  display: { fontFamily: Outfit, fontSize: "clamp(2.5rem, 1.4rem + 5vw, 5.75rem)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.035em" }
   headline: { fontFamily: Outfit, fontSize: "clamp(2.125rem, 1.3rem + 2.4vw, 3rem)", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-0.02em" }
   rail-heading: { fontFamily: Outfit, fontSize: "clamp(1.5rem, 2.2vw, 2rem)", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-0.02em" }
   heading: { fontFamily: Outfit, fontSize: 1.625rem, fontWeight: 600, lineHeight: 1.3, letterSpacing: "-0.01em" }
   title: { fontFamily: Outfit, fontSize: 1.25rem, fontWeight: 600, lineHeight: 1.3 }
-  stat: { fontFamily: Outfit, fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 800, lineHeight: 1, letterSpacing: "-0.02em" }
+  stat: { fontFamily: Outfit, fontSize: "clamp(2.5rem, 1rem + 3.6vw, 4.25rem)", fontWeight: 800, lineHeight: 1, letterSpacing: "-0.03em" }
   stat-total: { fontFamily: Outfit, fontSize: "clamp(3rem, 6vw, 4.5rem)", fontWeight: 800, lineHeight: 1, letterSpacing: "-0.03em" }
   stat-row: { fontFamily: Outfit, fontSize: 1.5rem, fontWeight: 700, lineHeight: 1 }
-  subtitle: { fontFamily: "DM Sans", fontSize: "clamp(1.125rem, 2.2vw, 1.375rem)", fontWeight: 400, lineHeight: 1.65 }
+  subtitle: { fontFamily: "DM Sans", fontSize: "clamp(1.125rem, 2.2vw, 1.375rem)", fontWeight: 400, lineHeight: 1.6 }
   lead: { fontFamily: "DM Sans", fontSize: 1.125rem, fontWeight: 400, lineHeight: 1.75 }
   body: { fontFamily: "DM Sans", fontSize: 1rem, fontWeight: 400, lineHeight: 1.6 }
   small: { fontFamily: "DM Sans", fontSize: 0.875rem, fontWeight: 400, lineHeight: 1.5 }
@@ -95,7 +95,7 @@ Tres roles de marca y una escalera neutra duplicada en oscuro; la profundidad vi
 
 **Hierarchy** — los tamaños viven en el frontmatter; esto es el mapa a las clases:
 
-- **Display**: `.hero-title`, uno por página, centrado.
+- **Display**: `.hero-title`, uno por página, centrado, sobre una medida de 1200px y con 1.04 de interlineado: el titular es una plancha, no un párrafo grande.
 - **Headline**: `.section-title`, `.banda-titulo`, `.cta-final-title` y el título del hero interior.
 - **Rail heading**: `.unidad h2`, dentro de su riel.
 - **Heading**: `.censo-article h3`, `.mapa-header`.
@@ -113,11 +113,12 @@ Tres roles de marca y una escalera neutra duplicada en oscuro; la profundidad vi
 Un contenedor centrado de 1320px con padding fluido (`clamp(1.25rem, 3.5vw, 3rem)`) y 820px para `.container--narrow`, dentro de bandas de color a sangre. Los bloques internos no vuelven a topar el ancho: topan la medida en `ch`, no la caja.
 
 - **Ritmo:** 7rem por sección; 4rem para `.mapa` y `.visualizaciones`, cada uno con hairline superior; 7rem para `.cta-final`; 4rem en móvil.
+- **The Clearance Rule.** El header es fijo y mide 76px (`--header-h`). El hero de la portada (`.hero--portada`) deja siempre 52px de aire arriba del titular, en los dos breakpoints, y ese alto vive en un solo token: `--hero-pad-top`, que ambas reglas de `padding` consumen. Cuando falta alto se aprieta el ritmo interno —el margen del libro de cifras, el interlineado del subtítulo—, nunca ese aire. Los heroes interiores no llevan el modificador y conservan su padding propio.
 - **Grillas:** dos columnas para `.charts-grid` y `.empresas`, tres para `.accesos`, cuatro para `.equipo`, con 2rem de gap.
 - **Rieles:** arriba de 1024px, `.censo-article`, `.unidad` y `.contacto-grid` son un riel de 280–320px más una columna de contenido, alineados en el mismo borde izquierdo.
 - **Bandas:** papel, superficie, navy, superficie, pie. Una sola banda navy a sangre por página.
-- **Breakpoints:** 1024 (equipo a tres), 900 (gráficos y accesos a una columna, pie a dos), 768 (una columna, menú hamburguesa, cifras apiladas), 480 (tipografía y padding chicos, botones del hero a lo ancho).
-- **Hero:** 92vh en la portada con contenido centrado y grilla de puntos radial; en interiores baja a `min-height: auto`, para que la banda navy de abajo se lea como una segunda superficie.
+- **Breakpoints:** 1024 (equipo a tres), 900 (gráficos y accesos a una columna, pie a dos), 768 (una columna, menú hamburguesa, cifras por renglón), 480 (tipografía y padding chicos, botones del hero a lo ancho).
+- **Hero:** 92vh en la portada con contenido centrado y una retícula de 24px que se espesa hacia el centro del campo; en interiores baja a `min-height: auto`, para que la banda navy de abajo se lea como una segunda superficie.
 
 ## Elevation & Depth
 
@@ -133,7 +134,7 @@ Híbrido: bandas tonales para la estructura y un único vocabulario neutro para 
 
 Tesis: el instrumento se enciende. El movimiento explica que los datos llegan, no que la página es linda.
 
-- **Hero (`enfocar`):** el titular entra desde `blur(10px)` y `translateY(18px)` en 0.85s con `cubic-bezier(0.16, 1, 0.3, 1)`; el subtítulo, las cifras y el CTA siguen con `aparecer` y un stagger de 0.1 a 0.4s. Es la única secuencia de entrada.
+- **Hero (`enfocar` + `encender`):** el titular entra desde `blur(10px)` y `translateY(18px)` en 0.85s con `cubic-bezier(0.16, 1, 0.3, 1)`; el subtítulo, las cifras y el CTA siguen con `aparecer` y un stagger de 0.1 a 0.4s. La retícula de fondo se enciende con `encender` (opacidad y escala 1.06 desde el centro, 1.4s). Es la única secuencia de entrada.
 - **Barra del título:** se traza de `scaleX(0)` a 1 al 60% de visibilidad, con origen a la izquierda y al centro en las bandas.
 - **Barras de ciudades:** se trazan una vez, al 35% de visibilidad.
 - **Mapa:** las celdas crecen desde radio 0 en el primer pintado, con retardo según la distancia al centro y tope de 320ms. Los filtros repintan sin animar.
@@ -149,12 +150,13 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 
 - **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es navy y pasa a naranja sobre las superficies navy, el pie y `.banda-oscura`.
 - **Tarjetas:** las únicas son `.chart-card` y `.acceso`, y ambas existen porque son un lienzo o un link. Todo lo demás va en listas divididas.
-- **Cifras y libro del censo:** valores estáticos, sin contador, porque dos de los tres llevan sufijo de moneda. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%.
+- **Cifras y libro del censo:** valores estáticos, sin contador, porque dos de los tres llevan sufijo de moneda. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%. Las tres cifras del hero son una grilla de tres columnas sobre dos hairlines, con los rótulos arrancando en la misma línea; debajo de 768px cada cifra pasa a renglón, con el dato a la izquierda y el rótulo a la derecha. La divisoria entre celdas es un trazo de 1px —vertical en desktop, horizontal en móvil— y no un borde de celda, para que el dato arranque en el eje del titular sin una caja que lo separe.
 - **Mapa de densidad:** una celda agregada por `L.circleMarker` sobre un canvas compartido, radio en píxeles (a escala país una celda de 550 m sería sub-píxel), con la rueda de zoom apagada. Los filtros recalculan cada celda desde su desglose. Estados `.mapa-loading` y `.mapa-fallback` con `[hidden]`. En oscuro se invierte el tile pane y la rampa de densidad corre al revés, para que las celdas más densas sigan siendo lo más claro del mapa.
 - **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. La validación es nativa con mensajes propios en español, para no depender del idioma del navegador.
 - **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2.
 - **Excepciones del detector:** el masthead del formulario y las filas de logros están firmados en `.impeccable/config.json`, cada uno con su razón y su medición; el waiver va por archivo porque el aviso de padding llega sin línea y no se puede atar al elemento. El `#000` de los `mask-image` es un waiver de valor: son el canal opaco de la máscara, no un color. `.section-subtitle` declara el `line-height` que hereda para que el analizador lo lea sobre su propio `font-size`.
 - **Header:** fijo, 95% blanco con blur, `aria-current` en la página activa y hamburguesa debajo de 768px.
+- **Hero de portada:** el modificador `.hero--portada` es el que lleva la escala display (1.04 de interlineado, 5.75rem de tope) y el piso de aire de `--hero-pad-top`. `.hero` sin modificador queda para las páginas interiores, con el titular más chico y su propio padding.
 - **Superficies del navegador:** `viewport-fit=cover` con `env(safe-area-inset-*)`, selección navy, caret naranja, scrollbar teñida y `font-variant-numeric: tabular-nums` en `body` para que las columnas de cifras alineen.
 
 ## Do's and Don'ts
