@@ -38,7 +38,7 @@ El formulario de contacto es la acción primaria del sitio. El ruteo por interé
 
 Tres unidades de negocio: Inteligencia Inmobiliaria (estudios de mercado, plataforma de indicadores, modelos financieros, valoración por rentabilidad, análisis de portafolios), Inversiones Inmobiliarias (perfil de inversión, prospección, visitas y negociación, revisión de títulos y contratos) y Desarrollos Inmobiliarios (capitales pasivos vía SPV por proyecto, gestión integral 360º y desarrollo en aportación de terreno).
 
-Base de datos propia: propiedades geolocalizadas y alquileres de referencia de `citrino-central`. El sitio publica sólo un agregado por celdas de ~550 m con piso de k-anonimato, en `data/panel.json`, regenerado con `scripts/agregar_panel.py` desde la base privada de `citrino-gestion`.
+Base de datos propia: propiedades geolocalizadas y alquileres de referencia. El sitio publica sólo un agregado por celdas de ~550 m con piso de k-anonimato, en `data/panel.json`.
 
 El campo `zona` es texto libre, no un catálogo: no se publica una cantidad de zonas porque ese número no existe todavía, y el catálogo con identificador y geometría es una deuda de `citrino-central`.
 

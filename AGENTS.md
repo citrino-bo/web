@@ -14,8 +14,8 @@ Reglas operativas para agentes y humanos en este repo. Quirúrgicas. Si no está
 
 Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una concern, nunca una página.**
 
-- Páginas: `index.html`, `inteligencia-inmobiliaria.html`, `servicios.html`, `quienes-somos.html`, `contacto.html`, `privacidad.html`, `gracias.html`.
-- Carpetas: `assets/` (imágenes), `data/` (artefactos derivados), `docs/` (documentación), `scripts/` (utilidades del repo). Nada más.
+- Páginas: `index.html`, `inteligencia-inmobiliaria.html`, `servicios.html`, `quienes-somos.html`, `contacto.html`, `privacidad.html`, `gracias.html`, `404.html`.
+- Carpetas: `assets/` (imágenes), `data/` (artefactos derivados), `docs/` (documentación), `scripts/` (utilidades del repo), `.impeccable/` (waivers del detector, versionados). Nada más.
 - Nombres kebab-case, sin espacios ni mayúsculas, en archivos y carpetas.
 - No se crean stubs de redirección: si una página deja de existir, se borra y se actualiza `sitemap.xml`.
 
@@ -36,7 +36,7 @@ Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una co
 
 - El HTML es la fuente de verdad; la spec puede estar stale. Antes de proponer cambios, leé la versión live (`*.html`, `styles.css`, `script.js`) y reflejá el estado real. Si la spec difiere, marcalo y proponé corregirla primero.
 - Antes de declarar "listo", verificá con el navegador en desktop, mobile y modo oscuro, y mostrá evidencia (captura + DOM). Sin verificación, no está listo.
-- El detector de diseño tiene que volver sin hallazgos: `.agents/skills/impeccable/scripts/impeccable.cmd detect --json <archivos>`.
+- El detector de diseño es la skill `impeccable`, instalada a nivel de usuario en `~/.agents/skills/impeccable/`; el `.agents/` del repo está en `.gitignore` y no llega a un clon. Se corre desde esa carpeta, con el cwd en el repo: `~/.agents/skills/impeccable/scripts/impeccable.cmd detect --json <archivos>`, y tiene que volver sin hallazgos. Si la carpeta no está, se instala con `npx impeccable install --global`.
 - Un test A/B se aprueba solo con primary metric, baseline rate y duración esperada.
 
 ## No hagas
@@ -63,4 +63,4 @@ Cinco roles canónicos con la etiqueta igual al rol: `needs-triage`, `needs-info
 
 ### Domain docs
 
-Un solo contexto: `GLOSSARY.md` y `docs/adr/` en la raíz. Ver `docs/agents/domain.md`.
+Un solo contexto. Ver `docs/agents/domain.md`.

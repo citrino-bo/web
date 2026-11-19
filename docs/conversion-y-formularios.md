@@ -43,7 +43,6 @@ Campos del MVP, en orden:
 
 Reglas:
 
-- Seis opciones de interés superan el umbral de 3–5 campos: por eso el formulario es de dos pasos lógicos (segmentación, luego contacto) dentro de la misma tarjeta, no dos pantallas.
 - Etiquetas visibles arriba del campo; el placeholder no reemplaza la etiqueta.
 - Una columna; targets de al menos 44px; inputs de al menos 16px (por debajo, iOS hace zoom al enfocar).
 - `type`/`autocomplete` correctos (`email`, `tel`) para que el teclado móvil y el autofill funcionen.
