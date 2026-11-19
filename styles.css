@@ -1199,7 +1199,9 @@ img {
     color: #fff;
     text-align: center;
     position: relative;
+    /* Como en .banda-oscura: sin clip, el scrollport propio congela el timeline de vista. */
     overflow: hidden;
+    overflow: clip;
 }
 
 .cta-final::before {
@@ -1208,7 +1210,8 @@ img {
     inset: 0;
     background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
     background-size: 24px 24px;
-    opacity: 0.4;
+    --reticula-luz: 0.4;
+    opacity: var(--reticula-luz);
     mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
     pointer-events: none;
@@ -1254,10 +1257,42 @@ img {
     inset: 0;
     background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
     background-size: 24px 24px;
-    opacity: 0.35;
+    --reticula-luz: 0.35;
+    opacity: var(--reticula-luz);
     mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse at center, #000 10%, transparent 70%);
     pointer-events: none;
+}
+
+/* Arriba de 768px la retícula se enciende con el gesto del hero repartido sobre el recorrido de la banda: llega encendida y no se apaga al salir. */
+@media (min-width: 768px) {
+    @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+            .cta-final,
+            .banda-oscura {
+                view-timeline-name: --reticula;
+            }
+
+            .cta-final::before,
+            .banda-oscura::before {
+                animation: encender-reticula linear both;
+                animation-timeline: --reticula;
+                animation-range: entry 0% entry 90%;
+            }
+        }
+    }
+}
+
+/* El mismo from/to de encender, con la luz propia de cada retícula como destino. */
+@keyframes encender-reticula {
+    from {
+        opacity: 0;
+        transform: scale(1.06);
+    }
+    to {
+        opacity: var(--reticula-luz);
+        transform: none;
+    }
 }
 
 .banda-oscura .container {
