@@ -80,20 +80,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const librosCenso = document.querySelectorAll('.censo-datos');
     const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    // Mismo reloj que las barras: los pasos van a 30 fps y el último deja el valor exacto del HTML.
-    function contarCifras(libro) {
+    // Reloj de los conteos: 900ms, un paso cada 33ms y el último deja el texto exacto del HTML.
+    function contarEnPasos(cifras) {
         const DURACION = 900;
-        const cifras = [];
-        libro.querySelectorAll('.censo-total-cifra, .censo-inmuebles').forEach(function(el) {
-            const valor = parseInt(el.textContent.replace(/\D/g, ''), 10);
-            if (!isNaN(valor)) cifras.push({ el: el, valor: valor });
-        });
-        if (cifras.length === 0) return;
-
-        // El rótulo del total arranca a la derecha de la cifra: sin ancho fijo se corre mientras el número cambia de largo.
-        const total = libro.querySelector('.censo-total-cifra');
-        if (total) total.style.minWidth = Math.ceil(total.getBoundingClientRect().width) + 'px';
-
         const inicio = performance.now();
         let ultimo = 0;
         function paso(ahora) {
@@ -106,11 +95,32 @@ document.addEventListener('DOMContentLoaded', function() {
             const k = Math.min(1, t / DURACION);
             const suave = 1 - Math.pow(1 - k, 3);
             cifras.forEach(function(c) {
-                c.el.textContent = Math.round(c.valor * suave).toLocaleString('es-BO');
+                c.el.textContent = k < 1 ? c.formato(Math.round(c.valor * suave)) : c.texto;
             });
             if (k < 1) requestAnimationFrame(paso);
         }
         requestAnimationFrame(paso);
+    }
+
+    function contarCifras(libro) {
+        const cifras = [];
+        libro.querySelectorAll('.censo-total-cifra, .censo-inmuebles').forEach(function(el) {
+            const valor = parseInt(el.textContent.replace(/\D/g, ''), 10);
+            if (isNaN(valor)) return;
+            cifras.push({
+                el: el,
+                valor: valor,
+                texto: el.textContent,
+                formato: function(n) { return n.toLocaleString('es-BO'); }
+            });
+        });
+        if (cifras.length === 0) return;
+
+        // El rótulo del total arranca a la derecha de la cifra: sin ancho fijo se corre mientras el número cambia de largo.
+        const total = libro.querySelector('.censo-total-cifra');
+        if (total) total.style.minWidth = Math.ceil(total.getBoundingClientRect().width) + 'px';
+
+        contarEnPasos(cifras);
     }
 
     if ('IntersectionObserver' in window) {
@@ -158,6 +168,43 @@ document.addEventListener('DOMContentLoaded', function() {
             listasBanda.forEach(function(l) { observadorBanda.observe(l); });
         } else {
             listasBanda.forEach(function(l) { l.classList.add('banda-visible'); });
+        }
+    }
+
+    // ── Quiénes Somos: los logros entran en cascada y las cifras con signo se cuentan ──
+    function contarLogros(lista) {
+        const cifras = [];
+        lista.querySelectorAll('.logro-cifra').forEach(function(el) {
+            const texto = el.textContent.trim();
+            // Sólo enteros: "3 casas/día" queda como está.
+            if (!/^[+-]?\d[\d.]*$/.test(texto)) return;
+            const valor = parseInt(texto.replace(/\D/g, ''), 10);
+            if (isNaN(valor)) return;
+            const signo = /^[+-]/.test(texto) ? texto[0] : '';
+            cifras.push({
+                el: el,
+                valor: valor,
+                texto: texto,
+                formato: function(n) { return signo + n.toLocaleString('es-BO'); }
+            });
+        });
+        if (cifras.length) contarEnPasos(cifras);
+    }
+
+    const listasLogros = document.querySelectorAll('.logros');
+    if (listasLogros.length) {
+        if ('IntersectionObserver' in window) {
+            const observadorLogros = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('logros-visible');
+                    if (!reducirMovimiento.matches) contarLogros(entry.target);
+                    observadorLogros.unobserve(entry.target);
+                });
+            }, { threshold: 0.2 });
+            listasLogros.forEach(function(l) { observadorLogros.observe(l); });
+        } else {
+            listasLogros.forEach(function(l) { l.classList.add('logros-visible'); });
         }
     }
 
