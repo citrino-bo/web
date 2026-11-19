@@ -54,18 +54,14 @@
     /* Colores de datos: mapa y gráficos. Se redefinen en modo oscuro. */
     /* Hairline visible: --bg-lighter da 1,05:1 sobre la banda de papel. */
     --hairline: rgba(0, 40, 87, 0.14);
-    /* Rampa secuencial del mapa: un solo tono, luminancia monotónica. */
-    --dens-1: #dbe7f2;
-    --dens-2: #a8c4de;
-    --dens-3: #6d9bc7;
-    --dens-4: #3a6ea3;
-    --dens-5: #002857;
-    --chart-bar: var(--dens-4);
-    --chart-bar-alt: var(--dens-3);
+    --chart-bar: #3a6ea3;
+    --chart-bar-alt: #6d9bc7;
     --chart-bar-accent: rgba(238, 121, 0, 0.8);
     --chart-bar-return: rgba(16, 185, 129, 0.8);
     --chart-text: #4b5563;
     --chart-grid: rgba(0, 40, 87, 0.08);
+    /* Punto de una celda sin agrupar: navy sobre tiles claros. */
+    --mapa-punto: #002857;
     --focus-ring: rgba(238, 121, 0, 0.2);
 
     --z-skip-link: 9999;
@@ -968,33 +964,46 @@ img {
     color: #fff;
 }
 
-.mapa-leyenda {
+/* Los grupos llevan el número de propiedades del área, no la cantidad de celdas. */
+.mapa-cluster {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
+    justify-content: center;
+    background: transparent;
+}
+
+.mapa-cluster div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.mapa-cluster--chico div {
+    width: 34px;
+    height: 34px;
+    background: var(--primary-color-mid);
     font-size: 0.75rem;
-    letter-spacing: 0.04em;
-    color: var(--text-light);
 }
 
-.mapa-leyenda {
-    margin-top: 1rem;
+.mapa-cluster--medio div {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color-light);
+    font-size: 0.8rem;
 }
 
-.leyenda-tramo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-right: 0.75rem;
-}
-
-.mapa-leyenda i {
-    display: block;
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
+.mapa-cluster--grande div {
+    background: var(--secondary-color);
 }
 
 .mapa-wrapper {
@@ -2694,12 +2703,8 @@ a.empresa:hover .empresa-nombre {
         --chart-text: #b6bdc9;
         --chart-grid: rgba(147, 197, 253, 0.14);
         --focus-ring: rgba(238, 121, 0, 0.3);
-        /* El mapa oscuro invierte el fondo, así que la rampa de densidad corre al revés: sin esto las celdas más densas (navy) desaparecen en el mapa. */
-        --dens-1: #16304d;
-        --dens-2: #24507e;
-        --dens-3: #4a80b4;
-        --dens-4: #8fbde6;
-        --dens-5: #d7e8f7;
+        /* El mapa oscuro invierte los tiles: los puntos pasan a azul claro. */
+        --mapa-punto: #9dc4e8;
     }
 
     body {

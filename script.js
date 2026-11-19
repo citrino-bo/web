@@ -382,94 +382,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // ── Panel de datos: mapa de densidad y gráficos ──
+    // ── Panel de datos: mapa interactivo y gráficos ──
     const mapaEl = document.getElementById('mapa');
     if (mapaEl) inicializarPanel(mapaEl);
 
     function inicializarPanel(contenedor) {
-        const CORTES = [10, 25, 75, 200];
-        const RADIOS = [4, 6, 8, 11, 14];
-        // Una sola rampa para mapa y gráficos, definida en los tokens --dens-*.
-        const estiloRaiz = getComputedStyle(document.documentElement);
-        const ESCALA = [1, 2, 3, 4, 5].map(function(i) {
-            return estiloRaiz.getPropertyValue('--dens-' + i).trim();
-        });
-        // Centro del área metropolitana de Santa Cruz: con el encuadre angosto de móvil un centro desplazado deja la nube de densidad contra un borde.
-        const CENTRO = [-17.7833, -63.1812];
-        const ZOOM = window.innerWidth < 768 ? 8 : 9;
+        // Arranca en el área metropolitana: a escala país una celda de 550 m no se distingue.
+        const CENTRO = [-17.78, -63.18];
+        const ZOOM = window.innerWidth < 768 ? 11 : 12;
+        const MAX_ZOOM = 14;
         let panel = null;
         let mapa = null;
-        let capa = null;
+        let grupo = null;
         let lienzo = null;
-        let celdasAnimadas = false;
-        // Las celdas esperan a que el mapa entre en pantalla: el prefetch llega 600px antes y sin esto el aterrizaje ocurría fuera de cuadro.
-        let celdasPendientes = [];
-        let aterrizajeListo = false;
+        let puntoColor = '#002857';
         let tipo = 'todos';
         let operacion = 'todas';
-
-        function tramo(n) {
-            for (let i = 0; i < CORTES.length; i++) {
-                if (n < CORTES[i]) return i;
-            }
-            return CORTES.length;
-        }
-
-        // Aterrizaje de las celdas: 24 pasos como máximo, no un rAF por marcador.
-        function animarCeldas(puntos) {
-            const DURACION = 480;
-            const inicio = performance.now();
-            let ultimo = 0;
-            function paso(ahora) {
-                const t = ahora - inicio;
-                if (t - ultimo < 33 && t < 900) {
-                    requestAnimationFrame(paso);
-                    return;
-                }
-                ultimo = t;
-                let vivo = false;
-                puntos.forEach(function(p) {
-                    const k = Math.min(1, Math.max(0, (t - p.retraso) / DURACION));
-                    if (k < 1) vivo = true;
-                    const suave = 1 - Math.pow(1 - k, 3);
-                    p.marcador.setRadius(p.radio * suave);
-                });
-                if (vivo) requestAnimationFrame(paso);
-            }
-            requestAnimationFrame(paso);
-        }
-
-        // El aterrizaje corre una sola vez, cuando el mapa ya se ve.
-        function soltarCeldas() {
-            if (celdasAnimadas || celdasPendientes.length === 0) return;
-            celdasAnimadas = true;
-            animarCeldas(celdasPendientes);
-        }
-
-        function leyenda() {
-            const cont = document.getElementById('mapa-leyenda-tramos');
-            if (!cont || !panel) return;
-            const rangos = [];
-            let desde = panel.k;
-            CORTES.forEach(function(corte) {
-                rangos.push(desde + '–' + (corte - 1));
-                desde = corte;
-            });
-            rangos.push(desde + '+');
-            cont.innerHTML = rangos.map(function(r, i) {
-                return '<span class="leyenda-tramo"><i style="background:var(--dens-' + (i + 1) + ')"></i>' + r + '</span>';
-            }).join('');
-        }
-
-        function color(n) {
-            return ESCALA[tramo(n)];
-        }
-
-        // Radio en píxeles: a escala país una celda geográfica sería invisible,
-        // así que la densidad se dibuja con tamaño constante en pantalla.
-        function radio(n) {
-            return RADIOS[tramo(n)];
-        }
 
         function contar(celda) {
             if (tipo === 'todos' && operacion === 'todas') return celda.n;
@@ -479,44 +407,53 @@ document.addEventListener('DOMContentLoaded', function() {
             return celda[tipo === 'todos' ? operacion : tipo];
         }
 
+        // El globo suma las propiedades de sus celdas: muestra inmuebles, no puntos en el mapa.
+        function iconoCluster(cluster) {
+            const total = cluster.getAllChildMarkers().reduce(function(suma, marcador) {
+                return suma + (marcador.peso || 0);
+            }, 0);
+            const tamano = total < 100 ? 'chico' : total < 1000 ? 'medio' : 'grande';
+            return L.divIcon({
+                html: '<div><span>' + total.toLocaleString('es-BO') + '</span></div>',
+                className: 'mapa-cluster mapa-cluster--' + tamano,
+                iconSize: [46, 46]
+            });
+        }
+
+        function aviso(titulo, texto) {
+            const fallback = document.getElementById('mapa-fallback');
+            const tituloEl = document.getElementById('mapa-fallback-titulo');
+            const textoEl = document.getElementById('mapa-fallback-texto');
+            if (!fallback) return;
+            if (!titulo) {
+                fallback.hidden = true;
+                return;
+            }
+            if (tituloEl) tituloEl.textContent = titulo;
+            if (textoEl) textoEl.textContent = texto;
+            fallback.hidden = false;
+        }
+
         function pintar() {
             if (!mapa || !panel) return;
-            if (capa) mapa.removeLayer(capa);
-            capa = L.layerGroup().addTo(mapa);
-
-            const animar = !celdasAnimadas && !reducirMovimiento.matches;
-            const centro = mapa.getCenter();
-            const puntos = [];
-            let visibles = 0;
+            grupo.clearLayers();
+            const marcadores = [];
             panel.grilla.forEach(function(celda) {
                 const n = contar(celda);
                 if (n < panel.k) return;
-                visibles++;
                 const punto = L.circleMarker([celda.lat, celda.lng], {
-                    radius: animar ? 0 : radio(n),
-                    stroke: true,
-                    color: '#ffffff',
-                    weight: 1,
-                    fillColor: color(n),
-                    fillOpacity: 1,
+                    radius: 5,
+                    stroke: false,
+                    fillColor: puntoColor,
+                    fillOpacity: 0.55,
                     renderer: lienzo
                 });
-                punto.bindPopup('<strong>' + n.toLocaleString('es-BO') + '</strong> propiedades');
-                punto.on('click', function() {
-                    track('mapa', { page: pagina, accion: 'celda' });
-                });
-                capa.addLayer(punto);
-                if (animar) {
-                    const d = Math.hypot(celda.lat - centro.lat, (celda.lng - centro.lng) * Math.cos(centro.lat * Math.PI / 180));
-                    puntos.push({ marcador: punto, radio: radio(n), retraso: Math.min(d * 90, 320) });
-                }
+                punto.peso = n;
+                marcadores.push(punto);
             });
-
-            celdasPendientes = puntos;
-            if (aterrizajeListo) soltarCeldas();
-
-            const leyenda = document.getElementById('mapa-leyenda');
-            if (leyenda) leyenda.hidden = visibles === 0;
+            grupo.addLayers(marcadores);
+            aviso(marcadores.length ? '' : 'Sin propiedades con ese filtro',
+                'Probá otra combinación de tipo y operación.');
         }
 
         function graficos(datos) {
@@ -587,10 +524,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function mostrarError() {
             const cargando = document.getElementById('mapa-loading');
-            const fallback = document.getElementById('mapa-fallback');
             const chartsFallback = document.getElementById('charts-fallback');
             if (cargando) cargando.hidden = true;
-            if (fallback) fallback.hidden = false;
+            aviso('El mapa no está disponible en este momento',
+                'Estamos trabajando para restablecerlo. Las visualizaciones de más abajo siguen disponibles.');
             if (chartsFallback) chartsFallback.hidden = false;
             track('mapa', { page: pagina, accion: 'error' });
         }
@@ -603,19 +540,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(function(datos) {
                     panel = datos;
-                    leyenda();
                     graficos(panel);
 
-                    if (typeof L === 'undefined') {
-                        mostrarError();
+                    if (typeof L === 'undefined' || typeof L.markerClusterGroup === 'undefined') {
+                        aviso('El mapa interactivo no está disponible en este momento',
+                            'Estamos trabajando para restablecerlo.');
                         return;
                     }
+
+                    puntoColor = getComputedStyle(document.documentElement).getPropertyValue('--mapa-punto').trim() || '#002857';
 
                     mapa = L.map(contenedor, {
                         center: CENTRO,
                         zoom: ZOOM,
                         minZoom: 4,
-                        maxZoom: 15,
+                        maxZoom: MAX_ZOOM,
                         scrollWheelZoom: false,
                         zoomControl: true
                     });
@@ -630,6 +569,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         maxZoom: 19
                     }).addTo(mapa);
 
+                    grupo = L.markerClusterGroup({
+                        maxClusterRadius: 70,
+                        spiderfyOnMaxZoom: false,
+                        showCoverageOnHover: false,
+                        zoomToBoundsOnClick: true,
+                        disableClusteringAtZoom: MAX_ZOOM + 1,
+                        iconCreateFunction: iconoCluster
+                    });
+                    grupo.on('clusterclick', function() {
+                        track('mapa', { page: pagina, accion: 'cluster', zoom: mapa.getZoom() });
+                    });
+                    mapa.addLayer(grupo);
+
                     const cargando = document.getElementById('mapa-loading');
                     if (cargando) cargando.hidden = true;
 
@@ -643,8 +595,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.filtro-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     const esTipo = btn.hasAttribute('data-tipo');
-                    const grupo = btn.parentElement;
-                    grupo.querySelectorAll('.filtro-btn').forEach(function(otro) {
+                    const grupoBotones = btn.parentElement;
+                    grupoBotones.querySelectorAll('.filtro-btn').forEach(function(otro) {
                         otro.setAttribute('aria-pressed', String(otro === btn));
                     });
                     if (esTipo) tipo = btn.getAttribute('data-tipo');
@@ -666,18 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }, { rootMargin: '600px 0px' });
             observadorMapa.observe(contenedor.closest('.mapa'));
-
-            const observadorAterrizaje = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (!entry.isIntersecting) return;
-                    observadorAterrizaje.disconnect();
-                    aterrizajeListo = true;
-                    soltarCeldas();
-                });
-            }, { threshold: 0 });
-            observadorAterrizaje.observe(contenedor.closest('.mapa-wrapper'));
         } else {
-            aterrizajeListo = true;
             arrancar();
         }
     }

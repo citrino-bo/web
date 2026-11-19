@@ -28,4 +28,4 @@ Los eventos de `script.js` suman `page` con el nombre de la página. El pageview
 - `interes` en `form`: `inversion`, `asesoria`, `datos`, `socio-pasivo`, `desarrollo`, `vender`
 - `accion` en `menu`: `abre`, `cierra`
 - `accion` en `marquesina`: `pausa`, `reanuda`
-- `accion` en `mapa`: `carga`, `filtro`, `celda`, `error`, `zoom`; `nivel` en `zoom`: `pais`, `departamento`, `ciudad`, `detalle`
+- `accion` en `mapa`: `carga`, `filtro`, `cluster`, `error`, `zoom`; `nivel` en `zoom`: `pais`, `departamento`, `ciudad`, `detalle`
