@@ -1,6 +1,6 @@
 # Motion
 
-Qué se mueve en el sitio, con qué técnica y con qué criterio se cierra cada página. Las secciones **Por página** describen el objetivo de su issue de motion: no son estado actual. La razón de no usar librería se registra como ADR al cerrar #36.
+Qué se mueve en el sitio, con qué técnica y con qué criterio se cierra cada página. Las secciones **Por página** describen el objetivo de su issue de motion: no son estado actual. Las dos decisiones difíciles de revertir viven en `adr/0001-motion-sin-libreria.md` y `adr/0002-scroll-atado-en-desktop.md`.
 
 ## Tesis
 
@@ -9,8 +9,10 @@ El instrumento responde. El movimiento marca estado, lectura y avance. Nada se a
 ## Repertorio
 
 - Entrada de bloque: 14px y 0.55s con `cubic-bezier(0.16, 1, 0.3, 1)`. Una vez por bloque.
+- Hero: el titular entra desde `blur(10px)` y 18px en 0.85s, el resto lo sigue con escalonado de 0.1 a 0.4s, y la retícula de fondo se enciende una vez en 1.4s con opacidad y escala 1.06. Es la única secuencia de entrada de la portada.
+- Navegación: `@view-transition` cruza el documento en 0.3s y el header queda quieto con `view-transition-name: masthead`. Sin soporte, la navegación corta como siempre.
 - Trazado: el guion naranja de 10×2px y la barra de 60×4px se dibujan de izquierda a derecha.
-- Scroll atado: sólo arriba de 768px y sólo con `@supports (animation-timeline: view())`. Sin soporte, el contenido queda en su estado final.
+- Scroll atado: sólo desde 768px y sólo con `@supports (animation-timeline: view())`. Sin soporte, el contenido queda en su estado final.
 - Cascada: sólo en listas y equipos, tope de cinco ítems, 70ms entre uno y otro.
 - Feedback: hover de -3/-4px en botones y tarjetas, `scale(0.97)` al presionar, zoom 1.03 en la foto del equipo, 2px en la flecha de empresa.
 - Conteo: sólo enteros. Nunca una cifra con sufijo de moneda.
@@ -20,10 +22,12 @@ El instrumento responde. El movimiento marca estado, lectura y avance. Nada se a
 - Animar un bloque con entrada propia y además animar sus ítems con otro gesto.
 - Scroll atado en móvil.
 - Cargar una librería de animación.
-- Contar una cifra con sufijo de moneda.
-- Desaturar o recolorear los logos de las unidades y del grupo.
 
 ## Por página
+
+### Inicio
+
+El libro del censo entra al 35% de visibilidad: las barras se trazan y los enteros se cuentan en 900ms, un paso cada 33ms. Las celdas del mapa brotan desde radio 0 con retardo según la distancia al centro y tope de 320ms, y el JSON se prefetchea 600px antes para que el aterrizaje ocurra a la vista. Los filtros repintan sin animar.
 
 ### Servicios
 
@@ -54,3 +58,7 @@ Cierre: la opacidad de la retícula sigue al scroll entre dos posiciones; con mo
 `DESIGN.md` se regenera desde el código vivo antes de cerrar el trabajo de motion. Los criterios muertos se borran, no se corrigen al costado.
 
 Cierre: ninguna afirmación de `DESIGN.md` contradice el HTML o el CSS; cada decisión difícil de revertir tiene su ADR; el detector de diseño vuelve sin hallazgos.
+
+## Presupuesto
+
+Ninguna animación del repertorio toca propiedades que disparen layout. El blur es un elemento y una vez. La navegación entre páginas no carga JavaScript. Con `prefers-reduced-motion` los momentos quedan en su estado final y el feedback sobrevive.
