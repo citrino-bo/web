@@ -16,6 +16,15 @@
         "reason": "Inset del masthead: 44px en desktop y 24px en mobile (clamp(1.5rem, 4vw, 2.75rem), que el analizador estatico no resuelve). Fila de logros: 28px de padding-bottom entre el texto y la divisoria, que el analizador no mide sobre la fila. El aviso llega con linea 0, asi que el waiver va por archivo."
       },
       {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "inteligencia-inmobiliaria.html"
+        ],
+        "createdAt": "2026-11-19T16:45:00.000Z",
+        "reason": "Filas de la banda: la sangria es 0px del lado del eje y 32px del lado de la grilla, para que el texto arranque en el borde del contenedor (DESIGN.md, un solo eje). No hay recuadro con borde ni fondo: la linea es la divisoria de la fila. El aviso llega con linea 0, asi que el waiver va por archivo."
+      },
+      {
         "rule": "design-system-color",
         "value": "#000",
         "files": [

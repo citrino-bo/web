@@ -1243,7 +1243,9 @@ img {
     color: #fff;
     padding: 6rem 0;
     position: relative;
+    /* hidden crea un contenedor de scroll propio y congela el timeline de vista de los ítems: clip recorta igual, sin scroll. */
     overflow: hidden;
+    overflow: clip;
 }
 
 .banda-oscura::before {
@@ -1285,6 +1287,21 @@ img {
     border-top: 1px solid var(--white-20);
 }
 
+.banda-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 2rem 2rem 2rem 0;
+    border-bottom: 1px solid var(--white-20);
+    position: relative;
+}
+
+.banda-item:nth-child(even) {
+    padding: 2rem 0 2rem 2rem;
+    border-left: 1px solid var(--white-20);
+}
+
+/* Una columna: los pares pierden borde y sangría. Va después de la base o la base gana. */
 @media (max-width: 900px) {
     .banda-lista {
         grid-template-columns: minmax(0, 1fr);
@@ -1295,19 +1312,6 @@ img {
         padding: 1.75rem 0;
         border-left: 0;
     }
-}
-
-.banda-item {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-    padding: 2rem 2rem 2rem 0;
-    border-bottom: 1px solid var(--white-20);
-}
-
-.banda-item:nth-child(even) {
-    padding: 2rem 0 2rem 2rem;
-    border-left: 1px solid var(--white-20);
 }
 
 .banda-icono {
@@ -1339,6 +1343,72 @@ img {
     line-height: 1.65;
     color: var(--white-70);
     max-width: 38rem;
+}
+
+/* ── Inteligencia: la banda entra en cascada y el guion se traza ── */
+
+/* El guion se apoya en la divisoria del ítem, alineado con el borde de la columna. */
+.banda-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--secondary-color);
+}
+
+.banda-item { --i: 0; }
+.banda-item:nth-child(2) { --i: 1; }
+.banda-item:nth-child(3) { --i: 2; }
+.banda-item:nth-child(4) { --i: 3; }
+
+/* Arriba de 768px cada ítem se escribe atado al scroll y arranca 4% del recorrido después del anterior. */
+@media (min-width: 768px) {
+    @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+            .banda-item {
+                view-timeline-name: --item;
+                animation: escribir linear both;
+                animation-timeline: view();
+                animation-range: cover calc(var(--i) * 4%) cover calc(45% + var(--i) * 4%);
+            }
+
+            .banda-item::before {
+                transform-origin: left;
+                animation: trazar linear both;
+                animation-timeline: --item;
+                animation-range: cover calc(var(--i) * 4%) cover calc(28% + var(--i) * 4%);
+            }
+        }
+    }
+}
+
+/* Móvil: la misma cascada una vez, sin atarse al scroll. */
+@media (max-width: 767px) {
+    .js .banda-item {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--i) * 70ms);
+    }
+
+    .js .banda-item::before {
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--i) * 70ms + 90ms);
+    }
+
+    .js .banda-lista.banda-visible .banda-item {
+        opacity: 1;
+        transform: none;
+    }
+
+    .js .banda-lista.banda-visible .banda-item::before {
+        transform: scaleX(1);
+    }
 }
 
 /* ── Accesos a reportes ─────────────────────── */
@@ -2495,6 +2565,17 @@ a.empresa:hover .empresa-nombre {
     .js .scroll-reveal {
         opacity: 1;
         transform: none;
+    }
+
+    .js .banda-item {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .js .banda-item::before {
+        transform: none;
+        transition: none;
     }
 
     .marquee-content {

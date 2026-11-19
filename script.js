@@ -144,6 +144,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // ── Inteligencia: la banda entra en cascada, sin atarse al scroll ──
+    const listasBanda = document.querySelectorAll('.banda-lista');
+    if (listasBanda.length) {
+        if ('IntersectionObserver' in window) {
+            const observadorBanda = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('banda-visible');
+                    observadorBanda.unobserve(entry.target);
+                });
+            }, { threshold: 0.2 });
+            listasBanda.forEach(function(l) { observadorBanda.observe(l); });
+        } else {
+            listasBanda.forEach(function(l) { l.classList.add('banda-visible'); });
+        }
+    }
+
     // ── Analítica ────────────────────────────────
     function track(evento, datos) {
         if (window.umami && typeof window.umami.track === 'function') {
