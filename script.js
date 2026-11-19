@@ -127,6 +127,23 @@ document.addEventListener('DOMContentLoaded', function() {
         librosCenso.forEach(function(l) { l.classList.add('censo-visible'); });
     }
 
+    // ── Servicios: en móvil la lista entra escalonada, sin atarse al scroll ──
+    const listasUnidad = document.querySelectorAll('.unidad-lista');
+    if (listasUnidad.length) {
+        if ('IntersectionObserver' in window) {
+            const observadorLista = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('lista-visible');
+                    observadorLista.unobserve(entry.target);
+                });
+            }, { threshold: 0.2 });
+            listasUnidad.forEach(function(l) { observadorLista.observe(l); });
+        } else {
+            listasUnidad.forEach(function(l) { l.classList.add('lista-visible'); });
+        }
+    }
+
     // ── Analítica ────────────────────────────────
     function track(evento, datos) {
         if (window.umami && typeof window.umami.track === 'function') {

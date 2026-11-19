@@ -239,12 +239,12 @@ img {
 .animate-delay-5 { animation-delay: 0.5s; }
 
 .scroll-reveal {
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .js .scroll-reveal {
     opacity: 0;
-    transform: translateY(32px);
+    transform: translateY(14px);
 }
 
 .js .scroll-reveal.visible {
@@ -1494,6 +1494,83 @@ img {
     margin-bottom: 0.15rem;
     font-weight: 600;
     color: var(--heading-ink);
+}
+
+/* ── Servicios: la lista se escribe mientras se lee ── */
+
+/* Cada ítem se traza al entrar, atado al scroll: si frenás a mitad de camino, queda a mitad. */
+@media (min-width: 768px) {
+    @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+            .unidad-lista li {
+                view-timeline-name: --item;
+                animation: escribir linear both;
+                animation-timeline: view();
+                animation-range: entry 0% cover 35%;
+            }
+
+            .unidad-lista li::before {
+                transform-origin: left;
+                animation: trazar linear both;
+                animation-timeline: --item;
+                animation-range: entry 0% cover 22%;
+            }
+
+            /* La lista que ya vive en el primer viewport no puede escribirse: nace completa. */
+            .unidad-lista[data-estatica] li,
+            .unidad-lista[data-estatica] li::before {
+                animation: none;
+            }
+        }
+    }
+}
+
+@keyframes escribir {
+    from {
+        opacity: 0.6;
+        transform: translateY(7px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes trazar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+/* Móvil: mismo repertorio sin scroll atado, la lista entra escalonada una vez. */
+@media (max-width: 767px) {
+    .unidad-lista li { --i: 0; }
+    .unidad-lista li:nth-child(2) { --i: 1; }
+    .unidad-lista li:nth-child(3) { --i: 2; }
+    .unidad-lista li:nth-child(4) { --i: 3; }
+    .unidad-lista li:nth-child(5) { --i: 4; }
+
+    .js .unidad-lista li {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--i) * 70ms);
+    }
+
+    .js .unidad-lista li::before {
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--i) * 70ms + 90ms);
+    }
+
+    .js .unidad-lista.lista-visible li {
+        opacity: 1;
+        transform: none;
+    }
+
+    .js .unidad-lista.lista-visible li::before {
+        transform: scaleX(1);
+    }
 }
 
 /* ── Grupo ──────────────────────────────────── */
