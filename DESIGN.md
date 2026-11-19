@@ -76,8 +76,8 @@ Tres roles de marca y una escalera neutra duplicada en oscuro; la profundidad vi
 
 - **Deep Authority** (`primary`): fondo del hero, `.banda-oscura` y `.cta-final`; el navy de los headings vía `--heading-ink`.
 - **Authority Light / Mid** (`primary-light`, `primary-mid`): los dos stops del hero de páginas interiores. `primary-light` es además el cuarto paso de la rampa de densidad.
-- **Signal** (`signal`): cifras, subrayado de 60×4px, marcadores de lista, links de LinkedIn.
-- **Signal Deep** (`signal-deep`): el degradado de `--gradient-secondary`, que es lo que permite texto blanco en AA sobre un botón primario.
+- **Signal** (`signal`): cifras, marcadores de lista, links de LinkedIn.
+- **Signal Deep** (`signal-deep`): primer stop de `--gradient-secondary`, que termina en `signal-ink`.
 - **Signal Ink** (`signal-ink`): el naranja para texto sobre superficie clara.
 - **Return** (`return`): sólo estado positivo.
 
@@ -91,7 +91,7 @@ Tres roles de marca y una escalera neutra duplicada en oscuro; la profundidad vi
 
 ## Typography
 
-**Display:** Outfit (400–800). **Body:** DM Sans (400–600). **Label:** JetBrains Mono (400–500), siempre uppercase con tracking amplio, y sólo para dato de máquina.
+**Display:** Outfit (400–800). **Body:** DM Sans (400–600). **Label:** JetBrains Mono (400–500), uppercase en `.cifra-label` y `.censo-total-label`, y sólo para dato de máquina.
 
 **Hierarchy** — los tamaños viven en el frontmatter; esto es el mapa a las clases:
 
@@ -102,7 +102,7 @@ Tres roles de marca y una escalera neutra duplicada en oscuro; la profundidad vi
 - **Title**: `.chart-card h3`, `.acceso h3`, `.lead-question`, `.documento h2`.
 - **Stat** / **Stat total** / **Stat row**: `.cifra-valor`, `.censo-total-cifra`, `.censo-inmuebles`.
 - **Lead** / **Subtitle** / **Body** / **Small**: prosa, subtítulos de sección, navegación y copy auxiliar.
-- **Label**: `.mapa-leyenda`, `.footer-nav-title`, `.cifra-label`, `.censo-proyectos`.
+- **Label**: `.cifra-label`, `.censo-total-label`, `.censo-proyectos`, `.mapa-leyenda`.
 
 **The One Bar Rule.** El subrayado naranja de 60×4px lo dibuja sólo `.section-title::after` / `.banda-titulo::after`, con `--gradient-secondary`. Las páginas de documento son la única variante: su `h2` lleva borde inferior completo. Nunca se redibuja localmente.
 
@@ -114,9 +114,9 @@ Un contenedor centrado de 1320px con padding fluido (`clamp(1.25rem, 3.5vw, 3rem
 
 - **Ritmo:** 7rem por sección; 4rem para `.mapa` y `.visualizaciones`, cada uno con hairline superior; 7rem para `.cta-final`; 4rem en móvil.
 - **The Clearance Rule.** El header es fijo y mide 76px (`--header-h`). El hero de la portada (`.hero--portada`) deja siempre 52px de aire arriba del titular, en los dos breakpoints, y ese alto vive en un solo token: `--hero-pad-top`, que ambas reglas de `padding` consumen. Cuando falta alto se aprieta el ritmo interno —el margen del libro de cifras, el interlineado del subtítulo—, nunca ese aire. Los heroes interiores no llevan el modificador y conservan su padding propio.
-- **Grillas:** dos columnas para `.charts-grid` y `.empresas`, tres para `.accesos`, cuatro para `.equipo`, con 2rem de gap.
+- **Grillas:** dos columnas para `.charts-grid` y `.empresas`, tres para `.accesos`, cuatro para `.equipo`; el gap base es 2rem y cada grilla lo ajusta (`.equipo` 2.5rem de fila y 2rem de columna, `.empresas` 2.5rem de columna, `.accesos` 1.5rem).
 - **Rieles:** arriba de 1024px, `.censo-article`, `.unidad` y `.contacto-grid` son un riel de 280–320px más una columna de contenido, alineados en el mismo borde izquierdo.
-- **Bandas:** papel, superficie, navy, superficie, pie. Una sola banda navy a sangre por página.
+- **Bandas:** navy a sangre en el hero, `.banda-censo`, `.banda-oscura`, `.banda-logros` y `.cta-final`; el cuerpo alterna papel y superficie.
 - **Breakpoints:** 1024 (equipo a tres), 900 (gráficos y accesos a una columna, pie a dos), 768 (una columna, menú hamburguesa, cifras por renglón), 480 (tipografía y padding chicos, botones del hero a lo ancho).
 - **Hero:** 92vh en la portada con contenido centrado y una retícula de 24px que se espesa hacia el centro del campo; en interiores baja a `min-height: auto`, para que la banda navy de abajo se lea como una segunda superficie.
 
@@ -124,24 +124,15 @@ Un contenedor centrado de 1320px con padding fluido (`clamp(1.25rem, 3.5vw, 3rem
 
 Híbrido: bandas tonales para la estructura y un único vocabulario neutro para la interacción. Ningún shadow se tiñe con un color de marca.
 
-- **sm** (`0 1px 2px 0 rgba(0, 0, 0, 0.05)`): tarjetas de gráfico, hairline del header.
-- **md** (`0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)`): `.acceso`, `.lead-form`, botones en reposo.
+- **sm** (`0 1px 2px 0 rgba(0, 0, 0, 0.05)`): `.chart-card`, `.acceso`, hairline del header.
+- **md** (`0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)`): `.lead-form`, botones en reposo.
 - **lg** (`0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05)`): hover, header tras el scroll, despliegue del menú móvil.
 
-**The Soft-Lift Rule.** Una tarjeta descansa en 1–2 y sube un nivel en hover, moviendo -4px. Sin glow, sin shadow más grande que `lg`, sin color.
+**The Soft-Lift Rule.** Una tarjeta con hover descansa en `sm` y sube a `lg` moviendo -4px. Sin glow, sin shadow más grande que `lg`, sin color.
 
 ## Motion
 
-Tesis: el instrumento se enciende. El movimiento explica que los datos llegan, no que la página es linda.
-
-- **Hero (`enfocar` + `encender`):** el titular entra desde `blur(10px)` y `translateY(18px)` en 0.85s con `cubic-bezier(0.16, 1, 0.3, 1)`; el subtítulo, las cifras y el CTA siguen con `aparecer` y un stagger de 0.1 a 0.4s. La retícula de fondo se enciende con `encender` (opacidad y escala 1.06 desde el centro, 1.4s). Es la única secuencia de entrada.
-- **Barras del título:** se traza de `scaleX(0)` a 1 al 60% de visibilidad, con origen a la izquierda y al centro en las bandas.
-- **Libro del censo:** al 35% de visibilidad las barras de ciudad se trazan y los enteros —total y ciudades— se cuentan en los mismos 900ms, a 30 fps. Las cifras del hero no se cuentan: dos llevan sufijo de moneda.
-- **Mapa:** las celdas crecen desde radio 0 cuando el mapa entra en pantalla, con retardo según la distancia al centro y tope de 320ms. El JSON se prefetchea 600px antes, así que el aterrizaje ocurre a la vista y no fuera de cuadro. Los filtros repintan sin animar.
-- **Navegación:** `@view-transition` cruza el documento en 0.3s y el header, con `view-transition-name: masthead`, no se mueve entre páginas. Sin soporte del navegador la navegación corta como siempre.
-- **Feedback:** botones y tarjetas suben -3/-4px en hover y hacen `scale(0.97)` al presionar; los filtros del mapa y la pausa de la marquesina hacen lo mismo al presionar.
-
-Presupuesto: ninguna propiedad que dispare layout, el blur es un elemento y una vez, y la navegación no carga JavaScript. Con `prefers-reduced-motion` los cuatro momentos se desactivan y el contenido queda en su estado final; el feedback sobrevive.
+El repertorio, lo prohibido y el criterio de cierre por página viven en `docs/motion.md`; sus secciones Por página son objetivos, no estado actual. Las decisiones de librería y de scroll atado se registran en `docs/adr/0001-motion-sin-libreria.md` y `docs/adr/0002-scroll-atado-en-desktop.md`.
 
 ## Shapes
 
@@ -149,11 +140,11 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 
 ## Components
 
-- **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es navy y pasa a naranja sobre las superficies navy, el pie y `.banda-oscura`.
-- **Tarjetas:** las únicas son `.chart-card` y `.acceso`, y ambas existen porque son un lienzo o un link. Todo lo demás va en listas divididas.
-- **Cifras y libro del censo:** las tres cifras del hero son estáticas porque dos llevan sufijo de moneda; los enteros del censo se cuentan al entrar, en el mismo reloj que sus barras. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%. Las tres cifras del hero son una grilla de tres columnas sobre dos hairlines, con los rótulos arrancando en la misma línea; debajo de 768px cada cifra pasa a renglón, con el dato a la izquierda y el rótulo a la derecha. La divisoria entre celdas es un trazo de 1px —vertical en desktop, horizontal en móvil— y no un borde de celda, para que el dato arranque en el eje del titular sin una caja que lo separe.
+- **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es navy y pasa a naranja en `.hero`, `.cta-final`, `.banda-oscura` y el pie.
+- **Tarjetas:** `.chart-card`, `.acceso` y `.lead-form`. Todo lo demás va en listas divididas.
+- **Cifras y libro del censo:** los enteros del censo se cuentan al entrar, en el mismo reloj que sus barras. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%. Las tres cifras del hero son una grilla de tres columnas sobre dos hairlines, con los rótulos arrancando en la misma línea; debajo de 768px cada cifra pasa a renglón, con el dato a la izquierda y el rótulo a la derecha. La divisoria entre celdas es un trazo de 1px —vertical en desktop, horizontal en móvil— y no un borde de celda, para que el dato arranque en el eje del titular sin una caja que lo separe.
 - **Mapa de densidad:** una celda agregada por `L.circleMarker` sobre un canvas compartido, radio en píxeles (a escala país una celda de 550 m sería sub-píxel), con la rueda de zoom apagada. Los filtros recalculan cada celda desde su desglose. Estados `.mapa-loading` y `.mapa-fallback` con `[hidden]`. En oscuro se invierte el tile pane y la rampa de densidad corre al revés, para que las celdas más densas sigan siendo lo más claro del mapa.
-- **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. La validación es nativa con mensajes propios en español, para no depender del idioma del navegador.
+- **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. Las reglas de validación viven en `docs/conversion-y-formularios.md`.
 - **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2.
 - **Excepciones del detector:** el masthead del formulario y las filas de logros están firmados en `.impeccable/config.json`, cada uno con su razón y su medición; el waiver va por archivo porque el aviso de padding llega sin línea y no se puede atar al elemento. El `#000` de los `mask-image` es un waiver de valor: son el canal opaco de la máscara, no un color. `.section-subtitle` declara el `line-height` que hereda para que el analizador lo lea sobre su propio `font-size`.
 - **Header:** fijo, 95% blanco con blur, `aria-current` en la página activa y hamburguesa debajo de 768px.
@@ -169,6 +160,4 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 - **Don't** pasar de 16px de radio en tarjetas ni combinar borde de 1px con un shadow de 16px o más.
 - **Don't** anidar una tarjeta dentro de otra, ni usar borde izquierdo o derecho de más de 1px como acento.
 - **Don't** poner texto muted (`ink-muted`) sobre una superficie oscura: va `dark-ink-medium` o un blanco con alfa.
-- **Don't** recolorear, desaturar o contornear los logos de las unidades o del grupo.
 - **Don't** publicar la base individual de propiedades: coordenadas, precios y superficies no salen del repo privado.
-- **Don't** contar una cifra con sufijo de moneda: el conteo es sólo para los enteros del censo.
