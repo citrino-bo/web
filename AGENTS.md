@@ -50,3 +50,17 @@ Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una co
 - Cambios de UI chicos (sección, copy, estilo): editá el HTML/CSS directo. Sin proposal + spec + design + tasks.
 - Cambios de lógica o multi-archivo: SDD con spec corta, no slop de 2000 palabras.
 - Los tickets viven en GitHub issues. Si la premisa de un ticket es falsa, pará y avisá.
+
+## Agent skills
+
+### Issue tracker
+
+Los issues viven en GitHub (`citrino-bo/web`) y se operan con el CLI `gh`. Ver `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Cinco roles canónicos con la etiqueta igual al rol: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. Las cinco existen en el repo. Ver `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Un solo contexto: `GLOSSARY.md` y `docs/adr/` en la raíz. Ver `docs/agents/domain.md`.
