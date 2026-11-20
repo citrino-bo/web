@@ -8,7 +8,7 @@ Reglas operativas para agentes y humanos en este repo. Quirúrgicas. Si no está
 - CSS con variables `:root`, fuentes Outfit + DM Sans + JetBrains Mono, colores `#002857` / `#ee7900` / `#10b981`.
 - Analítica: Umami — eventos en `docs/analitica.md`, infraestructura en `citrino-gestion/docs/operacion/infra.md`.
 - Conversión, CTAs y formularios: criterios en `docs/conversion-y-formularios.md`.
-- Fuente de datos: `citrino-gestion` genera la base completa de propiedades (privada); `scripts/agregar_panel.py` la agrega a `data/panel.json`, que es lo único que el sitio sirve.
+- Fuente de datos: `citrino-central` tiene la base completa de propiedades (privada); `scripts/exportar_propiedades.sql` la extrae y `scripts/agregar_panel.py` la agrega a `data/panel.json`, que es lo único que el sitio sirve.
 
 ## Estructura
 
@@ -22,6 +22,7 @@ Una sola regla: **la raíz tiene páginas planas `.html`; toda carpeta es una co
 ## Comandos
 
 - Verificar navegación y que no queden páginas huérfanas: `bash scripts/verificar_navs.sh`
+- Extraer la base de propiedades desde staging: `docker exec -i citrino-central-staging psql -U citrino -d citrino_central -At -f - < scripts/exportar_propiedades.sql > data/propiedades.json` (el archivo queda gitignoreado)
 - Regenerar el panel de datos publicado: `python scripts/agregar_panel.py <ruta_al_json_completo>`
 - Previsualizar local: `python -m http.server 8080`
 

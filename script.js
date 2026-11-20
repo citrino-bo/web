@@ -387,9 +387,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mapaEl) inicializarPanel(mapaEl);
 
     function inicializarPanel(contenedor) {
-        // Arranca en el área metropolitana: a escala país una celda de 550 m no se distingue.
-        const CENTRO = [-17.78, -63.18];
-        const ZOOM = window.innerWidth < 768 ? 11 : 12;
+        // Encuadre nacional: el país entra completo y las tres áreas metropolitanas quedan separadas.
+        const PAIS = [[-22.95, -69.75], [-9.6, -57.4]];
         const MAX_ZOOM = 14;
         let panel = null;
         let mapa = null;
@@ -412,11 +411,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = cluster.getAllChildMarkers().reduce(function(suma, marcador) {
                 return suma + (marcador.peso || 0);
             }, 0);
-            const tamano = total < 100 ? 'chico' : total < 1000 ? 'medio' : 'grande';
+            const tamano = total < 500 ? 'chico' : total < 5000 ? 'medio' : 'grande';
+            const lado = tamano === 'grande' ? 52 : tamano === 'medio' ? 42 : 34;
             return L.divIcon({
                 html: '<div><span>' + total.toLocaleString('es-BO') + '</span></div>',
                 className: 'mapa-cluster mapa-cluster--' + tamano,
-                iconSize: [46, 46]
+                iconSize: [lado, lado]
             });
         }
 
@@ -551,10 +551,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     puntoColor = getComputedStyle(document.documentElement).getPropertyValue('--mapa-punto').trim() || '#002857';
 
                     mapa = L.map(contenedor, {
-                        center: CENTRO,
-                        zoom: ZOOM,
+                        center: [-16.5, -64.0],
+                        zoom: 5,
                         minZoom: 4,
                         maxZoom: MAX_ZOOM,
+                        zoomSnap: 0.25,
                         scrollWheelZoom: false,
                         zoomControl: true
                     });
@@ -568,9 +569,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                         maxZoom: 19
                     }).addTo(mapa);
+                    mapa.fitBounds(PAIS, { padding: [12, 12] });
 
                     grupo = L.markerClusterGroup({
-                        maxClusterRadius: 70,
+                        maxClusterRadius: 40,
                         spiderfyOnMaxZoom: false,
                         showCoverageOnHover: false,
                         zoomToBoundsOnClick: true,

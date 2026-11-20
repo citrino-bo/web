@@ -976,28 +976,24 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 46px;
-    height: 46px;
+    width: 100%;
+    height: 100%;
     border: 2px solid rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     background: var(--primary-color);
     color: #fff;
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 600;
     line-height: 1;
 }
 
 .mapa-cluster--chico div {
-    width: 34px;
-    height: 34px;
     background: var(--primary-color-mid);
     font-size: 0.75rem;
 }
 
 .mapa-cluster--medio div {
-    width: 40px;
-    height: 40px;
     background: var(--primary-color-light);
     font-size: 0.8rem;
 }

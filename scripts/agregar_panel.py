@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Agrega la base de propiedades a celdas para publicar solo densidad, nunca inmuebles.
 
-Entrada: el JSON completo que emite citrino-gestion (23k registros con lat/lng exacta, precio y superficies). Ese archivo NO se commitea ni se sirve: es la base de datos.
+Entrada: el JSON completo con una entrada por inmueble (lat/lng, tipo y operación), extraído de citrino-central con `scripts/exportar_propiedades.sql`. Ese archivo NO se commitea ni se sirve: es la base de datos.
 
 Salida: data/panel.json, con el encabezado de indicadores y una grilla de celdas lat/lng con conteo. Cada celda de menos de K propiedades se descarta, asi ninguna celda publicada tiene menos de K inmuebles (piso de k-anonimato).
 
