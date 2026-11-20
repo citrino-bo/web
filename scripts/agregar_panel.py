@@ -5,6 +5,8 @@ Entrada: el JSON completo con una entrada por inmueble (lat/lng, tipo y operaci�
 
 Salida: data/panel.json, con el encabezado de indicadores y una grilla de celdas lat/lng con conteo. Cada celda de menos de K propiedades se descarta, asi ninguna celda publicada tiene menos de K inmuebles (piso de k-anonimato).
 
+El bloque `censo` es un agregado de proyectos ya públicos y no pasa por el piso de k-anonimato de la grilla.
+
 Uso:
     python scripts/agregar_panel.py [ruta_al_json_completo]
 
@@ -72,6 +74,7 @@ def main() -> None:
         "total": d["total"],
         "por_tipo": d.get("por_tipo", {}),
         "por_operacion": d.get("por_operacion", {}),
+        "censo": d.get("censo", {}),
         "celda": CELDA,
         "k": K,
         "celdas": len(grilla),
@@ -84,9 +87,11 @@ def main() -> None:
     )
 
     assert panel["total"] > 0 and panel["generado"], "encabezado vacío: se pisó la variable del JSON"
+    assert panel["censo"].get("proyectos"), "el JSON de entrada no trae el censo"
     assert all(c["n"] >= K for c in panel["grilla"]), "celda bajo el piso de k"
     assert panel["celdas"] < len(celdas), "la grilla no ocultó ninguna celda"
     print(
+        f"censo {panel['censo']['proyectos']} proyectos / {panel['censo']['inmuebles']} inmuebles | "
         f"celdas publicadas {panel['celdas']}/{len(celdas)} | "
         f"propiedades ocultas en celdas chicas {ocultas} | "
         f"descartadas por coordenada invalida {descartadas} | "

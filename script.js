@@ -76,11 +76,24 @@ document.addEventListener('DOMContentLoaded', function() {
         titulos.forEach(function(t) { t.classList.add('titulo-visible'); });
     }
 
-    // ── El libro del censo entra: las barras se trazan y los enteros se cuentan ──
-    const librosCenso = document.querySelectorAll('.censo-datos');
+    // ── Panel de datos: un solo JSON para el censo y el mapa ──
+    let panelPromesa = null;
+    function cargarPanel() {
+        if (!panelPromesa) {
+            panelPromesa = fetch('data/panel.json').then(function(r) {
+                if (!r.ok) throw new Error('respuesta ' + r.status);
+                return r.json();
+            });
+        }
+        return panelPromesa;
+    }
+
+    // ── El libro del censo se pinta desde el panel y entra cuando la banda es visible ──
+    const bandaCenso = document.querySelector('.banda-censo');
+    const libroCenso = bandaCenso ? bandaCenso.querySelector('.censo-datos') : null;
     const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    // Reloj de los conteos: 900ms, un paso cada 33ms y el último deja el texto exacto del HTML.
+    // Reloj de los conteos: 900ms, un paso cada 33ms y el último deja el texto exacto de la cifra.
     function contarEnPasos(cifras) {
         const DURACION = 900;
         const inicio = performance.now();
@@ -123,7 +136,77 @@ document.addEventListener('DOMContentLoaded', function() {
         contarEnPasos(cifras);
     }
 
-    if ('IntersectionObserver' in window) {
+    function formatearCifra(n) {
+        return Number(n).toLocaleString('es-BO');
+    }
+
+    function nombreCiudad(slug) {
+        return String(slug).replace(/_/g, ' ').replace(/\b\w/g, function(letra) {
+            return letra.toUpperCase();
+        });
+    }
+
+    function porcentaje(inmuebles, maximo) {
+        return (Math.round((inmuebles / maximo) * 1000) / 10) + '%';
+    }
+
+    function censoValido(censo) {
+        return censo &&
+            Number(censo.proyectos) > 0 &&
+            Number(censo.inmuebles) > 0 &&
+            Array.isArray(censo.ciudades) &&
+            censo.ciudades.length > 0 &&
+            censo.ciudades.every(function(ciudad) {
+                return Number(ciudad.proyectos) > 0 && Number(ciudad.inmuebles) > 0;
+            });
+    }
+
+    function pintarCenso(censo) {
+        libroCenso.querySelector('.censo-total-cifra').textContent = formatearCifra(censo.inmuebles);
+
+        const maximo = Math.max.apply(null, censo.ciudades.map(function(ciudad) {
+            return Number(ciudad.inmuebles);
+        }));
+        const lista = libroCenso.querySelector('.censo-ciudades');
+        lista.textContent = '';
+
+        censo.ciudades.forEach(function(ciudad) {
+            const fila = document.createElement('li');
+            fila.className = 'censo-ciudad';
+            fila.style.setProperty('--pct', porcentaje(Number(ciudad.inmuebles), maximo));
+
+            const nombre = document.createElement('span');
+            nombre.className = 'censo-nombre';
+            nombre.textContent = nombreCiudad(ciudad.ciudad);
+
+            const barra = document.createElement('span');
+            barra.className = 'censo-barra';
+            barra.appendChild(document.createElement('i'));
+
+            const inmuebles = document.createElement('span');
+            inmuebles.className = 'censo-inmuebles';
+            inmuebles.textContent = formatearCifra(ciudad.inmuebles);
+
+            const proyectos = document.createElement('span');
+            proyectos.className = 'censo-proyectos';
+            proyectos.textContent = formatearCifra(ciudad.proyectos) + (Number(ciudad.proyectos) === 1 ? ' proyecto' : ' proyectos');
+
+            fila.appendChild(nombre);
+            fila.appendChild(barra);
+            fila.appendChild(inmuebles);
+            fila.appendChild(proyectos);
+            lista.appendChild(fila);
+        });
+
+        libroCenso.hidden = false;
+    }
+
+    function iniciarCenso() {
+        if (!('IntersectionObserver' in window)) {
+            libroCenso.classList.add('censo-visible');
+            if (!reducirMovimiento.matches) contarCifras(libroCenso);
+            return;
+        }
         const observadorCenso = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (!entry.isIntersecting) return;
@@ -132,9 +215,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 observadorCenso.unobserve(entry.target);
             });
         }, { threshold: 0.35 });
-        librosCenso.forEach(function(l) { observadorCenso.observe(l); });
-    } else {
-        librosCenso.forEach(function(l) { l.classList.add('censo-visible'); });
+        observadorCenso.observe(libroCenso);
+    }
+
+    if (bandaCenso && libroCenso) {
+        cargarPanel()
+            .then(function(datos) {
+                const censo = datos && datos.censo;
+                if (!censoValido(censo)) throw new Error('panel sin censo');
+                pintarCenso(censo);
+                iniciarCenso();
+            })
+            .catch(function() {
+                bandaCenso.hidden = true;
+            });
     }
 
     // ── Servicios: en móvil la lista entra escalonada, sin atarse al scroll ──
@@ -533,11 +627,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function arrancar() {
-            fetch('data/panel.json')
-                .then(function(r) {
-                    if (!r.ok) throw new Error('respuesta ' + r.status);
-                    return r.json();
-                })
+            cargarPanel()
                 .then(function(datos) {
                     panel = datos;
                     graficos(panel);
@@ -609,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // El mapa carga recién cuando se acerca al viewport: el JSON no compite con el hero.
+        // El mapa arranca cuando se acerca al viewport; el censo ya pidió el JSON, así que comparten una sola descarga.
         if ('IntersectionObserver' in window) {
             const observadorMapa = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
