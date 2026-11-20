@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ── Navegación móvil ─────────────────────────
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const header = document.querySelector('.header');
+    // Sin :has() el header no ve el menú abierto: la clase de respaldo mantiene el estado sólido.
+    const admiteHas = !!(window.CSS && CSS.supports && CSS.supports('selector(:has(*))'));
 
     if (hamburger && navMenu) {
         function fijarMenu(abierto) {
@@ -9,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hamburger.classList.toggle('active', abierto);
             hamburger.setAttribute('aria-expanded', String(abierto));
             hamburger.setAttribute('aria-label', abierto ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+            if (!admiteHas && header) header.classList.toggle('menu-abierto', abierto);
         }
 
         hamburger.addEventListener('click', function() {
@@ -32,17 +36,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ── Sombra del header al scrollear ───────────
+    // ── Estado del header: transparente arriba, sólido desde 100px ──
+    function actualizarHeader() {
+        if (header) header.classList.toggle('scrolled', window.scrollY > 100);
+    }
+
     let ticking = false;
     window.addEventListener('scroll', function() {
         if (ticking) return;
         ticking = true;
         window.requestAnimationFrame(function() {
-            const header = document.querySelector('.header');
-            if (header) header.classList.toggle('scrolled', window.scrollY > 100);
+            actualizarHeader();
             ticking = false;
         });
     }, { passive: true });
+
+    // La página puede abrir ya scrolleada: el estado inicial no espera al primer scroll.
+    actualizarHeader();
+    window.addEventListener('load', actualizarHeader);
 
     // ── Aparición de bloques ─────────────────────
     const reveals = document.querySelectorAll('.scroll-reveal');

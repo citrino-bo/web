@@ -124,9 +124,9 @@ Un contenedor centrado de 1320px con padding fluido (`clamp(1.25rem, 3.5vw, 3rem
 
 Híbrido: bandas tonales para la estructura y un único vocabulario neutro para la interacción. Ningún shadow se tiñe con un color de marca.
 
-- **sm** (`0 1px 2px 0 rgba(0, 0, 0, 0.05)`): `.chart-card`, `.acceso`, hairline del header.
+- **sm** (`0 1px 2px 0 rgba(0, 0, 0, 0.05)`): `.chart-card`, `.acceso`, header sólido.
 - **md** (`0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)`): `.lead-form`, botones en reposo.
-- **lg** (`0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05)`): hover, header tras el scroll, despliegue del menú móvil.
+- **lg** (`0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05)`): hover y despliegue del menú móvil.
 
 **The Soft-Lift Rule.** Una tarjeta con hover descansa en `sm` y sube a `lg` moviendo -4px. Sin glow, sin shadow más grande que `lg`, sin color.
 
@@ -147,7 +147,7 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 - **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. Las reglas de validación viven en `docs/conversion-y-formularios.md`.
 - **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2.
 - **Excepciones del detector:** el masthead del formulario y las filas de logros están firmados en `.impeccable/config.json`, cada uno con su razón y su medición; el waiver va por archivo porque el aviso de padding llega sin línea y no se puede atar al elemento. El `#000` de los `mask-image` es un waiver de valor: son el canal opaco de la máscara, no un color. `.section-subtitle` declara el `line-height` que hereda para que el analizador lo lea sobre su propio `font-size`.
-- **Header:** fijo, 95% blanco con blur, `aria-current` en la página activa y hamburguesa debajo de 768px.
+- **Header:** fijo y transparente arriba del hero, con la navegación en `--white-90`, el enlace activo y su hover en blanco sobre el subrayado naranja, y el logo blanco. Desde 100px de scroll es una barra sólida: `rgba(255, 255, 255, 0.95)`, `blur(20px)`, `--shadow-sm` y hairline inferior de `1px solid rgba(0, 40, 87, 0.08)`, con texto y logo navy. En oscuro el estado sólido usa `rgba(10, 15, 26, 0.95)` y conserva el texto claro y el logo blanco. El menú móvil abierto fuerza el estado sólido, y `header--solido` hace que las páginas sin hero arranquen sólidas. `aria-current` en la página activa y hamburguesa debajo de 768px.
 - **Hero de portada:** el modificador `.hero--portada` es el que lleva la escala display (1.04 de interlineado, 5.75rem de tope) y el piso de aire de `--hero-pad-top`. `.hero` sin modificador queda para las páginas interiores, con el titular más chico y su propio padding.
 - **Superficies del navegador:** `viewport-fit=cover` con `env(safe-area-inset-*)`, selección navy, caret naranja, scrollbar teñida y `font-variant-numeric: tabular-nums` en `body` para que las columnas de cifras alineen.
 

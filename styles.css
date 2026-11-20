@@ -74,6 +74,15 @@
     --header-h: calc(2rem + 44px);
     /* Aire entre el header y el titular del hero: el piso que no se recorta cuando falta alto. 8rem = 76px de header + 52px de aire. */
     --hero-pad-top: 8rem;
+
+    /* Header: capa transparente arriba del hero. El estado sólido redefine estos valores. */
+    --header-bg: transparent;
+    --header-ink: var(--white-90);
+    --header-ink-strong: #fff;
+    --header-hamburger: #fff;
+    --header-focus: var(--secondary-color);
+    --header-logo-claro: none;
+    --header-logo-oscuro: block;
 }
 
 /* ── Base ───────────────────────────────────── */
@@ -296,15 +305,49 @@ img {
     left: 0;
     right: 0;
     z-index: var(--z-header);
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.3s ease;
+    background-color: var(--header-bg);
+    color: var(--header-ink);
+    box-shadow: none;
+    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.header.scrolled {
-    box-shadow: var(--shadow-lg);
+/* Arriba del todo la barra es una capa: la navegación y el logo van en blanco sobre el hero. */
+.header .nav-menu a {
+    color: var(--header-ink);
+}
+
+.header .nav-menu a:hover,
+.header .nav-menu a.nav-active {
+    color: var(--header-ink-strong);
+}
+
+.header .hamburger span {
+    background: var(--header-hamburger);
+}
+
+.header :focus-visible {
+    outline-color: var(--header-focus);
+}
+
+/* Al scrollear, con el menú móvil abierto o en una página sin hero, la barra vuelve a ser sólida. */
+.header.scrolled,
+.header.header--solido,
+.header:has(.nav-menu.active),
+.header.menu-abierto {
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --header-border: rgba(0, 40, 87, 0.08);
+    --header-ink: var(--text-dark);
+    --header-ink-strong: var(--secondary-ink);
+    --header-hamburger: var(--text-dark);
+    --header-focus: var(--primary-color);
+    --header-logo-claro: block;
+    --header-logo-oscuro: none;
+
+    background-color: var(--header-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    /* El hairline va por dentro: un border sumaria 1px al alto y el aire del hero esta calculado sobre 76. */
+    box-shadow: inset 0 -1px 0 var(--header-border), var(--shadow-sm);
 }
 
 .nav-container {
@@ -330,9 +373,13 @@ img {
     display: block;
 }
 
-/* El tema lo decide el CSS, así que el logo se cambia acá y no por JS */
+/* El tema y el estado del header deciden el logo: el blanco sobre el hero, el navy sobre la barra sólida. */
 .logo-img--oscuro {
-    display: none;
+    display: var(--header-logo-oscuro);
+}
+
+.logo-img--claro {
+    display: var(--header-logo-claro);
 }
 
 .nav-menu {
@@ -352,6 +399,7 @@ img {
     text-decoration: none;
     position: relative;
     white-space: nowrap;
+    transition: color 0.25s ease;
 }
 
 .nav-menu a::after {
@@ -397,7 +445,7 @@ img {
     height: 2px;
     background: var(--text-dark);
     border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.25s ease;
 }
 
 .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -2664,6 +2712,12 @@ a.empresa:hover .empresa-nombre {
     .marquee-content {
         animation: none;
     }
+
+    .header,
+    .header .nav-menu a,
+    .header .hamburger span {
+        transition: none;
+    }
 }
 
 /* ── Modo oscuro ────────────────────────────── */
@@ -2708,16 +2762,19 @@ a.empresa:hover .empresa-nombre {
         background-color: var(--white);
     }
 
-    .header {
-        background: rgba(10, 15, 26, 0.95);
-    }
-
-    .logo-img--claro {
-        display: none;
-    }
-
-    .logo-img--oscuro {
-        display: block;
+    /* Sobre el hero oscuro la barra sólida usa el fondo del tema y conserva el texto claro. */
+    .header.scrolled,
+    .header.header--solido,
+    .header:has(.nav-menu.active),
+    .header.menu-abierto {
+        --header-bg: rgba(10, 15, 26, 0.95);
+        --header-border: transparent;
+        --header-ink: var(--text-dark);
+        --header-ink-strong: var(--secondary-ink);
+        --header-hamburger: var(--text-dark);
+        --header-focus: var(--secondary-color);
+        --header-logo-claro: none;
+        --header-logo-oscuro: block;
     }
 
     .hero,
