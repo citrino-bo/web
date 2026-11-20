@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """Agrega la base de propiedades a celdas para publicar solo densidad, nunca inmuebles.
 
-Entrada: el JSON completo que emite citrino-gestion (23k registros con lat/lng exacta,
-precio y superficies). Ese archivo NO se commitea ni se sirve: es la base de datos.
+Entrada: el JSON completo que emite citrino-gestion (23k registros con lat/lng exacta, precio y superficies). Ese archivo NO se commitea ni se sirve: es la base de datos.
 
-Salida: data/panel.json, con el encabezado de indicadores y una grilla de celdas
-lat/lng con conteo. Cada celda de menos de K propiedades se descarta, asi ninguna
-celda publicada tiene menos de K inmuebles (piso de k-anonimato).
+Salida: data/panel.json, con el encabezado de indicadores y una grilla de celdas lat/lng con conteo. Cada celda de menos de K propiedades se descarta, asi ninguna celda publicada tiene menos de K inmuebles (piso de k-anonimato).
 
 Uso:
     python scripts/agregar_panel.py [ruta_al_json_completo]
@@ -50,24 +47,6 @@ def main() -> None:
         det = detalle.setdefault(clave, Counter())
         det[p.get("tipo_operacion")] += 1
         det[p.get("tipo_inmueble")] += 1
-
-    publicables = {
-        clave: n for clave, n in celdas.items() if n >= K
-    }
-
-    # Red de seguridad: el total publicado nunca puede reconstruir el total real.
-    ocultas = sum(n for (i, j), n in celdas.items() if n < K)
-
-    claves = ("venta", "alquiler", "anticretico", "casa", "departamento", "terreno")
-    grilla = [
-        {
-            "lat": round((i + 0.5) * CELDA, 4),
-            "lng": round((j + 0.5) * CELDA, 4),
-            "n": n,
-            **{k: detalle[(i, j)][k] for k in claves},
-        }
-        for (i, j), n in sorted(publicables.items(), key=lambda kv: -kv[1])
-    ]
 
     publicables = {
         clave: n for clave, n in celdas.items() if n >= K
