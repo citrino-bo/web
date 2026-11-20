@@ -12,6 +12,7 @@ colors:
   signal-hover: "#ff9f30"
   signal-ink: "#a14c00"
   hairline: "rgba(0, 40, 87, 0.14)"
+  field-border: "rgba(0, 40, 87, 0.55)"
   density-1: "#dbe7f2"
   density-2: "#a8c4de"
   density-3: "#6d9bc7"
@@ -34,6 +35,7 @@ colors:
   dark-ink: "#e5e7eb"
   dark-ink-medium: "#b6bdc9"
   dark-link: "#93c5fd"
+  dark-field-border: "rgba(147, 197, 253, 0.5)"
 typography:
   display: { fontFamily: Outfit, fontSize: "clamp(2.5rem, 1.4rem + 5vw, 5.75rem)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.035em" }
   headline: { fontFamily: Outfit, fontSize: "clamp(2.125rem, 1.3rem + 2.4vw, 3rem)", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-0.02em" }
@@ -140,12 +142,12 @@ Redondeado, nunca blando: la escala está en `rounded`. Los bordes casi no exist
 
 ## Components
 
-- **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es navy y pasa a naranja en `.hero`, `.cta-final`, `.banda-oscura` y el pie.
+- **Botones:** el borde transparente de 2px evita que las variantes muevan el layout. Primario con `--gradient-secondary` y blanco; secundario transparente con borde blanco, sólo sobre navy. El foco es `--focus-color` —navy en claro, `--dark-link` en oscuro— y pasa a naranja en `.hero`, `.cta-final`, `.banda-oscura` y el pie.
 - **Tarjetas:** `.chart-card`, `.acceso` y `.lead-form`. Todo lo demás va en listas divididas.
 - **Cifras y libro del censo:** los enteros del censo se cuentan al entrar, en el mismo reloj que sus barras. Las barras de ciudad se escalan contra la ciudad más grande, no contra 100%. Las tres cifras del hero son una grilla de tres columnas sobre dos hairlines, con los rótulos arrancando en la misma línea; debajo de 768px cada cifra pasa a renglón, con el dato a la izquierda y el rótulo a la derecha. La divisoria entre celdas es un trazo de 1px —vertical en desktop, horizontal en móvil— y no un borde de celda, para que el dato arranque en el eje del titular sin una caja que lo separe.
 - **Mapa interactivo:** cada celda agregada de 550 m entra como un `L.circleMarker` sobre un canvas compartido; `L.markerClusterGroup` agrupa los puntos y el globo suma las propiedades de sus celdas, con tres tamaños —chico, medio y grande— y el grande en naranja. El encuadre inicial es el país: `fitBounds` sobre los límites de Bolivia con `zoomSnap` de 0.25, así que las tres áreas metropolitanas quedan separadas en el primer cuadro; el techo es 14 y la rueda de zoom queda apagada. Los filtros recalculan cada celda desde su desglose y vuelven a agrupar. Estados `.mapa-loading` y `.mapa-fallback` con `[hidden]`. En oscuro se invierte el tile pane y los puntos pasan a `--mapa-punto` claro.
-- **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. Las reglas de validación viven en `docs/conversion-y-formularios.md`.
-- **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2.
+- **Formulario:** el interés es el primer campo y define el asunto y el ruteo del lead. Los seis intereses son filas de una lista, con la selección marcada por relleno. Los campos de texto llevan borde `--field-border` (3,5:1 sobre su relleno) porque la caja es lo único que los distingue; el resto del sistema sigue con hairline. Las reglas de validación viven en `docs/conversion-y-formularios.md`.
+- **Marquesina de clientes:** excepción documentada del detector. El track está duplicado a propósito para que el loop no muestre un hueco, y el botón de pausa existe por WCAG 2.2.2. En oscuro los logos no se invierten: cada marca va en una placa blanca con su padding, así conserva sus colores oficiales.
 - **Excepciones del detector:** el masthead del formulario y las filas de logros están firmados en `.impeccable/config.json`, cada uno con su razón y su medición; el waiver va por archivo porque el aviso de padding llega sin línea y no se puede atar al elemento. El `#000` de los `mask-image` es un waiver de valor: son el canal opaco de la máscara, no un color. `.section-subtitle` declara el `line-height` que hereda para que el analizador lo lea sobre su propio `font-size`.
 - **Header:** fijo y transparente arriba del hero, con la navegación en `--white-90`, el enlace activo y su hover en blanco sobre el subrayado naranja, y el logo blanco. Desde 100px de scroll es una barra sólida: `rgba(255, 255, 255, 0.95)`, `blur(20px)`, `--shadow-sm` y hairline inferior de `1px solid rgba(0, 40, 87, 0.08)`, con texto y logo navy. En oscuro el estado sólido usa `rgba(10, 15, 26, 0.95)` y conserva el texto claro y el logo blanco. El menú móvil abierto fuerza el estado sólido, y `header--solido` hace que las páginas sin hero arranquen sólidas. `aria-current` en la página activa y hamburguesa debajo de 768px.
 - **Hero de portada:** el modificador `.hero--portada` es el que lleva la escala display (1.04 de interlineado, 5.75rem de tope) y el piso de aire de `--hero-pad-top`. `.hero` sin modificador queda para las páginas interiores, con el titular más chico y su propio padding.

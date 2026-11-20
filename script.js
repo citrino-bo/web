@@ -238,7 +238,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 iniciarCenso();
             })
             .catch(function() {
-                bandaCenso.hidden = true;
+                // La banda sostiene el argumento de la página: si faltan las cifras se avisa, no se borra la sección.
+                libroCenso.textContent = '';
+                const avisoCenso = document.createElement('p');
+                avisoCenso.className = 'censo-aviso';
+                avisoCenso.textContent = 'Las cifras del censo no están disponibles en este momento.';
+                libroCenso.appendChild(avisoCenso);
+                libroCenso.hidden = false;
             });
     }
 
@@ -328,17 +334,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return ultimo || 'index';
     })();
 
-    document.querySelectorAll('section[id]').forEach(function(seccion) {
-        const observadorSeccion = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    track('seccion', { page: pagina, id: seccion.id });
-                    observadorSeccion.unobserve(seccion);
-                }
-            });
-        }, { threshold: 0.4 });
-        observadorSeccion.observe(seccion);
-    });
+    if ('IntersectionObserver' in window) {
+        document.querySelectorAll('section[id]').forEach(function(seccion) {
+            const observadorSeccion = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        track('seccion', { page: pagina, id: seccion.id });
+                        observadorSeccion.unobserve(seccion);
+                    }
+                });
+            }, { threshold: 0.4 });
+            observadorSeccion.observe(seccion);
+        });
+    }
 
     (function() {
         const umbrales = [25, 50, 75, 100];
@@ -504,11 +512,13 @@ document.addEventListener('DOMContentLoaded', function() {
         let operacion = 'todas';
 
         function contar(celda) {
-            if (tipo === 'todos' && operacion === 'todas') return celda.n;
+            const n = Number(celda.n) || 0;
+            if (!n) return 0;
+            if (tipo === 'todos' && operacion === 'todas') return n;
             if (tipo !== 'todos' && operacion !== 'todas') {
-                return Math.round(celda.n * (celda[tipo] / celda.n) * (celda[operacion] / celda.n));
+                return Math.round(n * (Number(celda[tipo]) / n) * (Number(celda[operacion]) / n));
             }
-            return celda[tipo === 'todos' ? operacion : tipo];
+            return Number(celda[tipo === 'todos' ? operacion : tipo]) || 0;
         }
 
         // El globo suma las propiedades de sus celdas: muestra inmuebles, no puntos en el mapa.
@@ -527,9 +537,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function aviso(titulo, texto) {
             const fallback = document.getElementById('mapa-fallback');
+            const cargando = document.getElementById('mapa-loading');
             const tituloEl = document.getElementById('mapa-fallback-titulo');
             const textoEl = document.getElementById('mapa-fallback-texto');
             if (!fallback) return;
+            if (cargando) cargando.hidden = true;
             if (!titulo) {
                 fallback.hidden = true;
                 return;
@@ -537,6 +549,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (tituloEl) tituloEl.textContent = titulo;
             if (textoEl) textoEl.textContent = texto;
             fallback.hidden = false;
+        }
+
+        function apagarFiltros() {
+            document.querySelectorAll('.filtro-btn').forEach(function(btn) {
+                btn.disabled = true;
+            });
         }
 
         function pintar() {
@@ -631,9 +649,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const cargando = document.getElementById('mapa-loading');
             const chartsFallback = document.getElementById('charts-fallback');
             if (cargando) cargando.hidden = true;
-            aviso('El mapa no está disponible en este momento',
-                'Estamos trabajando para restablecerlo. Las visualizaciones de más abajo siguen disponibles.');
+            aviso('No pudimos cargar la base de propiedades',
+                'El mapa y las visualizaciones vuelven a estar disponibles al recargar la página.');
             if (chartsFallback) chartsFallback.hidden = false;
+            apagarFiltros();
             track('mapa', { page: pagina, accion: 'error' });
         }
 
@@ -645,7 +664,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (typeof L === 'undefined' || typeof L.markerClusterGroup === 'undefined') {
                         aviso('El mapa interactivo no está disponible en este momento',
-                            'Estamos trabajando para restablecerlo.');
+                            'Estamos trabajando para restablecerlo. Las visualizaciones siguen disponibles.');
+                        apagarFiltros();
                         return;
                     }
 

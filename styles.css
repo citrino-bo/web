@@ -54,6 +54,8 @@
     /* Colores de datos: mapa y gráficos. Se redefinen en modo oscuro. */
     /* Hairline visible: --bg-lighter da 1,05:1 sobre la banda de papel. */
     --hairline: rgba(0, 40, 87, 0.14);
+    /* Borde de control: 3,5:1 sobre el relleno del campo, el mínimo de WCAG 1.4.11. */
+    --field-border: rgba(0, 40, 87, 0.55);
     --chart-bar: #3a6ea3;
     --chart-bar-alt: #6d9bc7;
     --chart-bar-accent: rgba(238, 121, 0, 0.8);
@@ -62,7 +64,8 @@
     --chart-grid: rgba(0, 40, 87, 0.08);
     /* Punto de una celda sin agrupar: navy sobre tiles claros. */
     --mapa-punto: #002857;
-    --focus-ring: rgba(238, 121, 0, 0.2);
+    /* Color del anillo de foco: navy sobre claro, azul claro sobre oscuro. */
+    --focus-color: var(--primary-color);
 
     --z-skip-link: 9999;
     --z-header: 1000;
@@ -149,7 +152,7 @@ img {
 }
 
 :focus-visible {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--focus-color);
     outline-offset: 2px;
 }
 
@@ -241,7 +244,6 @@ img {
 .animate-delay-2 { animation-delay: 0.2s; }
 .animate-delay-3 { animation-delay: 0.3s; }
 .animate-delay-4 { animation-delay: 0.4s; }
-.animate-delay-5 { animation-delay: 0.5s; }
 
 .scroll-reveal {
     transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
@@ -461,7 +463,7 @@ img {
     min-height: 92vh;
     display: flex;
     align-items: center;
-    padding: 8rem max(2rem, env(safe-area-inset-right)) 5rem max(2rem, env(safe-area-inset-left));
+    padding: var(--hero-pad-top) max(2rem, env(safe-area-inset-right)) 5rem max(2rem, env(safe-area-inset-left));
     overflow: hidden;
 }
 
@@ -689,7 +691,7 @@ img {
 
 .btn-secondary:hover {
     background: #fff;
-    color: #002857;
+    color: var(--primary-color);
     transform: translateY(-3px);
 }
 
@@ -726,12 +728,18 @@ img {
     margin: 1rem 0 0;
     border-radius: 2px;
     background: var(--gradient-secondary);
-    transform: scaleX(0);
+    transform: none;
     transform-origin: left;
     transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
 }
 
-.titulo-visible::after {
+/* Sin JS la barra nace dibujada: el observador que la traza no existe. */
+.js .section-title::after,
+.js .banda-titulo::after {
+    transform: scaleX(0);
+}
+
+.js .titulo-visible::after {
     transform: scaleX(1);
 }
 
@@ -848,6 +856,11 @@ img {
     margin-top: 2.5rem;
     padding-top: 2rem;
     border-top: 1px solid var(--white-20);
+}
+
+.censo-aviso {
+    font-size: 1.0625rem;
+    color: var(--white-70);
 }
 
 .censo-total {
@@ -999,11 +1012,17 @@ img {
     min-height: 44px;
 }
 
-.filtro-btn:hover {
+/* Sin base de datos los filtros no tienen qué filtrar: quedan apagados, no mintiendo. */
+.filtro-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.filtro-btn:not([disabled]):hover {
     background: var(--primary-10);
 }
 
-.filtro-btn:active {
+.filtro-btn:not([disabled]):active {
     transform: scale(0.97);
 }
 
@@ -1048,13 +1067,14 @@ img {
 
 .mapa-cluster--grande div {
     background: var(--secondary-color);
+    color: var(--primary-color);
 }
 
 .mapa-wrapper {
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--bg-lighter);
+    border: 1px solid var(--hairline);
     background: var(--bg-lighter);
 }
 
@@ -1110,17 +1130,6 @@ img {
 .leaflet-container {
     font-family: var(--font-body);
     background: var(--bg-lighter);
-}
-
-.leaflet-popup-content {
-    margin: 0.75rem 1rem;
-    font-size: 0.875rem;
-}
-
-.leaflet-popup-content strong {
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    color: var(--heading-ink);
 }
 
 /* ── Visualizaciones ────────────────────────── */
@@ -1189,7 +1198,7 @@ img {
     min-height: 44px;
     margin-top: 1.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid var(--primary-20);
+    border: 1px solid var(--field-border);
     border-radius: 10px;
     background: transparent;
     font-family: var(--font-body);
@@ -1197,7 +1206,7 @@ img {
     font-weight: 500;
     color: var(--text-medium);
     cursor: pointer;
-    transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.15s ease;
 }
 
 .marquesina-pausa:hover {
@@ -1207,6 +1216,12 @@ img {
 
 .marquesina-pausa:active {
     transform: scale(0.97);
+}
+
+.marquesina-pausa[aria-pressed="true"] {
+    border-color: var(--secondary-color);
+    background: var(--secondary-10);
+    color: var(--heading-ink);
 }
 
 .marquee-content.pausada {
@@ -2106,7 +2121,7 @@ a.empresa:hover .empresa-nombre {
 }
 
 .lead-option:has(input:focus-visible) {
-    outline: 2px solid var(--secondary-color);
+    outline: 2px solid var(--focus-color);
     outline-offset: 2px;
 }
 
@@ -2148,7 +2163,7 @@ a.empresa:hover .empresa-nombre {
 .lead-field textarea {
     width: 100%;
     padding: 0.8rem 0.9rem;
-    border: 1px solid var(--primary-20);
+    border: 1px solid var(--field-border);
     border-radius: 10px;
     background: var(--bg-light);
     font-family: var(--font-body);
@@ -2164,9 +2179,7 @@ a.empresa:hover .empresa-nombre {
 
 .lead-field input:focus-visible,
 .lead-field textarea:focus-visible {
-    outline: none;
     border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .lead-field--consent {
@@ -2463,10 +2476,13 @@ a.empresa:hover .empresa-nombre {
         background: var(--white);
         box-shadow: var(--shadow-lg);
         padding: 0.5rem 2rem 1.5rem;
+    }
+
+    .js .nav-menu {
         display: none;
     }
 
-    .nav-menu.active {
+    .js .nav-menu.active {
         display: flex;
     }
 
@@ -2479,8 +2495,38 @@ a.empresa:hover .empresa-nombre {
         display: none;
     }
 
-    .hamburger {
+    .js .hamburger {
         display: flex;
+    }
+
+    /* Sin JS la hamburguesa no abre nada: el header deja de ser capa y la navegación queda en el flujo. */
+    html:not(.js) .header {
+        position: static;
+        background-color: var(--white);
+    }
+
+    html:not(.js) .nav-container {
+        flex-wrap: wrap;
+    }
+
+    html:not(.js) .nav-menu {
+        position: static;
+        flex: 1 0 100%;
+        box-shadow: none;
+        padding: 0 1.25rem 1rem;
+    }
+
+    html:not(.js) .nav-menu a,
+    html:not(.js) .header .nav-menu a.nav-active {
+        color: var(--text-dark);
+    }
+
+    html:not(.js) .logo-img--oscuro {
+        display: none;
+    }
+
+    html:not(.js) .logo-img--claro {
+        display: block;
     }
 
     .hero {
@@ -2531,7 +2577,7 @@ a.empresa:hover .empresa-nombre {
     .cifra-label {
         min-height: 0;
         margin-top: 0;
-        font-size: 0.6875rem;
+        font-size: 0.75rem;
         max-width: none;
         flex: 1;
         text-align: right;
@@ -2592,15 +2638,6 @@ a.empresa:hover .empresa-nombre {
 
     .unidad-logo {
         height: 60px;
-    }
-
-    .empresa {
-        gap: 1.25rem;
-    }
-
-    .empresa-logo {
-        width: 88px;
-        height: 44px;
     }
 
     .equipo {
@@ -2752,7 +2789,8 @@ a.empresa:hover .empresa-nombre {
         --chart-bar-return: rgba(16, 185, 129, 0.85);
         --chart-text: #b6bdc9;
         --chart-grid: rgba(147, 197, 253, 0.14);
-        --focus-ring: rgba(238, 121, 0, 0.3);
+        --focus-color: var(--dark-link);
+        --field-border: rgba(147, 197, 253, 0.5);
         /* El mapa oscuro invierte los tiles: los puntos pasan a azul claro. */
         --mapa-punto: #9dc4e8;
     }
@@ -2768,7 +2806,7 @@ a.empresa:hover .empresa-nombre {
     .header:has(.nav-menu.active),
     .header.menu-abierto {
         --header-bg: rgba(10, 15, 26, 0.95);
-        --header-border: transparent;
+        --header-border: rgba(255, 255, 255, 0.12);
         --header-ink: var(--text-dark);
         --header-ink-strong: var(--secondary-ink);
         --header-hamburger: var(--text-dark);
@@ -2811,10 +2849,6 @@ a.empresa:hover .empresa-nombre {
         background: var(--bg-lighter);
     }
 
-    .leaflet-container {
-        background: #1a2235;
-    }
-
     /* Los tiles de OSM son claros: se invierten para que el mapa no sea un bloque blanco, y el pane de marcadores queda fuera del filtro para que la rampa conserve su significado. */
     .leaflet-tile-pane {
         filter: invert(1) hue-rotate(180deg) brightness(0.86) contrast(0.9) saturate(0.7);
@@ -2837,17 +2871,19 @@ a.empresa:hover .empresa-nombre {
         color: var(--dark-link);
     }
 
+    /* Las marcas no se recolorean: sobre la superficie oscura cada logo va en su placa clara, como el de la CBDI. */
     .client-logo,
     .marquee-content:hover .client-logo {
-        filter: grayscale(1) invert(1);
+        filter: none;
+        opacity: 1;
     }
 
     .client-logo {
-        opacity: 0.8;
-    }
-
-    .marquee-content:hover .client-logo {
-        opacity: 1;
+        /* El alto sigue midiendo el logo: la placa se suma por fuera. */
+        box-sizing: content-box;
+        padding: 0.4rem 0.7rem;
+        background: #fff;
+        border-radius: 8px;
     }
 }
 
