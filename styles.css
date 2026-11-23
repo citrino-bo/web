@@ -1230,6 +1230,11 @@ img {
     animation: marquee 34s linear infinite;
 }
 
+/* Los logos que traen placa propia cambian de archivo por tema: el <picture> no debe ser el ítem flex. */
+.marquee-content picture {
+    display: contents;
+}
+
 @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
@@ -2837,11 +2842,6 @@ a.empresa:hover .empresa-nombre {
         color: var(--text-dark);
     }
 
-    .unidad-logo,
-    .empresa-logo img {
-        filter: brightness(0.96);
-    }
-
     .mapa-wrapper,
     .persona-foto {
         background: var(--bg-lighter);
@@ -2869,19 +2869,17 @@ a.empresa:hover .empresa-nombre {
         color: var(--dark-link);
     }
 
-    /* Las marcas no se recolorean: sobre la superficie oscura cada logo va en su placa clara, como el de la CBDI. */
+    /* Sobre la tinta la marca se dibuja en silueta blanca: conserva la forma y no necesita fondo. */
     .client-logo,
-    .marquee-content:hover .client-logo {
-        filter: none;
-        opacity: 1;
+    .marquee-content:hover .client-logo,
+    .unidad-logo,
+    .empresa-logo img {
+        filter: brightness(0) invert(1);
     }
 
-    .client-logo {
-        /* El alto sigue midiendo el logo: la placa se suma por fuera. */
-        box-sizing: content-box;
-        padding: 0.4rem 0.7rem;
-        background: #fff;
-        border-radius: 8px;
+    .client-logo,
+    .marquee-content:hover .client-logo {
+        opacity: 0.85;
     }
 }
 
