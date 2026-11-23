@@ -2214,8 +2214,12 @@ a.empresa:hover .empresa-nombre {
     align-self: stretch;
 }
 
-.lead-submit[disabled] {
-    opacity: 0.6;
+/* Enviando: el botón queda en navy para que el rótulo siga legible cuando el fondo naranja no lo es. */
+.lead-submit[disabled],
+.lead-submit[disabled]:hover {
+    background: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transform: none;
     cursor: not-allowed;
 }
 

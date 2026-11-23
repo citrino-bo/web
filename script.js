@@ -478,6 +478,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const destino = ruteo[elegido.value];
             if (destino && leadSubject) leadSubject.value = destino.asunto;
             track('form', { page: pagina, accion: 'envio', interes: destino ? destino.slug : '' });
+
+            // El POST nativo navega fuera de la página: el botón se apaga para que no entren dos leads.
+            const boton = document.getElementById('lead-submit');
+            if (boton) {
+                boton.disabled = true;
+                boton.textContent = 'Enviando…';
+            }
         });
 
         // Email o WhatsApp: al menos uno.
