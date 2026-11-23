@@ -238,13 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 iniciarCenso();
             })
             .catch(function() {
-                // La banda sostiene el argumento de la página: si faltan las cifras se avisa, no se borra la sección.
-                libroCenso.textContent = '';
-                const avisoCenso = document.createElement('p');
-                avisoCenso.className = 'censo-aviso';
-                avisoCenso.textContent = 'Las cifras del censo no están disponibles en este momento.';
-                libroCenso.appendChild(avisoCenso);
-                libroCenso.hidden = false;
+                // Sin cifras, la banda conserva su texto y el bloque de datos no aparece.
+                libroCenso.hidden = true;
             });
     }
 
@@ -656,8 +651,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const cargando = document.getElementById('mapa-loading');
             const chartsFallback = document.getElementById('charts-fallback');
             if (cargando) cargando.hidden = true;
-            aviso('No pudimos cargar la base de propiedades',
-                'El mapa y las visualizaciones vuelven a estar disponibles al recargar la página.');
+            aviso('El mapa no está disponible en este momento',
+                'Estamos trabajando para restablecerlo.');
             if (chartsFallback) chartsFallback.hidden = false;
             apagarFiltros();
             track('mapa', { page: pagina, accion: 'error' });
@@ -671,7 +666,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (typeof L === 'undefined' || typeof L.markerClusterGroup === 'undefined') {
                         aviso('El mapa interactivo no está disponible en este momento',
-                            'Estamos trabajando para restablecerlo. Las visualizaciones siguen disponibles.');
+                            'Estamos trabajando para restablecerlo.');
                         apagarFiltros();
                         return;
                     }

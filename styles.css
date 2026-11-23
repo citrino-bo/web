@@ -858,11 +858,6 @@ img {
     border-top: 1px solid var(--white-20);
 }
 
-.censo-aviso {
-    font-size: 1.0625rem;
-    color: var(--white-70);
-}
-
 .censo-total {
     display: flex;
     flex-wrap: wrap;
@@ -1067,7 +1062,6 @@ img {
 
 .mapa-cluster--grande div {
     background: var(--secondary-color);
-    color: var(--primary-color);
 }
 
 .mapa-wrapper {
